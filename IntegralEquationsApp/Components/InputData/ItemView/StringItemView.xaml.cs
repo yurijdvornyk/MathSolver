@@ -1,5 +1,4 @@
-﻿using IntegralEquationsApp.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,18 +12,27 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using ProblemSdk;
 
-namespace IntegralEquationsApp
+namespace IntegralEquationsApp.Components.InputData.ItemView
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for StringItemView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class StringItemView : UserControl, IBaseItemView<string>
     {
-        public MainWindow()
+        public StringItemView()
         {
             InitializeComponent();
+        }
+
+        public string getValue()
+        {
+            return textBox.Text;
+        }
+
+        public void setValue(string value)
+        {
+            textBox.Text = value;
         }
     }
 }

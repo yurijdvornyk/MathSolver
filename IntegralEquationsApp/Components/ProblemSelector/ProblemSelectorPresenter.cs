@@ -1,14 +1,26 @@
-﻿using IntegralEquationsApp.Data;
+﻿using System;
+using IntegralEquationsApp.Data;
+using ProblemSdk;
 
 namespace IntegralEquationsApp.Components.ProblemSelector
 {
-    public class ProblemSelectorPresenter : MvpPresenter<IProblemSelectorView>
+    public class ProblemSelectorPresenter : Presenter<IProblemSelectorView>
     {
-        public ProblemSelectorPresenter(IProblemSelectorView view) : base(view) { }
+        private ProblemDataSource dataSource;
+
+        public ProblemSelectorPresenter(IProblemSelectorView view) : base(view)
+        {
+            dataSource = ProblemDataSource.GetInstance();
+        }
 
         public void LoadProblems()
         {
-            view.SetProblemList(ProblemDataSource.GetInstance().Problems);
+            view.SetProblemList(dataSource.Problems);
+        }
+
+        internal void ChangeCurrentProblem(IProblem currentProblem)
+        {
+            dataSource.CurrentProblem = currentProblem;
         }
     }
 }

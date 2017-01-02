@@ -63,6 +63,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Components\InputData\InputDataView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\InputData\ItemView\NumericIntegerItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\InputData\ItemView\NumericDoubleItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Components\ProblemSelector\ProblemSelectorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -76,12 +88,27 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Components\BaseMvpContract.cs" />
-    <Compile Include="Components\MvpPresenter.cs" />
+    <Compile Include="Components\InputData\IInputDataView.cs" />
+    <Compile Include="Components\InputData\InputDataView.xaml.cs">
+      <DependentUpon>InputDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\InputData\InputDataPresenter.cs" />
+    <Compile Include="Components\InputData\ItemView\IBaseItemView.cs" />
+    <Compile Include="Components\InputData\ItemView\NumericIntegerItemView.xaml.cs">
+      <DependentUpon>NumericIntegerItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\InputData\ItemView\ItemValueParseException.cs" />
+    <Compile Include="Components\InputData\ItemView\NumericDoubleItemView.xaml.cs">
+      <DependentUpon>NumericDoubleItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Presenter.cs" />
     <Compile Include="Components\ProblemSelector\IProblemSelectorView.cs" />
     <Compile Include="Components\ProblemSelector\ProblemSelectorPresenter.cs" />
     <Compile Include="Components\ProblemSelector\ProblemSelectorView.xaml.cs">
       <DependentUpon>ProblemSelectorView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Data\AppData.cs" />
+    <Compile Include="Data\ICurrentProblemListener.cs" />
     <Compile Include="Data\ProblemDataSource.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -117,13 +144,16 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Components\InputData\" />
     <Folder Include="Components\Results\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ProblemSdk\ProblemSdk.csproj">
       <Project>{82994d35-440b-41b6-b057-993d6c26d830}</Project>
       <Name>ProblemSdk</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Problems\Problems.csproj">
+      <Project>{382E1C6E-B2E8-4002-8EBA-09DF63757CBC}</Project>
+      <Name>Problems</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

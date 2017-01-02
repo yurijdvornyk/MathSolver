@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ProblemSdk;
+using System.Collections.ObjectModel;
 
 namespace IntegralEquationsApp.Components.ProblemSelector
 {
@@ -21,6 +22,16 @@ namespace IntegralEquationsApp.Components.ProblemSelector
     /// </summary>
     public partial class ProblemSelectorView : UserControl, IProblemSelectorView
     {
+        public ObservableCollection<IProblem> Problems
+        {
+            get { return (ObservableCollection<IProblem>)GetValue(ProblemsProperty); }
+            set { SetValue(ProblemsProperty, value); }
+        }
+
+        public static readonly DependencyProperty ProblemsProperty =
+            DependencyProperty.Register("Problems", typeof(ObservableCollection<IProblem>), 
+                typeof(ProblemSelectorView), new PropertyMetadata(new ObservableCollection<IProblem>()));
+
         private ProblemSelectorPresenter presenter;
 
         public ProblemSelectorView()
@@ -32,11 +43,16 @@ namespace IntegralEquationsApp.Components.ProblemSelector
 
         public void SetProblemList(List<IProblem> problems)
         {
-            comboBox.Items.Clear();
+            Problems.Clear();
             foreach (IProblem problem in problems)
             {
-                comboBox.Items.Add(problem);
+                Problems.Add(problem);
             }
+        }
+
+        private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            presenter.ChangeCurrentProblem(comboBox.SelectedItem as IProblem);
         }
     }
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using IntegralEquationsApp.Data;
 using System.Windows;
 
 namespace IntegralEquationsApp
@@ -13,5 +8,9 @@ namespace IntegralEquationsApp
     /// </summary>
     public partial class App : Application
     {
+        void App_Startup(object sender, StartupEventArgs e)
+        {
+            AppData.Initialize();
+        }
     }
 }

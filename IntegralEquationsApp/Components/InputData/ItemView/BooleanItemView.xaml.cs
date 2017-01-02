@@ -1,5 +1,4 @@
-﻿using IntegralEquationsApp.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,18 +12,27 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using ProblemSdk;
 
-namespace IntegralEquationsApp
+namespace IntegralEquationsApp.Components.InputData.ItemView
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for BooleanItemView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class BooleanItemView : UserControl, IBaseItemView<bool>
     {
-        public MainWindow()
+        public BooleanItemView()
         {
             InitializeComponent();
+        }
+
+        public bool getValue()
+        {
+            return checkBox.IsChecked.Value;
+        }
+
+        public void setValue(bool value)
+        {
+            checkBox.IsChecked = value;
         }
     }
 }

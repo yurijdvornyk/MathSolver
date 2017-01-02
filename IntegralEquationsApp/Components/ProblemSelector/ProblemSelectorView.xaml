@@ -6,6 +6,8 @@
              xmlns:local="clr-namespace:IntegralEquationsApp.Components.ProblemSelector"
              mc:Ignorable="d">
     <Grid>
-        <ComboBox Name="comboBox"/>
+        <ComboBox Name="comboBox"
+                  SelectionChanged="comboBox_SelectionChanged"
+                  ItemsSource="{Binding Path=Problems, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 </UserControl>

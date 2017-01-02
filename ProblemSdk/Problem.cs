@@ -29,6 +29,11 @@ namespace ProblemSdk
             // TODO: Add code after implementing solution with Rx.
         }
 
+        public override string ToString()
+        {
+            return Name;
+        }
+
         public abstract void SetInputData();
         protected abstract ProblemResult Execute();
         protected abstract void UpdateData();
