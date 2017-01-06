@@ -16,28 +16,13 @@ using System.Windows.Shapes;
 namespace IntegralEquationsApp.Components.InputData.ItemView
 {
     /// <summary>
-    /// Interaction logic for NumericDoubleItemView.xaml
+    /// Interaction logic for NumericItemView.xaml
     /// </summary>
-    public partial class NumericDoubleItemView : UserControl, IBaseItemView<double>
+    public partial class NumericItemView : UserControl, IBaseItemView<double>
     {
-        public NumericDoubleItemView()
+        public NumericItemView()
         {
             InitializeComponent();
-        }
-
-        public double getValue()
-        {
-            double result = 0;
-            if (!double.TryParse(textBox.Text, out result))
-            {
-                throw new ItemValueParseException(GetType());
-            }
-            return result;
-        }
-
-        public void setValue(double value)
-        {
-            textBox.Text = value.ToString();
         }
     }
 }

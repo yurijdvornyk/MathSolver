@@ -5,6 +5,6 @@ namespace IntegralEquationsApp.Components.InputData
 {
     public interface IInputDataView : IView
     {
-        void buildLayoutForProblem(ProblemData problemData);
+        void BuildLayoutForProblem(ProblemData problemData);
     }
 }

@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ProblemSdk;
 using ProblemSdk.Data;
+using IntegralEquationsApp.Components.InputData.ItemView;
 
 namespace IntegralEquationsApp.Components.InputData
 {
@@ -22,27 +23,98 @@ namespace IntegralEquationsApp.Components.InputData
     /// </summary>
     public partial class InputDataView : UserControl, IInputDataView
     {
+        private readonly int INPUT_DATA_ITEM_MARGIN = 5;
+
+        private InputDataPresenter presenter;
+        private List<BaseItemView> itemViews;
+
         public InputDataView()
         {
             InitializeComponent();
+            itemViews = new List<BaseItemView>();
+            presenter = new InputDataPresenter(this);
         }
 
-        public void buildLayoutForProblem(ProblemData problemData)
+        public void BuildLayoutForProblem(ProblemData problemData)
         {
+            itemViews.Clear();
+            contentArea.Children.Clear();
+            contentArea.ColumnDefinitions.Clear();
+            contentArea.RowDefinitions.Clear();
             if (problemData == null)
             {
-                dockPanel.Children.Clear();
                 return;
             }
+            ColumnDefinition titleColumn = new ColumnDefinition();
+            titleColumn.Width = GridLength.Auto;
+            contentArea.ColumnDefinitions.Add(titleColumn);
+            ColumnDefinition valueColumn = new ColumnDefinition();
+            contentArea.ColumnDefinitions.Add(valueColumn);
             foreach (IDataItem item in problemData.DataItems)
             {
-                dockPanel.Children.Add(getItemView(item));
+                RowDefinition row = new RowDefinition();
+                row.Height = GridLength.Auto;
+                contentArea.RowDefinitions.Add(row);
+
+                FrameworkElement itemTitle = getItemTitleView(item);
+                itemTitle.Margin = new Thickness(INPUT_DATA_ITEM_MARGIN);
+                itemTitle.HorizontalAlignment = HorizontalAlignment.Left;
+                itemTitle.VerticalAlignment = VerticalAlignment.Center;
+                Grid.SetColumn(itemTitle, 0);
+                Grid.SetRow(itemTitle, contentArea.RowDefinitions.Count - 1);
+                contentArea.Children.Add(itemTitle);
+
+                FrameworkElement itemValue = getItemValueView(item);
+                itemValue.Margin = new Thickness(INPUT_DATA_ITEM_MARGIN);
+                itemValue.HorizontalAlignment = HorizontalAlignment.Stretch;
+                itemValue.VerticalAlignment = VerticalAlignment.Center;
+                Grid.SetColumn(itemValue, 1);
+                Grid.SetRow(itemValue, contentArea.RowDefinitions.Count - 1);
+                contentArea.Children.Add(itemValue);
+                itemViews.Add(itemValue as BaseItemView);
             }
         }
 
-        private UIElement getItemView(IDataItem item)
+        public List<object> GetItemValues()
         {
-            throw new NotImplementedException();
+            List<object> result = new List<object>();
+            foreach (var itemView in itemViews)
+            {
+                result.Add(itemView.GetValue());
+            }
+            return result;
+        }
+
+        private FrameworkElement getItemTitleView(IDataItem item)
+        {
+            TextBlock textBlock = new TextBlock();
+            textBlock.Text = item.Name;
+            return textBlock;
+        }
+
+        private BaseItemView getItemValueView(IDataItem item)
+        {
+            Type itemType = item.GetDataItemType();
+            if (itemType == typeof(int).GetType())
+            {
+                return new TextFieldItemView();
+            }
+            else if (itemType == typeof(double).GetType())
+            {
+                return new TextFieldItemView();
+            }
+            else if (itemType == typeof(bool).GetType())
+            {
+                return new BooleanItemView();
+            }
+            else if (itemType == typeof(string).GetType())
+            {
+                return new TextFieldItemView();
+            }
+            else
+            {
+                return new ErrorItemView();
+            }
         }
     }
 }

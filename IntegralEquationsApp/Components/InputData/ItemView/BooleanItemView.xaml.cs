@@ -18,21 +18,21 @@ namespace IntegralEquationsApp.Components.InputData.ItemView
     /// <summary>
     /// Interaction logic for BooleanItemView.xaml
     /// </summary>
-    public partial class BooleanItemView : UserControl, IBaseItemView<bool>
+    public partial class BooleanItemView
     {
         public BooleanItemView()
         {
             InitializeComponent();
         }
 
-        public bool getValue()
+        public override object GetValue()
         {
             return checkBox.IsChecked.Value;
         }
 
-        public void setValue(bool value)
+        public override void SetValue(object value)
         {
-            checkBox.IsChecked = value;
+            checkBox.IsChecked = (bool)value;
         }
     }
 }

@@ -67,13 +67,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Components\InputData\ItemView\NumericIntegerItemView.xaml">
+    <Page Include="Components\InputData\ItemView\BooleanItemView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Components\InputData\ItemView\ErrorItemView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Components\InputData\ItemView\NumericDoubleItemView.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Components\InputData\ItemView\StringItemView.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Components\ProblemSelector\ProblemSelectorView.xaml">
       <SubType>Designer</SubType>
@@ -93,13 +97,16 @@
       <DependentUpon>InputDataView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\InputData\InputDataPresenter.cs" />
-    <Compile Include="Components\InputData\ItemView\IBaseItemView.cs" />
-    <Compile Include="Components\InputData\ItemView\NumericIntegerItemView.xaml.cs">
-      <DependentUpon>NumericIntegerItemView.xaml</DependentUpon>
+    <Compile Include="Components\InputData\ItemView\BooleanItemView.xaml.cs">
+      <DependentUpon>BooleanItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\InputData\ItemView\BaseItemView.cs" />
+    <Compile Include="Components\InputData\ItemView\ErrorItemView.xaml.cs">
+      <DependentUpon>ErrorItemView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\InputData\ItemView\ItemValueParseException.cs" />
-    <Compile Include="Components\InputData\ItemView\NumericDoubleItemView.xaml.cs">
-      <DependentUpon>NumericDoubleItemView.xaml</DependentUpon>
+    <Compile Include="Components\InputData\ItemView\StringItemView.xaml.cs">
+      <DependentUpon>StringItemView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\Presenter.cs" />
     <Compile Include="Components\ProblemSelector\IProblemSelectorView.cs" />

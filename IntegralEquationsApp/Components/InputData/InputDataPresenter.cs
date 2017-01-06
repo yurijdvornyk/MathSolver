@@ -10,11 +10,14 @@ namespace IntegralEquationsApp.Components.InputData
 {
     public class InputDataPresenter : Presenter<IInputDataView>, ICurrentProblemListener
     {
-        public InputDataPresenter(IInputDataView view) : base(view) { }
+        public InputDataPresenter(IInputDataView view) : base(view)
+        {
+            ProblemDataSource.GetInstance().AddCurrentProblemListener(this);
+        }
 
         public void OnCurrentProblemChanged(IProblem currentProblem)
         {
-            view.buildLayoutForProblem(currentProblem != null ? currentProblem.InputData : null);
+            view.BuildLayoutForProblem(currentProblem != null ? currentProblem.InputData : null);
         }
     }
 }
