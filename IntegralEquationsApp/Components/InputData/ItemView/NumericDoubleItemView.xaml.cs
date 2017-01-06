@@ -16,23 +16,38 @@ using System.Windows.Shapes;
 namespace IntegralEquationsApp.Components.InputData.ItemView
 {
     /// <summary>
-    /// Interaction logic for BooleanItemView.xaml
+    /// Interaction logic for NumericDoubleItemView.xaml
     /// </summary>
-    public partial class BooleanItemView
+    public partial class NumericDoubleItemView
     {
-        public BooleanItemView()
+        public NumericDoubleItemView()
         {
             InitializeComponent();
         }
 
         public override object GetItemValue()
         {
-            return checkBox.IsChecked.Value;
+            double result = 0;
+            if (double.TryParse(textBox.Text, out result))
+            {
+                return result;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public override void SetItemValue(object value)
         {
-            checkBox.IsChecked = (bool)value;
+            if (value is double)
+            {
+                textBox.Text = value.ToString();
+            }
+            else
+            {
+                textBox.Text = "";
+            }
         }
     }
 }

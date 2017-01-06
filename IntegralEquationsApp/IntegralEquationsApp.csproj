@@ -75,6 +75,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Components\InputData\ItemView\NumericDoubleItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\InputData\ItemView\NumericIntegerItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Components\InputData\ItemView\StringItemView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -105,6 +113,12 @@
       <DependentUpon>ErrorItemView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\InputData\ItemView\ItemValueParseException.cs" />
+    <Compile Include="Components\InputData\ItemView\NumericDoubleItemView.xaml.cs">
+      <DependentUpon>NumericDoubleItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\InputData\ItemView\NumericIntegerItemView.xaml.cs">
+      <DependentUpon>NumericIntegerItemView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Components\InputData\ItemView\StringItemView.xaml.cs">
       <DependentUpon>StringItemView.xaml</DependentUpon>
     </Compile>

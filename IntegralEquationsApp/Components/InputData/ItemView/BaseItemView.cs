@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Windows.Controls;
 
 namespace IntegralEquationsApp.Components.InputData.ItemView
 {
@@ -7,7 +8,7 @@ namespace IntegralEquationsApp.Components.InputData.ItemView
     /// </summary>
     public abstract class BaseItemView : UserControl
     {
-        public abstract void SetValue(object value);
-        public abstract object GetValue();
+        public abstract void SetItemValue(object value);
+        public abstract object GetItemValue();
     }
 }

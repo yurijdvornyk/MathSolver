@@ -41,7 +41,7 @@ namespace ProblemSdk.Data
 
         public Type GetDataItemType()
         {
-            return typeof(T).GetType();
+            return typeof(T);
         }
 
         public object GetValue()

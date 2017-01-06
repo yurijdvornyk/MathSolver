@@ -28,9 +28,9 @@ namespace IntegralEquationsApp.Components.InputData.ItemView
             textBox.Text = ERROR_CANNOT_HANDLE_INPUT_DATA_ITEM_TYPE;
         }
 
-        public override void SetValue(object value) { }
+        public override void SetItemValue(object value) { }
 
-        public override object GetValue()
+        public override object GetItemValue()
         {
             return null;
         }

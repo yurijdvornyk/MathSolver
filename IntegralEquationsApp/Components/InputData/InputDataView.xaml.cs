@@ -80,7 +80,7 @@ namespace IntegralEquationsApp.Components.InputData
             List<object> result = new List<object>();
             foreach (var itemView in itemViews)
             {
-                result.Add(itemView.GetValue());
+                result.Add(itemView.GetItemValue());
             }
             return result;
         }
@@ -95,21 +95,21 @@ namespace IntegralEquationsApp.Components.InputData
         private BaseItemView getItemValueView(IDataItem item)
         {
             Type itemType = item.GetDataItemType();
-            if (itemType == typeof(int).GetType())
+            if (itemType == typeof(int))
             {
-                return new TextFieldItemView();
+                return new NumericIntegerItemView();
             }
-            else if (itemType == typeof(double).GetType())
+            else if (itemType == typeof(double))
             {
-                return new TextFieldItemView();
+                return new NumericDoubleItemView();
             }
-            else if (itemType == typeof(bool).GetType())
+            else if (itemType == typeof(bool))
             {
                 return new BooleanItemView();
             }
-            else if (itemType == typeof(string).GetType())
+            else if (itemType == typeof(string))
             {
-                return new TextFieldItemView();
+                return new StringItemView();
             }
             else
             {
