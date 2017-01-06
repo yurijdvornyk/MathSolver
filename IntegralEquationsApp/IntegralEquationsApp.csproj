@@ -91,6 +91,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Components\Result\Charts\ResultChartsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\Result\Data\ResultDataView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\Result\ResultView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -128,6 +140,21 @@
     <Compile Include="Components\ProblemSelector\ProblemSelectorView.xaml.cs">
       <DependentUpon>ProblemSelectorView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Components\Result\Charts\IResultChartsView.cs" />
+    <Compile Include="Components\Result\Charts\ResultChartsPresenter.cs" />
+    <Compile Include="Components\Result\Charts\ResultChartsView.xaml.cs">
+      <DependentUpon>ResultChartsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Result\Data\IResultDataView.cs" />
+    <Compile Include="Components\Result\Data\ResultDataPresenter.cs" />
+    <Compile Include="Components\Result\Data\ResultDataView.xaml.cs">
+      <DependentUpon>ResultDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Result\IResultView.cs" />
+    <Compile Include="Components\Result\ResultPresenter.cs" />
+    <Compile Include="Components\Result\ResultView.xaml.cs">
+      <DependentUpon>ResultView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Data\AppData.cs" />
     <Compile Include="Data\ICurrentProblemListener.cs" />
     <Compile Include="Data\ProblemDataSource.cs" />
@@ -164,9 +191,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Components\Results\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\ProblemSdk\ProblemSdk.csproj">
       <Project>{82994d35-440b-41b6-b057-993d6c26d830}</Project>

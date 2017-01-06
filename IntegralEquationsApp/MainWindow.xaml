@@ -5,12 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IntegralEquationsApp"
         xmlns:problemSelector="clr-namespace:IntegralEquationsApp.Components.ProblemSelector"
-        xmlns:InputData="clr-namespace:IntegralEquationsApp.Components.InputData" x:Class="IntegralEquationsApp.MainWindow"
+        xmlns:inputData="clr-namespace:IntegralEquationsApp.Components.InputData"
+    xmlns:result="clr-namespace:IntegralEquationsApp.Components.Result"
+    x:Class="IntegralEquationsApp.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <problemSelector:ProblemSelectorView x:Name="problemSelector" Margin="10" VerticalAlignment="Top" />
-        <InputData:InputDataView x:Name="inputDataView" Margin="10,41,10,10"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <problemSelector:ProblemSelectorView x:Name="problemSelector" Margin="10" VerticalAlignment="Top" Grid.Column="0"/>
+        <inputData:InputDataView x:Name="inputDataView" Margin="10,41,10,10" Grid.Column="0"/>
+        <result:ResultView Grid.Column="1"/>
         <Button x:Name="button" Content="Button" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Click="button_Click"/>
     </Grid>
 </Window>
