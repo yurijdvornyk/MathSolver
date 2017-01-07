@@ -1,17 +1,11 @@
-﻿using System;
+﻿using IntegralEquationsApp.Data;
+using OxyPlot;
+using OxyPlot.Wpf;
+using ProblemSdk.Result;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace IntegralEquationsApp.Components.Result.Charts
 {
@@ -26,6 +20,31 @@ namespace IntegralEquationsApp.Components.Result.Charts
         {
             InitializeComponent();
             presenter = new ResultChartsPresenter(this);
+        }
+
+        public void setChartData(ResultChart chartData)
+        {
+            oxyChart.Series.Clear();
+            chartData.Items.ForEach(item => addChart(item));
+            foreach (var value in chartData.Items)
+            {
+                addChart(value);
+            }
+            oxyChart.IsLegendVisible = chartData.Items.Count > 1;
+        }
+
+        private void addChart(ResultChartItem item)
+        {
+            LineSeries lineSeries = new LineSeries();
+            lineSeries.StrokeThickness = 2;
+            lineSeries.Color = Colors.DarkGreen;
+            List<DataPoint> linePoints = new List<DataPoint>();
+            item.ChartPoints.ForEach(point =>
+            {
+                linePoints.Add(new DataPoint(point.X, point.Y));
+            });
+            lineSeries.ItemsSource = linePoints;
+            oxyChart.Series.Add(lineSeries);
         }
     }
 }

@@ -1,7 +1,22 @@
-﻿namespace IntegralEquationsApp.Components.Result.Charts
+﻿using System;
+using IntegralEquationsApp.Data;
+using ProblemSdk;
+using ProblemSdk.Result;
+
+namespace IntegralEquationsApp.Components.Result.Charts
 {
-    public class ResultChartsPresenter : Presenter<IResultChartsView>
+    public class ResultChartsPresenter : Presenter<IResultChartsView>, IProblemSolutionListener
     {
-        public ResultChartsPresenter(IResultChartsView view) : base(view) { }
+        public ResultChartsPresenter(IResultChartsView view) : base(view)
+        {
+            SolutionManager.GetInstance().AddSolutionListener(this);
+        }
+
+        public void OnProblemSolved(ProblemResult result)
+        {
+            view.setChartData(result.ResultChart);
+        }
+
+        public void OnStartProblemSolving(IProblem problem) { }
     }
 }
