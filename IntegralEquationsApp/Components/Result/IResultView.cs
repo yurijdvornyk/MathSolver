@@ -1,4 +1,6 @@
-﻿namespace IntegralEquationsApp.Components.Result
+﻿using ProblemSdk.Result;
+
+namespace IntegralEquationsApp.Components.Result
 {
     public interface IResultView : IView
     {

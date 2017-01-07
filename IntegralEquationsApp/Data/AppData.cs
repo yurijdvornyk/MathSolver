@@ -17,7 +17,7 @@ namespace IntegralEquationsApp.Data
 
         public static void Initialize()
         {
-            ProblemDataSource.GetInstance().setProblems(problems);
+            DataManager.GetInstance().setProblems(problems);
         }
     }
 }

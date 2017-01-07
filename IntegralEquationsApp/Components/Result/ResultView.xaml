@@ -9,10 +9,10 @@
              mc:Ignorable="d">
     <TabControl>
         <TabItem Header="Data">
-            <data:ResultDataView/>
+            <data:ResultDataView x:Name="dataView"/>
         </TabItem>
         <TabItem Header="Charts">
-            <charts:ResultChartsView/>
+            <charts:ResultChartsView x:Name="chartsView"/>
         </TabItem>
     </TabControl>
 </UserControl>

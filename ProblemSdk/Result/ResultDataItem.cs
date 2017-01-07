@@ -8,6 +8,28 @@ namespace ProblemSdk.Result
         public List<string> ColumnTitles { get; private set; }
         public List<List<object>> ResultItemMatrix { get; private set; }
 
+        public object[,] GetResultItemMatrix()
+        {
+            int rows = ResultItemMatrix.Count;
+            int columns = 0;
+            ResultItemMatrix.ForEach(columnList =>
+            {
+                if (columnList.Count > columns)
+                {
+                    columns = columnList.Count;
+                }
+            });
+            object[,] result = new object[rows, columns];
+            for (int i = 0; i < ResultItemMatrix.Count; ++i)
+            {
+                for (int j = 0; j < ResultItemMatrix[i].Count; ++j)
+                {
+                    result[i, j] = ResultItemMatrix[i][j];
+                }
+            }
+            return result;
+        }
+
         public class Builder
         {
             private ResultDataItem item;

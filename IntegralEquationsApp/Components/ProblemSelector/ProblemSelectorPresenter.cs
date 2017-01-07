@@ -1,16 +1,15 @@
-﻿using System;
-using IntegralEquationsApp.Data;
+﻿using IntegralEquationsApp.Data;
 using ProblemSdk;
 
 namespace IntegralEquationsApp.Components.ProblemSelector
 {
     public class ProblemSelectorPresenter : Presenter<IProblemSelectorView>
     {
-        private ProblemDataSource dataSource;
+        private DataManager dataSource;
 
         public ProblemSelectorPresenter(IProblemSelectorView view) : base(view)
         {
-            dataSource = ProblemDataSource.GetInstance();
+            dataSource = DataManager.GetInstance();
         }
 
         public void LoadProblems()

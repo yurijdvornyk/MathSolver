@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using IntegralEquationsApp.Data;
+using System.Collections.Generic;
+using System.Windows;
 
 namespace IntegralEquationsApp
 {
@@ -12,14 +14,9 @@ namespace IntegralEquationsApp
             InitializeComponent();
         }
 
-        private void button_Click(object sender, RoutedEventArgs e)
+        private void btnSolve_Click(object sender, RoutedEventArgs e)
         {
-            string res = "";
-            foreach (var item in inputDataView.GetItemValues())
-            {
-                res += item.ToString() + "\n";
-            }
-            MessageBox.Show(res);
+            SolutionManager.GetInstance().StartProblemSolving();
         }
     }
 }

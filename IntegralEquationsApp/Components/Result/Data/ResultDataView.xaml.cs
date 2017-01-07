@@ -39,5 +39,33 @@ namespace IntegralEquationsApp.Components.Result.Data
             InitializeComponent();
             presenter = new ResultDataPresenter(this);
         }
+
+        public void SetProblemResult(string title, List<ResultDataTable> dataTables)
+        {
+            ResultTabs.Clear();
+            dataTables.ForEach(dataTable =>
+            {
+                DataGrid dataGrid = new DataGrid();
+                dataGrid.IsReadOnly = true;
+                dataGrid.CanUserSortColumns = false;
+                dataGrid.CanUserAddRows = false;
+                dataGrid.CanUserDeleteRows = false;
+                dataGrid.CanUserResizeRows = false;
+                dataGrid.CanUserResizeColumns = false;
+                dataGrid.SelectionUnit = DataGridSelectionUnit.Cell;
+                dataGrid.ItemsSource = dataTable.AsDataView();
+
+                TabItem tabItem = new TabItem();
+                tabItem.Header = getTabHeader(dataTable, tabItem);
+                tabItem.Content = dataGrid;
+                ResultTabs.Add(tabItem);
+            });
+        }
+
+        private string getTabHeader(ResultDataTable dataTable, TabItem tabItem)
+        {
+            return string.IsNullOrEmpty(dataTable.TableName) ? 
+                (ResultTabs.Count + 1).ToString() : dataTable.TableName;
+        }
     }
 }

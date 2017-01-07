@@ -46,6 +46,7 @@
     <Compile Include="Data\MultipleDataItem.cs" />
     <Compile Include="Data\SingleDataItem.cs" />
     <Compile Include="IProblem.cs" />
+    <Compile Include="ISolutionListener.cs" />
     <Compile Include="Problem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Result\ChartPoint.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="Result\ResultData.cs" />
     <Compile Include="Result\ProblemResult.cs" />
     <Compile Include="Result\ResultDataItem.cs" />
+    <Compile Include="SolutionNotifier.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -112,7 +112,7 @@ namespace Problems
                 resultMatrix[i, 1] = result[i].Y;
             }
             ProblemResult problemResult = new ProblemResult("Result", "x", "tau(x)");
-            problemResult.ResultData.Items.Add(ResultDataItem.Builder.Create().SetMatrix(resultMatrix).Build());
+            problemResult.ResultData.Items.Add(ResultDataItem.Builder.Create().ColumnTitles("x", "tau(x)").SetMatrix(resultMatrix).Build());
             problemResult.ResultChart.Items.Add(ResultChartItem.Builder.Create().Points(result).Build());
             return problemResult;
         }

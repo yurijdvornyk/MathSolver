@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace IntegralEquationsApp.Data
 {
-    public class ProblemDataSource
+    public class DataManager
     {
-        private static ProblemDataSource problemDataSource;
+        private static DataManager problemDataManager;
 
         public List<IProblem> Problems { get; private set; }
         public IProblem CurrentProblem
@@ -22,13 +22,21 @@ namespace IntegralEquationsApp.Data
         }
 
         private IProblem currentProblem;
-
         private List<ICurrentProblemListener> currentProblemListeners;
 
-        private ProblemDataSource()
+        private DataManager()
         {
             Problems = new List<IProblem>();
             currentProblemListeners = new List<ICurrentProblemListener>();
+        }
+
+        public static DataManager GetInstance()
+        {
+            if (problemDataManager == null)
+            {
+                problemDataManager = new DataManager();
+            }
+            return problemDataManager;
         }
 
         public void AddCurrentProblemListener(ICurrentProblemListener listener)
@@ -45,15 +53,6 @@ namespace IntegralEquationsApp.Data
             {
                 currentProblemListeners.Remove(listener);
             }
-        }
-
-        public static ProblemDataSource GetInstance()
-        {
-            if (problemDataSource == null)
-            {
-                problemDataSource = new ProblemDataSource();
-            }
-            return problemDataSource;
         }
 
         internal void setProblems(List<IProblem> problems)

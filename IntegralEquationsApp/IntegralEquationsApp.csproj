@@ -147,6 +147,9 @@
     </Compile>
     <Compile Include="Components\Result\Data\IResultDataView.cs" />
     <Compile Include="Components\Result\Data\ResultDataPresenter.cs" />
+    <Compile Include="Components\Result\Data\ResultDataTable.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Components\Result\Data\ResultDataView.xaml.cs">
       <DependentUpon>ResultDataView.xaml</DependentUpon>
     </Compile>
@@ -157,7 +160,9 @@
     </Compile>
     <Compile Include="Data\AppData.cs" />
     <Compile Include="Data\ICurrentProblemListener.cs" />
-    <Compile Include="Data\ProblemDataSource.cs" />
+    <Compile Include="Data\IProblemSolutionListener.cs" />
+    <Compile Include="Data\DataManager.cs" />
+    <Compile Include="Data\SolutionManager.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

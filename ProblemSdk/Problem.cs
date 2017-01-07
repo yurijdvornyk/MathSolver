@@ -11,17 +11,21 @@ namespace ProblemSdk
         public virtual string Equation { get; protected set; }
         public ProblemData InputData { get; private set; }
         public ProblemResult Result { get; private set; }
+        public SolutionNotifier SolutionNotifier { get; private set; }
 
         public Problem()
         {
             InputData = new ProblemData();
+            SolutionNotifier = SolutionNotifier.GetInstance();
         }
 
         public void Solve()
         {
+            SolutionNotifier.NotifyStartProblemSolving(this);
             SetInputData();
             UpdateData();
             Result = Execute(); // TODO: Do it with Rx.
+            SolutionNotifier.NotifyProblemSolved(this);
         }
 
         public void CancelSolution()
@@ -37,6 +41,5 @@ namespace ProblemSdk
         public abstract void SetInputData();
         protected abstract ProblemResult Execute();
         protected abstract void UpdateData();
-
     }
 }

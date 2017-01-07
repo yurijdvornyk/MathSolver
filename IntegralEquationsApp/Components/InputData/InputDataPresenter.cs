@@ -12,7 +12,7 @@ namespace IntegralEquationsApp.Components.InputData
     {
         public InputDataPresenter(IInputDataView view) : base(view)
         {
-            ProblemDataSource.GetInstance().AddCurrentProblemListener(this);
+            DataManager.GetInstance().AddCurrentProblemListener(this);
         }
 
         public void OnCurrentProblemChanged(IProblem currentProblem)
