@@ -52,14 +52,24 @@ namespace IntegralEquationsApp.Components.Result.Data
                 dataGrid.CanUserDeleteRows = false;
                 dataGrid.CanUserResizeRows = false;
                 dataGrid.CanUserResizeColumns = false;
+                dataGrid.CanUserReorderColumns = false;
+                dataGrid.CanUserSortColumns = false;
+                dataGrid.Style = new Style(typeof(DataGrid));
+
                 dataGrid.SelectionUnit = DataGridSelectionUnit.Cell;
                 dataGrid.ItemsSource = dataTable.AsDataView();
 
                 TabItem tabItem = new TabItem();
+                tabItem.Style = new Style(typeof(TabItem));
+
                 tabItem.Header = getTabHeader(dataTable, tabItem);
                 tabItem.Content = dataGrid;
                 ResultTabs.Add(tabItem);
             });
+            if (ResultTabs.Count > 0)
+            {
+                tcResultsTabs.SelectedItem = ResultTabs.Last();
+            }
         }
 
         private string getTabHeader(ResultDataTable dataTable, TabItem tabItem)

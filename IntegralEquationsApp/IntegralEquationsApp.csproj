@@ -168,6 +168,7 @@
     </Compile>
     <Compile Include="Data\AppData.cs" />
     <Compile Include="Data\ICurrentProblemListener.cs" />
+    <Compile Include="Data\IProblemArgumentsUpdater.cs" />
     <Compile Include="Data\IProblemSolutionListener.cs" />
     <Compile Include="Data\DataManager.cs" />
     <Compile Include="Data\SolutionManager.cs" />

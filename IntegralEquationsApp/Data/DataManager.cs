@@ -1,5 +1,6 @@
 ﻿using ProblemSdk;
 using System.Collections.Generic;
+using System;
 
 namespace IntegralEquationsApp.Data
 {
@@ -8,6 +9,8 @@ namespace IntegralEquationsApp.Data
         private static DataManager problemDataManager;
 
         public List<IProblem> Problems { get; private set; }
+        public List<object> CurrentProblemArguments { get; set; }
+        public IProblemArgumentsUpdater ArgumentsUpdater { get; set; }
         public IProblem CurrentProblem
         {
             get
@@ -17,6 +20,7 @@ namespace IntegralEquationsApp.Data
             set
             {
                 currentProblem = value;
+                CurrentProblemArguments = new List<object>();
                 currentProblemListeners.ForEach(listener => listener.OnCurrentProblemChanged(currentProblem));
             }
         }
@@ -27,6 +31,7 @@ namespace IntegralEquationsApp.Data
         private DataManager()
         {
             Problems = new List<IProblem>();
+            CurrentProblemArguments = new List<object>();
             currentProblemListeners = new List<ICurrentProblemListener>();
         }
 
@@ -53,6 +58,15 @@ namespace IntegralEquationsApp.Data
             {
                 currentProblemListeners.Remove(listener);
             }
+        }
+
+        public void SolveProblem()
+        {
+            if (ArgumentsUpdater != null)
+            {
+                ArgumentsUpdater.UpdateArguments();
+            }
+            currentProblem.Solve(CurrentProblemArguments.ToArray());
         }
 
         internal void setProblems(List<IProblem> problems)

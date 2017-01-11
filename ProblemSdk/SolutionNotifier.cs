@@ -36,17 +36,17 @@ namespace ProblemSdk
             solutionListeners.Remove(listener);
         }
 
-        public void NotifyStartProblemSolving(IProblem problem)
+        internal void NotifyStartProblemSolving(IProblem problem)
         {
-            solutionListeners.ForEach(listener => listener.OnStartProblemSolving(problem));
+            solutionListeners.ForEach(listener => listener.OnStartSolving(problem));
         }
 
-        public void NotifySolvingProgressChanged(IProblem problem, double progress)
+        internal void NotifySolvingProgressChanged(IProblem problem, double progress)
         {
-            solutionListeners.ForEach(listener => listener.OnProblemProgressChanged(problem, progress));
+            solutionListeners.ForEach(listener => listener.OnProgressChanged(problem, progress));
         }
 
-        public void NotifyProblemSolved(IProblem problem)
+        internal void NotifyProblemSolved(IProblem problem)
         {
             solutionListeners.ForEach(listener => listener.OnProblemSolved(problem));
         }

@@ -26,18 +26,15 @@ namespace IntegralEquationsApp.Components.InputData
         private readonly int INPUT_DATA_ITEM_MARGIN = 5;
 
         private InputDataPresenter presenter;
-        private List<BaseItemView> itemViews;
 
         public InputDataView()
         {
             InitializeComponent();
-            itemViews = new List<BaseItemView>();
             presenter = new InputDataPresenter(this);
         }
 
         public void BuildLayoutForProblem(ProblemData problemData)
         {
-            itemViews.Clear();
             contentArea.Children.Clear();
             contentArea.ColumnDefinitions.Clear();
             contentArea.RowDefinitions.Clear();
@@ -71,16 +68,18 @@ namespace IntegralEquationsApp.Components.InputData
                 Grid.SetColumn(itemValue, 1);
                 Grid.SetRow(itemValue, contentArea.RowDefinitions.Count - 1);
                 contentArea.Children.Add(itemValue);
-                itemViews.Add(itemValue as BaseItemView);
             }
         }
 
         public List<object> GetItemValues()
         {
             List<object> result = new List<object>();
-            foreach (var itemView in itemViews)
+            for (int i = 0; i < contentArea.Children.Count; ++i)
             {
-                result.Add(itemView.GetItemValue());
+                if (contentArea.Children[i] is BaseItemView)
+                {
+                    result.Add((contentArea.Children[i] as BaseItemView).GetItemValue());
+                }
             }
             return result;
         }

@@ -10,8 +10,7 @@ namespace ProblemSdk
         string Equation { get; }
         ProblemData InputData { get; }
         ProblemResult Result { get; }
-        void SetInputData();
-        void Solve();
+        void Solve(params object[] args);
         void CancelSolution();
     }
 }

@@ -49,6 +49,11 @@ namespace ProblemSdk.Data
             return Value;
         }
 
+        public object GetDefaultValue()
+        {
+            return DefaultValue;
+        }
+
         public void SetValue(object value)
         {
             if (value is T)

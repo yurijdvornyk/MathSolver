@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArbitraryContour.cs" />
+    <Compile Include="Helper\IntegrationHelper.cs" />
     <Compile Include="Helper\LinearEquationHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RectilinearSegmentProblem.cs" />

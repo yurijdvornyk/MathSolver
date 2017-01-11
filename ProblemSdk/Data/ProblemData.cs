@@ -35,9 +35,20 @@ namespace ProblemSdk.Data
         public void GetValue<T>(int itemPosition, out T outerObject)
         {
             IDataItem dataItem = DataItems[itemPosition];
-            if (typeof(T).Equals(dataItem.GetValue().GetType()))
+            if (dataItem.GetValue() == null)
             {
-                outerObject = (T) dataItem.GetValue();
+                if (dataItem.GetDefaultValue() != null)
+                {
+                    outerObject = (T)dataItem.GetDefaultValue();
+                }
+                else
+                {
+                    outerObject = default(T);
+                }
+            }
+            else if (typeof(T).Equals(dataItem.GetValue().GetType()))
+            {
+                outerObject = (T)dataItem.GetValue();
             }
             else
             {

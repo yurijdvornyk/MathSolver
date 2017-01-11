@@ -1,13 +1,13 @@
 ﻿namespace ProblemSdk.Result
 {
-    public class Point
+    public class ProblemChartPoint
     {
         private const string POINT_STRING_FORMAT = "({0}; {1})";
 
         public double X { get; set; }
         public double Y { get; set; }
 
-        public Point(double x, double y)
+        public ProblemChartPoint(double x, double y)
         {
             X = x;
             Y = y;
@@ -15,9 +15,9 @@
 
         public override bool Equals(object obj)
         {
-            if (obj is Point)
+            if (obj is ProblemChartPoint)
             {
-                Point other = obj as Point;
+                ProblemChartPoint other = obj as ProblemChartPoint;
                 return X == other.X && Y == other.Y;
             }
             return false;

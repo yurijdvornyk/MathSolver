@@ -9,6 +9,7 @@ namespace ProblemSdk.Data
         bool IsSet();
         void Reset();
         object GetValue();
+        object GetDefaultValue();
         void SetValue(object value);
         bool IsValid();
     }

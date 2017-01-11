@@ -35,14 +35,12 @@ namespace IntegralEquationsApp.Data
             solutionListeners.Add(listener);
         }
 
-        public void OnProblemError(IProblem problem)
+        public void OnError(IProblem problem)
         {
-            throw new NotImplementedException();
         }
 
-        public void OnProblemProgressChanged(IProblem problem, double progress)
+        public void OnProgressChanged(IProblem problem, double progress)
         {
-            throw new NotImplementedException();
         }
 
         public void OnProblemSolved(IProblem problem)
@@ -50,7 +48,7 @@ namespace IntegralEquationsApp.Data
             solutionListeners.ForEach(listener => listener.OnProblemSolved(dataManager.CurrentProblem.Result));
         }
 
-        public void OnStartProblemSolving(IProblem problem)
+        public void OnStartSolving(IProblem problem)
         {
             solutionListeners.ForEach(listener => listener.OnStartProblemSolving(dataManager.CurrentProblem));
         }
@@ -62,9 +60,7 @@ namespace IntegralEquationsApp.Data
 
         public void StartProblemSolving()
         {
-            IProblem problem = dataManager.CurrentProblem;
-            solutionListeners.ForEach(listener => listener.OnStartProblemSolving(problem));
-            problem.Solve();
+            dataManager.SolveProblem();
         }
     }
 }

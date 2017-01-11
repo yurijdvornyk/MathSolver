@@ -12,11 +12,11 @@
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" 
                                                   VerticalScrollBarVisibility="Disabled" 
                                                   DockPanel.Dock="Bottom">
-                        <TabPanel x:Name="HeaderPanel"
-                                                  Panel.ZIndex ="1" 
-                                                  Margin="2,2,2,0"
-                                                  KeyboardNavigation.TabIndex="1"
-                                                  IsItemsHost="true" />
+                        <TabPanel x:Name="headerPanel"
+                                  Panel.ZIndex ="1" 
+                                  Margin="2,2,2,0"
+                                  KeyboardNavigation.TabIndex="1"
+                                  IsItemsHost="true" />
                     </ScrollViewer>
                     <ContentPresenter x:Name="PART_SelectedContentHost" 
                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"

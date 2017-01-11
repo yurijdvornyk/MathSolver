@@ -1,5 +1,4 @@
-﻿using System;
-using ProblemSdk.Data;
+﻿using ProblemSdk.Data;
 using ProblemSdk.Result;
 
 namespace ProblemSdk
@@ -19,12 +18,12 @@ namespace ProblemSdk
             SolutionNotifier = SolutionNotifier.GetInstance();
         }
 
-        public void Solve()
+        public void Solve(params object[] args)
         {
+            setInputData(args);
+            updateData();
             SolutionNotifier.NotifyStartProblemSolving(this);
-            SetInputData();
-            UpdateData();
-            Result = Execute(); // TODO: Do it with Rx.
+            Result = execute(); // TODO: Do it with Rx.
             SolutionNotifier.NotifyProblemSolved(this);
         }
 
@@ -38,8 +37,8 @@ namespace ProblemSdk
             return Name;
         }
 
-        public abstract void SetInputData();
-        protected abstract ProblemResult Execute();
-        protected abstract void UpdateData();
+        protected abstract void setInputData(params object[] args);
+        protected abstract ProblemResult execute();
+        protected abstract void updateData();
     }
 }

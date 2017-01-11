@@ -24,7 +24,7 @@ namespace Problems
         private readonly int B = 1;
         private int N;
         private double H;
-        private string variable;
+        private string Variable;
 
         public double[,] matrix;
 
@@ -35,12 +35,11 @@ namespace Problems
             InputData.AddSingleDataItemAtPosition(POSITION_N, "N", 100);
         }
 
-        public override void SetInputData()
+        protected override void setInputData(params object[] args)
         {
-            // TODO: Dummy data
-            InputData.SetValue(POSITION_G, "1");
-            InputData.SetValue(POSITION_VAR, "x");
-            InputData.SetValue(POSITION_N, 100);
+            InputData.SetValue(POSITION_G, args[0]);
+            InputData.SetValue(POSITION_VAR, args[1]);
+            InputData.SetValue(POSITION_N, args[2]);
         }
 
         private void fillMatrix()
@@ -74,9 +73,9 @@ namespace Problems
             matrix = M;
         }
 
-        public List<Point> GetTx()
+        public List<ProblemChartPoint> GetTx()
         {
-            List<Point> tx = new List<Point>();
+            List<ProblemChartPoint> tx = new List<ProblemChartPoint>();
             fillMatrix();
 
             double[] b = new double[N];
@@ -97,12 +96,12 @@ namespace Problems
                 double ti = A + i * H;
                 double ti1 = A + (i + 1) * H;
                 double x = (ti + ti1) / 2;
-                tx.Add(new Point(x, b[i]));
+                tx.Add(new ProblemChartPoint(x, b[i]));
             }
             return tx;
         }
 
-        protected override ProblemResult Execute()
+        protected override ProblemResult execute()
         {
             var result = GetTx();
             object[,] resultMatrix = new object[result.Count, 2];
@@ -117,11 +116,11 @@ namespace Problems
             return problemResult;
         }
 
-        protected override void UpdateData()
+        protected override void updateData()
         {
             InputData.GetValue(POSITION_N, out N);
-            InputData.GetValue(POSITION_VAR, out variable);
-            FunctionG = new HomericExpression(InputData.GetValue<string>(POSITION_G), variable);
+            InputData.GetValue(POSITION_VAR, out Variable);
+            FunctionG = new HomericExpression(InputData.GetValue<string>(POSITION_G), Variable);
             H = (double)(B - A) / N;
         }
     }
