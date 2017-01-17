@@ -1,10 +1,6 @@
 ﻿using Problems;
 using ProblemSdk;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IntegralEquationsApp.Data
 {
@@ -12,7 +8,10 @@ namespace IntegralEquationsApp.Data
     {
         private static readonly List<IProblem> problems = new List<IProblem>()
         {
-            new RectilinearSegment()
+            new RectilinearSegment(),
+            new ParameterizedRectilinearSegment(),
+            new ArbitraryContour(),
+            new LinearSingularEquation()
         };
 
         public static void Initialize()

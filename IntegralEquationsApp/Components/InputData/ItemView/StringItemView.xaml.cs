@@ -5,9 +5,13 @@
     /// </summary>
     public partial class StringItemView
     {
-        public StringItemView()
+        public StringItemView(object defaultValue)
         {
             InitializeComponent();
+            if (defaultValue != null)
+            {
+                SetItemValue(defaultValue);
+            }
         }
 
         public override object GetItemValue()

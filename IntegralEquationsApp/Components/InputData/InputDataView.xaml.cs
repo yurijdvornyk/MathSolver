@@ -93,22 +93,31 @@ namespace IntegralEquationsApp.Components.InputData
 
         private BaseItemView getItemValueView(IDataItem item)
         {
+            object defaultValue = null;
+            if (item.GetValue() != null)
+            {
+                defaultValue = item.GetValue();
+            }
+            else if (item.GetDefaultValue() != null)
+            {
+                defaultValue = item.GetDefaultValue();
+            }
             Type itemType = item.GetDataItemType();
             if (itemType == typeof(int))
             {
-                return new NumericIntegerItemView();
+                return new NumericIntegerItemView(defaultValue);
             }
             else if (itemType == typeof(double))
             {
-                return new NumericDoubleItemView();
+                return new NumericDoubleItemView(defaultValue);
             }
             else if (itemType == typeof(bool))
             {
-                return new BooleanItemView();
+                return new BooleanItemView(defaultValue);
             }
             else if (itemType == typeof(string))
             {
-                return new StringItemView();
+                return new StringItemView(defaultValue);
             }
             else
             {

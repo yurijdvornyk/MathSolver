@@ -20,9 +20,13 @@ namespace IntegralEquationsApp.Components.InputData.ItemView
     /// </summary>
     public partial class BooleanItemView
     {
-        public BooleanItemView()
+        public BooleanItemView(object defaultValue)
         {
             InitializeComponent();
+            if (defaultValue != null)
+            {
+                SetItemValue(defaultValue);
+            }
         }
 
         public override object GetItemValue()

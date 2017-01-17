@@ -37,7 +37,14 @@ namespace ProblemSdk
             return Name;
         }
 
-        protected abstract void setInputData(params object[] args);
+        protected virtual void setInputData(params object[] args)
+        {
+            for (int i = 0; i < args.Length; ++i)
+            {
+                InputData.SetValue(i, args[i]);
+            }
+        }
+
         protected abstract ProblemResult execute();
         protected abstract void updateData();
     }

@@ -46,8 +46,10 @@
     <Compile Include="ArbitraryContour.cs" />
     <Compile Include="Helper\IntegrationHelper.cs" />
     <Compile Include="Helper\LinearEquationHelper.cs" />
+    <Compile Include="LinearSingularEquation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RectilinearSegment.cs" />
+    <Compile Include="ParameterizedRectilinearSegment.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ProblemSdk\ProblemSdk.csproj">

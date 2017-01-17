@@ -20,9 +20,14 @@ namespace IntegralEquationsApp.Components.InputData.ItemView
     /// </summary>
     public partial class NumericDoubleItemView
     {
-        public NumericDoubleItemView()
+
+        public NumericDoubleItemView(object defaultValue)
         {
             InitializeComponent();
+            if (defaultValue != null)
+            {
+                SetItemValue(defaultValue);
+            }
         }
 
         public override object GetItemValue()

@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Problems
 {
-    public class ArbitraryContour : Problem
+    public class ParameterizedRectilinearSegment : Problem
     {
         private readonly int POSITION_G = 0;
         private readonly int POSITION_PHI1 = 1;
@@ -19,9 +19,6 @@ namespace Problems
         private readonly int POSITION_A = 6;
         private readonly int POSITION_B = 7;
         private readonly int POSITION_N = 8;
-
-        public override string Name { get { return "Integral equation with logarithmic singularity for arbitrary open-circuited parameterized contour"; } }
-        public override string Equation { get { return @"K\tau=\frac{1}{2\pi}\int\limits_{\alpha}^{\beta}{\tau(t)\ln{\left(\frac{1}{\sqrt{(\varphi_1(t)-\varphi_1(s))^2+(\varphi_2(t)-\varphi_2(s))^2}}\right)}F(t)}dt=g(s)"; } }
 
         private HomericExpression FunctionG;
         private HomericExpression Phi1;
@@ -35,16 +32,14 @@ namespace Problems
         private double H { get { return (B - A) / N; } }
         private string variable;
 
-        #region Fields
+        public override string Name { get { return "Integral equation with logarithmic singularity for rectilinear parameterized segment"; } }
+
+        public override string Equation { get { return @"K\tau=\frac{1}{2\pi}\int\limits_{\alpha}^{\beta}{\tau(t)\ln{\frac{1}{|t-s|}}}dt=g(s), \qquad s\in(\alpha, \beta)"; } }
 
         private SortedDictionary<double, double> Tx = new SortedDictionary<double, double>();
         public double[,] matrix;
 
-        #endregion
-
-        #region Constructor
-
-        public ArbitraryContour() : base()
+        public ParameterizedRectilinearSegment() : base()
         {
             InputData.AddSingleDataItemAtPosition<string>(POSITION_G, "g");
             InputData.AddSingleDataItemAtPosition(POSITION_PHI1, "Phi1", "t^2");
@@ -57,46 +52,34 @@ namespace Problems
             InputData.AddSingleDataItemAtPosition(POSITION_N, "N", 100);
         }
 
-        #endregion
-
-        #region Methods
-
-        private double jacobian(double t)
+        private void fillParameterizedMatrix()
         {
-            double dt1 = Phi1Der.Calculate(t);
-            double dt2 = Phi2Der.Calculate(t);
-            double jacobian = Math.Sqrt(dt1 * dt1 + dt2 * dt2);
-            return jacobian;
-        }
-
-        private void fillMatrix()
-        {
-            double[,] M = new double[N, N]; // M: N x N
+            double[,] M = new double[N, N];
 
             for (int i = 0; i < N; ++i)
             {
                 double ti = A + i * H;
                 double ti1 = A + (i + 1) * H;
-
                 for (int j = 0; j < N; ++j)
                 {
                     double tj = A + j * H;
                     double tj1 = A + (j + 1) * H;
                     double t = (tj + tj1) / 2;
 
-                    if (i != j)
+                    if (t > ti1 || t < ti)
                     {
-                        string UnderLog = "1/(( ((" + Phi1.Expression + ")-(" + Phi1.Calculate(t) + "))^2 + ((" + Phi2.Expression + ")-(" + Phi2.Calculate(t) + "))^2 )^0.5)";
-                        string jacobianHere = "( (" + Phi1Der.Expression + ")^2 + (" + Phi2Der.Expression + ")^2 )^0.5";
-                        string toIntegrate = "(" + jacobianHere + ") * Ln(" + UnderLog + ")";
-                        double integral = IntegrationHelper.GaussMethod(toIntegrate, ti, ti1, variable);
-                        M[i, j] = (1 / (2 * Math.PI)) * integral;
+                        string UnderLog = "((" + Phi1.Expression + ") - (" + Phi1.Calculate(t) + "))^2"
+                            + " + ((" + Phi2.Expression + ") - (" + Phi2.Calculate(t) + "))^2";
+
+                        double dt1 = Phi1Der.Calculate(t);
+                        double dt2 = Phi2Der.Calculate(t);
+                        double jacobian = Math.Sqrt(dt1 * dt1 + dt2 * dt2);
+                        string functionStr = "(-0.5/(2*pi)) * Ln(" + UnderLog + ") * (" + jacobian.ToString() + ")";
+                        M[i, j] = IntegrationHelper.GaussMethod(functionStr, ti, ti1, variable);
                     }
                     else
                     {
-                        double middle = (ti + ti1) / 2;
-                        M[i, j] = (1 / (2 * Math.PI)) * jacobian(middle) * (ti1 - ti + ti * Math.Log(t - ti) - ti1 * Math.Log(ti1 - t) + t * Math.Log((ti1 - t) / (t - ti)));
-                        M[i, j] += (1 / (2 * Math.PI)) * jacobian(middle) * Math.Log(jacobian(middle));
+                        M[i, j] = 1;
                     }
                 }
             }
@@ -106,7 +89,8 @@ namespace Problems
         public SortedDictionary<double, double> GetTx()
         {
             Tx.Clear();
-            fillMatrix();
+
+            fillParameterizedMatrix();
 
             double[] b = new double[N];
             // Fill b in Ac=b
@@ -115,7 +99,23 @@ namespace Problems
                 double ti = A + i * H;
                 double ti1 = A + (i + 1) * H;
                 double t = (ti + ti1) / 2;
-                b[i] = jacobian(t);
+
+                double dt1;
+                double dt2;
+
+                try
+                {
+                    dt1 = Phi1Der.Calculate(t);
+                    dt2 = Phi2Der.Calculate(t);
+                }
+                catch
+                {
+                    throw new ArgumentException("Phi derivatives are in wrong format!");
+                }
+
+                string jacobianStr = "(" + (dt1 * dt1 + dt2 * dt2).ToString() + ")^0.5";
+                HomericExpression jacobian = new HomericExpression(jacobianStr, variable);
+                b[i] = jacobian.Calculate(t);
             }
 
             b = LinearEquationHelper.SolveWithGaussMethod(matrix, b);
@@ -128,6 +128,7 @@ namespace Problems
                 double x = (ti + ti1) / 2;
                 Tx.Add(x, b[i]);
             }
+
             return Tx;
         }
 
@@ -140,7 +141,7 @@ namespace Problems
             {
                 matrix[i, 0] = resultRaw.Keys.ToList()[i];
                 matrix[i, 1] = resultRaw.Values.ToList()[i];
-                chartPoints.Add(new ProblemChartPoint((double) matrix[i, 0], (double) matrix[i, 1]));
+                chartPoints.Add(new ProblemChartPoint((double)matrix[i, 0], (double)matrix[i, 1]));
             }
             ProblemResult problemResult = new ProblemResult("Result", "t", "tau(t)");
             problemResult.ResultData.Items.Add(ResultDataItem.Builder.Create().ColumnTitles("t", "tau(t)").SetMatrix(matrix).Build());
@@ -160,7 +161,5 @@ namespace Problems
             InputData.GetValue(POSITION_B, out B);
             InputData.GetValue(POSITION_N, out N);
         }
-
-        #endregion
     }
 }
