@@ -30,9 +30,9 @@ namespace Problems
 
         public RectilinearSegment() : base()
         {
-            InputData.AddSingleDataItemAtPosition<string>(POSITION_G, "g");
-            InputData.AddSingleDataItemAtPosition(POSITION_VAR, "Variable", "x");
-            InputData.AddSingleDataItemAtPosition(POSITION_N, "N", 100);
+            InputData.AddDataItemAtPosition<string>(POSITION_G, "g");
+            InputData.AddDataItemAtPosition(POSITION_VAR, "Variable", "x");
+            InputData.AddDataItemAtPosition(POSITION_N, "N", 100);
         }
 
         protected override void setInputData(params object[] args)

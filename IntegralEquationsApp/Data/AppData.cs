@@ -11,6 +11,8 @@ namespace IntegralEquationsApp.Data
             new RectilinearSegment(),
             new ParameterizedRectilinearSegment(),
             new ArbitraryContour(),
+            new ArbitraryContourAbsCase(),
+            new ArbitraryContourExtendedCase(),
             new LinearSingularEquation()
         };
 

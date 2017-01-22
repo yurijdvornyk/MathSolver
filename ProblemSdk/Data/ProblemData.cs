@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProblemSdk.Error;
+using System;
 using System.Collections.Generic;
 
 namespace ProblemSdk.Data
@@ -29,75 +30,44 @@ namespace ProblemSdk.Data
 
         public T GetValue<T>(int itemPosition)
         {
-            return (T) DataItems[itemPosition].GetValue();
+            try
+            {
+                return (T)DataItems[itemPosition].GetValue();
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throwDataItemTypeMismatchException<T>(itemPosition, ex);
+            }
+            return default(T);
         }
 
         public void GetValue<T>(int itemPosition, out T outerObject)
         {
-            IDataItem dataItem = DataItems[itemPosition];
-            if (dataItem.GetValue() == null)
-            {
-                if (dataItem.GetDefaultValue() != null)
-                {
-                    outerObject = (T)dataItem.GetDefaultValue();
-                }
-                else
-                {
-                    outerObject = default(T);
-                }
-            }
-            else if (typeof(T).Equals(dataItem.GetValue().GetType()))
-            {
-                outerObject = (T)dataItem.GetValue();
-            }
-            else
-            {
-                throw new ArgumentException(string.Format("Type mismatch! Type of {0} is {1}.", dataItem.Name, dataItem.GetType().Name));
-            }
+            outerObject = GetValue<T>(itemPosition);
         }
 
-        public void AddSingleDataItem<T>(
+        public void AddDataItem<T>(
             string name, 
             T defaultValue = default(T), 
             bool isRequired = true, 
-            List<T> valueOptions = null,
             Predicate<T> validationPredicate = null)
         {
-            DataItems.Add(new SingleDataItem<T>(name, defaultValue, isRequired, valueOptions, validationPredicate));
+            DataItems.Add(new DataItem<T>(name, defaultValue, isRequired, validationPredicate));
         }
 
-        public void AddMultipleDataItem<T>(
-            string name, 
-            List<T> defaultValues = default(List<T>), 
-            bool isRequired = true, 
-            List<T> valueOptions = null,
-            Predicate<List<T>> validationPredicate = null)
-        {
-            DataItems.Add(new MultipleDataItem<T>(name, defaultValues, isRequired, valueOptions, validationPredicate));
-        }
-
-        public void AddSingleDataItemAtPosition<T>(
+        public void AddDataItemAtPosition<T>(
             int position,
             string name,
             T defaultValue = default(T),
             bool isRequired = true,
-            List<T> valueOptions = null,
             Predicate<T> validationPredicate = null)
         {
             addEmptyItemsIfNeed(position);
-            DataItems.Insert(position, new SingleDataItem<T>(name, defaultValue, isRequired, valueOptions, validationPredicate));
-        }
-
-        public void AddMultipleDataItemAtPosition<T>(
-            int position,
-            string name,
-            List<T> defaultValues = default(List<T>),
-            bool isRequired = true,
-            List<T> valueOptions = null,
-            Predicate<List<T>> validationPredicate = null)
-        {
-            addEmptyItemsIfNeed(position);
-            DataItems.Insert(position, new MultipleDataItem<T>(name, defaultValues, isRequired, valueOptions, validationPredicate));
+            DataItems.Insert(position, new DataItem<T>(name, defaultValue, isRequired, validationPredicate));
         }
 
         private void addEmptyItemsIfNeed(int position)
@@ -109,6 +79,13 @@ namespace ProblemSdk.Data
                     DataItems.Add(null);
                 }
             }
+        }
+
+        private void throwDataItemTypeMismatchException<T>(int itemPosition, Exception originalException)
+        {
+            string validType = typeof(T).Name;
+            string invalidType = DataItems[itemPosition].GetDataItemType().Name;
+            throw new DataItemTypeMismatchException(DataItems[itemPosition].Name, typeof(T).Name, invalidType, originalException.Message);
         }
     }
 }

@@ -34,23 +34,13 @@ namespace Problems
 
         public LinearSingularEquation() : base()
         {
-            //InputData = new List<ProblemDataItem>()
-            //{
-            //    new ProblemDataItem("g", ProblemDataItemType.OneOfMany, 0, true, new List<object> { 0, 1 }),
-            //    new ProblemDataItem("Phi1", ProblemDataItemType.Function),
-            //    new ProblemDataItem("Phi2", ProblemDataItemType.Function),
-            //    new ProblemDataItem("Variable", ProblemDataItemType.String),
-            //    new ProblemDataItem("a", ProblemDataItemType.Double),
-            //    new ProblemDataItem("b", ProblemDataItemType.Double),
-            //    new ProblemDataItem("N", ProblemDataItemType.UnsignedInt)
-            //};
-            InputData.AddSingleDataItemAtPosition(POSITION_G, "g", 0, true, new List<int> { 0, 1 });
-            InputData.AddSingleDataItemAtPosition(POSITION_PHI1, "Phi1", "t");
-            InputData.AddSingleDataItemAtPosition(POSITION_PHI2, "Phi2", "1");
-            InputData.AddSingleDataItemAtPosition(POSITION_VAR, "Variable", "t");
-            InputData.AddSingleDataItemAtPosition<double>(POSITION_A, "a", -1);
-            InputData.AddSingleDataItemAtPosition(POSITION_B, "b", 1);
-            InputData.AddSingleDataItemAtPosition(POSITION_N, "N", 100);
+            InputData.AddDataItemAtPosition(POSITION_G, "g", 0, true, x => x == 0 || x == 1);
+            InputData.AddDataItemAtPosition(POSITION_PHI1, "Phi1", "t");
+            InputData.AddDataItemAtPosition(POSITION_PHI2, "Phi2", "1");
+            InputData.AddDataItemAtPosition(POSITION_VAR, "Variable", "t");
+            InputData.AddDataItemAtPosition<double>(POSITION_A, "a", -1);
+            InputData.AddDataItemAtPosition(POSITION_B, "b", 1);
+            InputData.AddDataItemAtPosition(POSITION_N, "N", 100);
         }
 
         private double[,] GetMatrix()

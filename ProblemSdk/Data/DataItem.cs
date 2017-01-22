@@ -8,14 +8,13 @@ namespace ProblemSdk.Data
     /// </summary>
     /// <typeparam name="V">Value type (string, number, etc.)</typeparam>
     /// <typeparam name="T">Item Type (object or the list of objects)</typeparam>
-    public abstract class DataItem<V, T> : IDataItem
+    public /*abstract*/ class DataItem<T> : IDataItem
     {
         private const string INVALID_CAST_EXCEPTION_MESSAGE = "Cannot cast given object to {0}";
 
         public string Name { get; set; }
         public T DefaultValue { get; set; }
         public T Value { get; set; }
-        public List<V> ValueOptions { get; set; }
         public bool IsRequired { get; set; }
         public Predicate<T> ValidationPredicate { get; set; }
 
@@ -23,12 +22,10 @@ namespace ProblemSdk.Data
             string name, 
             T defaultValue = default(T),
             bool isRequired = true, 
-            List<V> valueOptions = null, 
             Predicate<T> validationPredicate = null)
         {
             Name = name;
             DefaultValue = defaultValue;
-            ValueOptions = valueOptions != null ? valueOptions : new List<V>();
             IsRequired = isRequired;
             Value = default(T);
             ValidationPredicate = validationPredicate;
@@ -71,8 +68,14 @@ namespace ProblemSdk.Data
             return ValidationPredicate.Invoke(Value);
         }
 
-        public abstract bool IsSet();
+        public bool IsSet()
+        {
+            return IsRequired && DefaultValue == null && Value == null;
+        }
 
-        public abstract void Reset();
+        public void Reset()
+        {
+            Value = DefaultValue;
+        }
     }
 }

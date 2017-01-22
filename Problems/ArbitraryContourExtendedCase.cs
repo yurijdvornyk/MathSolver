@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Problems
 {
-    public class ArbitraryContour : Problem
+    public class ArbitraryContourExtendedCase : Problem
     {
         private readonly int POSITION_G = 0;
         private readonly int POSITION_PHI1 = 1;
@@ -20,25 +20,23 @@ namespace Problems
         private readonly int POSITION_B = 7;
         private readonly int POSITION_N = 8;
 
-        public override string Name { get { return "Integral equation with logarithmic singularity for arbitrary open-circuited parameterized contour"; } }
-        public override string Equation { get { return @"K\tau=\frac{1}{2\pi}\int\limits_{\alpha}^{\beta}{\tau(t)\ln{\left(\frac{1}{\sqrt{(\varphi_1(t)-\varphi_1(s))^2+(\varphi_2(t)-\varphi_2(s))^2}}\right)}F(t)}dt=g(s)"; } }
-
         private HomericExpression FunctionG;
         private HomericExpression Phi1;
         private HomericExpression Phi2;
         private HomericExpression Phi1Der;
         private HomericExpression Phi2Der;
-
         private double A;
         private double B;
         private int N;
         private double H { get { return (B - A) / N; } }
         private string variable;
-
         private SortedDictionary<double, double> Tx = new SortedDictionary<double, double>();
-        public double[,] matrix;
+        private double[,] matrix;
 
-        public ArbitraryContour() : base()
+        public override string Name { get { return "Integral equation with logarithmic singularity for arbitrary open-circuited parameterized contour - extended form"; } }
+        public override string Equation { get { return @"K\tau\equiv\frac{1}{2\pi}\int\limits_a^b{\ln\frac{1}{|t-s|}\tau(t)}dt + \frac{1}{2\pi}\int\limits_a^b{W(t,s)\tau(t)}dt=g(s)"; } }
+
+        public ArbitraryContourExtendedCase() : base()
         {
             InputData.AddDataItemAtPosition<string>(POSITION_G, "g");
             InputData.AddDataItemAtPosition(POSITION_PHI1, "Phi1", "t^2");
@@ -61,7 +59,7 @@ namespace Problems
 
         private void fillMatrix()
         {
-            double[,] M = new double[N, N]; // M: N x N
+            double[,] M = new double[N, N];
 
             for (int i = 0; i < N; ++i)
             {
@@ -81,12 +79,23 @@ namespace Problems
                         string toIntegrate = "(" + jacobianHere + ") * Ln(" + UnderLog + ")";
                         double integral = IntegrationHelper.GaussMethod(toIntegrate, ti, ti1, variable);
                         M[i, j] = (1 / (2 * Math.PI)) * integral;
+
+                        string UnderLog2 = "((" + Phi1.Expression + ") - (" + Phi1.Calculate(t) + "))^2"
+                            + " + ((" + Phi2.Expression + ") - (" + Phi2.Calculate(t) + "))^2";
+                        double dt1 = Phi1Der.Calculate(t);
+                        double dt2 = Phi2Der.Calculate(t);
+                        double jacobian = Math.Sqrt(dt1 * dt1 + dt2 * dt2);
+                        string functionStr = "(-0.5/(2*pi)) * Ln(" + UnderLog2 + ") * (" + jacobian.ToString() + ")";
+
+                        M[i, j] += IntegrationHelper.GaussMethod(functionStr, ti, ti1, variable);
                     }
-                    else
+                    if (i == j)
                     {
                         double middle = (ti + ti1) / 2;
                         M[i, j] = (1 / (2 * Math.PI)) * jacobian(middle) * (ti1 - ti + ti * Math.Log(t - ti) - ti1 * Math.Log(ti1 - t) + t * Math.Log((ti1 - t) / (t - ti)));
                         M[i, j] += (1 / (2 * Math.PI)) * jacobian(middle) * Math.Log(jacobian(middle));
+
+                        M[i, j] += 1;
                     }
                 }
             }
@@ -97,7 +106,6 @@ namespace Problems
         {
             Tx.Clear();
             fillMatrix();
-
             double[] b = new double[N];
             // Fill b in Ac=b
             for (int i = 0; i < N; ++i)
@@ -130,7 +138,7 @@ namespace Problems
             {
                 matrix[i, 0] = resultRaw.Keys.ToList()[i];
                 matrix[i, 1] = resultRaw.Values.ToList()[i];
-                chartPoints.Add(new ProblemChartPoint((double) matrix[i, 0], (double) matrix[i, 1]));
+                chartPoints.Add(new ProblemChartPoint((double)matrix[i, 0], (double)matrix[i, 1]));
             }
             ProblemResult problemResult = new ProblemResult("Result", "t", "tau(t)");
             problemResult.ResultData.Items.Add(ResultDataItem.Builder.Create().ColumnTitles("t", "tau(t)").SetMatrix(matrix).Build());

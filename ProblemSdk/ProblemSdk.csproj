@@ -43,8 +43,10 @@
     <Compile Include="Data\DataItem.cs" />
     <Compile Include="Data\IDataItem.cs" />
     <Compile Include="Data\ProblemData.cs" />
-    <Compile Include="Data\MultipleDataItem.cs" />
-    <Compile Include="Data\SingleDataItem.cs" />
+    <Compile Include="Error\DataItemTypeMismatchException.cs" />
+    <Compile Include="Error\InputDataException.cs" />
+    <Compile Include="Error\Messages.cs" />
+    <Compile Include="Error\ProblemException.cs" />
     <Compile Include="IProblem.cs" />
     <Compile Include="ISolutionListener.cs" />
     <Compile Include="Problem.cs" />
