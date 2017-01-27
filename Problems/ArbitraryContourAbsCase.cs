@@ -45,11 +45,11 @@ namespace Problems
 
         public ArbitraryContourAbsCase() : base()
         {
-            InputData.AddDataItemAtPosition<string>(POSITION_G, "g");
-            InputData.AddDataItemAtPosition(POSITION_VAR, "Variable", "t");
-            InputData.AddDataItemAtPosition<double>(POSITION_A, "a", 0);
-            InputData.AddDataItemAtPosition(POSITION_B, "b", 6.28);
-            InputData.AddDataItemAtPosition(POSITION_N, "N", 100);
+            InputData.AddDataItemAt<string>(POSITION_G, "g");
+            InputData.AddDataItemAt(POSITION_VAR, "Variable", "t");
+            InputData.AddDataItemAt<double>(POSITION_A, "a", 0);
+            InputData.AddDataItemAt(POSITION_B, "b", 6.28);
+            InputData.AddDataItemAt(POSITION_N, "N", 100);
 
             L1x1Der = new HomericExpression("1");
             L1x2Der = new HomericExpression("-1");

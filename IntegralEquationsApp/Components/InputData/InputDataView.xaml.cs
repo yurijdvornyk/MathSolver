@@ -94,14 +94,14 @@ namespace IntegralEquationsApp.Components.InputData
         private BaseItemView getItemValueView(IDataItem item)
         {
             object defaultValue = null;
-            if (item.GetValue() != null)
-            {
-                defaultValue = item.GetValue();
-            }
-            else if (item.GetDefaultValue() != null)
+            if (item.GetDefaultValue() != null)
             {
                 defaultValue = item.GetDefaultValue();
             }
+            else if (item.GetValue() != null)
+            {
+                defaultValue = item.GetValue();
+            } 
             Type itemType = item.GetDataItemType();
             if (itemType == typeof(int))
             {

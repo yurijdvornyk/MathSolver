@@ -8,11 +8,12 @@ namespace ProblemSdk.Data
     /// </summary>
     /// <typeparam name="V">Value type (string, number, etc.)</typeparam>
     /// <typeparam name="T">Item Type (object or the list of objects)</typeparam>
-    public /*abstract*/ class DataItem<T> : IDataItem
+    public class DataItem<T> : IDataItem
     {
         private const string INVALID_CAST_EXCEPTION_MESSAGE = "Cannot cast given object to {0}";
 
         public string Name { get; set; }
+        public string Hint { get; set; }
         public T DefaultValue { get; set; }
         public T Value { get; set; }
         public bool IsRequired { get; set; }

@@ -41,15 +41,15 @@ namespace Problems
 
         public ParameterizedRectilinearSegment() : base()
         {
-            InputData.AddDataItemAtPosition<string>(POSITION_G, "g");
-            InputData.AddDataItemAtPosition(POSITION_PHI1, "Phi1", "t^2");
-            InputData.AddDataItemAtPosition(POSITION_PHI2, "Phi2", "t");
-            InputData.AddDataItemAtPosition(POSITION_PHI1_DER, "Phi1'", "2*t");
-            InputData.AddDataItemAtPosition(POSITION_PHI2_DER, "Phi2'", "1");
-            InputData.AddDataItemAtPosition(POSITION_VAR, "Variable", "t");
-            InputData.AddDataItemAtPosition<double>(POSITION_A, "a", 0);
-            InputData.AddDataItemAtPosition(POSITION_B, "b", 6.28);
-            InputData.AddDataItemAtPosition(POSITION_N, "N", 100);
+            InputData.AddDataItemAt<string>(POSITION_G, "g");
+            InputData.AddDataItemAt(POSITION_PHI1, "Phi1", "t^2");
+            InputData.AddDataItemAt(POSITION_PHI2, "Phi2", "t");
+            InputData.AddDataItemAt(POSITION_PHI1_DER, "Phi1'", "2*t");
+            InputData.AddDataItemAt(POSITION_PHI2_DER, "Phi2'", "1");
+            InputData.AddDataItemAt(POSITION_VAR, "Variable", "t");
+            InputData.AddDataItemAt<double>(POSITION_A, "a", 0);
+            InputData.AddDataItemAt(POSITION_B, "b", 6.28);
+            InputData.AddDataItemAt(POSITION_N, "N", 100);
         }
 
         private void fillParameterizedMatrix()

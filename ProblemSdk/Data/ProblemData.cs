@@ -50,6 +50,11 @@ namespace ProblemSdk.Data
             outerObject = GetValue<T>(itemPosition);
         }
 
+        public void AddDataItem(IDataItem dataItem)
+        {
+            DataItems.Add(dataItem);
+        }
+
         public void AddDataItem<T>(
             string name, 
             T defaultValue = default(T), 
@@ -59,15 +64,20 @@ namespace ProblemSdk.Data
             DataItems.Add(new DataItem<T>(name, defaultValue, isRequired, validationPredicate));
         }
 
-        public void AddDataItemAtPosition<T>(
+        public void AddDataItemAt(int position, IDataItem dataItem)
+        {
+            addEmptyItemsIfNeed(position);
+            DataItems.Insert(position, dataItem);
+        }
+
+        public void AddDataItemAt<T>(
             int position,
             string name,
             T defaultValue = default(T),
             bool isRequired = true,
             Predicate<T> validationPredicate = null)
         {
-            addEmptyItemsIfNeed(position);
-            DataItems.Insert(position, new DataItem<T>(name, defaultValue, isRequired, validationPredicate));
+            AddDataItemAt(position, new DataItem<T>(name, defaultValue, isRequired, validationPredicate));
         }
 
         private void addEmptyItemsIfNeed(int position)

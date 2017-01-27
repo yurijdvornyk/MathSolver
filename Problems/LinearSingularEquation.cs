@@ -34,13 +34,13 @@ namespace Problems
 
         public LinearSingularEquation() : base()
         {
-            InputData.AddDataItemAtPosition(POSITION_G, "g", 0, true, x => x == 0 || x == 1);
-            InputData.AddDataItemAtPosition(POSITION_PHI1, "Phi1", "t");
-            InputData.AddDataItemAtPosition(POSITION_PHI2, "Phi2", "1");
-            InputData.AddDataItemAtPosition(POSITION_VAR, "Variable", "t");
-            InputData.AddDataItemAtPosition<double>(POSITION_A, "a", -1);
-            InputData.AddDataItemAtPosition(POSITION_B, "b", 1);
-            InputData.AddDataItemAtPosition(POSITION_N, "N", 100);
+            InputData.AddDataItemAt(POSITION_G, "g", 0, true, x => x == 0 || x == 1);
+            InputData.AddDataItemAt(POSITION_PHI1, "Phi1", "t");
+            InputData.AddDataItemAt(POSITION_PHI2, "Phi2", "1");
+            InputData.AddDataItemAt(POSITION_VAR, "Variable", "t");
+            InputData.AddDataItemAt<double>(POSITION_A, "a", -1);
+            InputData.AddDataItemAt(POSITION_B, "b", 1);
+            InputData.AddDataItemAt(POSITION_N, "N", 100);
         }
 
         private double[,] GetMatrix()

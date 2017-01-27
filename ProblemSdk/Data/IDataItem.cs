@@ -5,6 +5,7 @@ namespace ProblemSdk.Data
     public interface IDataItem
     {
         string Name { get; }
+        string Hint { get; }
         Type GetDataItemType();
         bool IsSet();
         void Reset();

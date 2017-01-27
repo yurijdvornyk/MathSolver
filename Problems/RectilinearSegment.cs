@@ -1,6 +1,7 @@
 ﻿using HomericLibrary;
 using Problems.Helper;
 using ProblemSdk;
+using ProblemSdk.Data;
 using ProblemSdk.Result;
 using System;
 using System.Collections.Generic;
@@ -30,9 +31,12 @@ namespace Problems
 
         public RectilinearSegment() : base()
         {
-            InputData.AddDataItemAtPosition<string>(POSITION_G, "g");
-            InputData.AddDataItemAtPosition(POSITION_VAR, "Variable", "x");
-            InputData.AddDataItemAtPosition(POSITION_N, "N", 100);
+            InputData.AddDataItemAt(POSITION_G, 
+                DataItemBuilder<string>.Create().Name("g").Build());
+            InputData.AddDataItemAt(POSITION_VAR, 
+                DataItemBuilder<string>.Create().Name("Variable").DefValue("x").Build());
+            InputData.AddDataItemAt(POSITION_N, 
+                DataItemBuilder<int>.Create().Name("N").DefValue(100).Build());
         }
 
         protected override void setInputData(params object[] args)

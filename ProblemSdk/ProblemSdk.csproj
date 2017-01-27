@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\DataItem.cs" />
+    <Compile Include="Data\DataItemBuilder.cs" />
     <Compile Include="Data\IDataItem.cs" />
     <Compile Include="Data\ProblemData.cs" />
     <Compile Include="Error\DataItemTypeMismatchException.cs" />
