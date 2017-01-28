@@ -1,9 +1,4 @@
 ﻿using IntegralEquationsApp.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ProblemSdk;
 using ProblemSdk.Result;
 
@@ -20,7 +15,7 @@ namespace IntegralEquationsApp.Components.InputData
 
         public void OnCurrentProblemChanged(IProblem currentProblem)
         {
-            view.BuildLayoutForProblem(currentProblem != null ? currentProblem.InputData : null);
+            view.BuildLayoutForProblem(currentProblem);
         }
 
         public void OnStartProblemSolving(IProblem problem) { }

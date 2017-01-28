@@ -1,24 +1,22 @@
 ﻿using HomericLibrary;
 using Problems.Helper;
+using Problems.Utils;
 using ProblemSdk;
 using ProblemSdk.Data;
 using ProblemSdk.Result;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Problems
 {
+    /// <summary>
+    /// K\tau=\frac{1}{2\pi}\int\limits_{-1}^{1}{\tau(y)\ln{\frac{1}{|x-y|}}}dy=g(x), \qquad x\in(-1, 1)
+    /// </summary>
     public class RectilinearSegment : Problem
     {
         private const int POSITION_G = 0;
         private const int POSITION_VAR = 1;
         private const int POSITION_N = 2;
-
-        public override string Name { get { return "Integral equation with logarithmic singularity for rectilinear segment"; } }
-        public override string Equation { get { return @"K\tau=\frac{1}{2\pi}\int\limits_{-1}^{1}{\tau(y)\ln{\frac{1}{|x-y|}}}dy=g(x)"; } }
 
         private HomericExpression FunctionG;
         private readonly int A = -1;
@@ -31,6 +29,8 @@ namespace Problems
 
         public RectilinearSegment() : base()
         {
+            Name = "Integral equation with logarithmic singularity for rectilinear segment";
+            Equation = EquationUtils.GetPathForCurrentProblemEquation(this);
             InputData.AddDataItemAt(POSITION_G, 
                 DataItemBuilder<string>.Create().Name("g").Build());
             InputData.AddDataItemAt(POSITION_VAR, 

@@ -7,6 +7,7 @@
              mc:Ignorable="d">
     <Grid>
         <ComboBox Name="comboBox"
+                  ToolTip="{Binding ElementName=comboBox, Path=SelectedItem, UpdateSourceTrigger=PropertyChanged}"
                   SelectionChanged="comboBox_SelectionChanged"
                   ItemsSource="{Binding Path=Problems, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>

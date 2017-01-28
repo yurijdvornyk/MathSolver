@@ -52,12 +52,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RectilinearSegment.cs" />
     <Compile Include="ParameterizedRectilinearSegment.cs" />
+    <Compile Include="Utils\EquationUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ProblemSdk\ProblemSdk.csproj">
       <Project>{82994d35-440b-41b6-b057-993d6c26d830}</Project>
       <Name>ProblemSdk</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Equations\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

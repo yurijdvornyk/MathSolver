@@ -1,5 +1,6 @@
 ﻿using HomericLibrary;
 using Problems.Helper;
+using Problems.Utils;
 using ProblemSdk;
 using ProblemSdk.Result;
 using System;
@@ -8,6 +9,9 @@ using System.Linq;
 
 namespace Problems
 {
+    /// <summary>
+    /// K\tau=\frac{1}{2\pi}\int\limits_{\alpha}^{\beta}{\tau(t)\ln{\frac{1}{|t-s|}}}dt=g(s), \qquad s\in(\alpha, \beta)
+    /// </summary>
     public class ParameterizedRectilinearSegment : Problem
     {
         private readonly int POSITION_G = 0;
@@ -32,15 +36,13 @@ namespace Problems
         private double H { get { return (B - A) / N; } }
         private string variable;
 
-        public override string Name { get { return "Integral equation with logarithmic singularity for rectilinear parameterized segment"; } }
-
-        public override string Equation { get { return @"K\tau=\frac{1}{2\pi}\int\limits_{\alpha}^{\beta}{\tau(t)\ln{\frac{1}{|t-s|}}}dt=g(s), \qquad s\in(\alpha, \beta)"; } }
-
         private SortedDictionary<double, double> Tx = new SortedDictionary<double, double>();
         public double[,] matrix;
 
         public ParameterizedRectilinearSegment() : base()
         {
+            Name = "Integral equation with logarithmic singularity for rectilinear parameterized segment";
+            Equation = EquationUtils.GetPathForCurrentProblemEquation(this);
             InputData.AddDataItemAt<string>(POSITION_G, "g");
             InputData.AddDataItemAt(POSITION_PHI1, "Phi1", "t^2");
             InputData.AddDataItemAt(POSITION_PHI2, "Phi2", "t");

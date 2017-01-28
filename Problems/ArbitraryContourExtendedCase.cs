@@ -1,5 +1,6 @@
 ﻿using HomericLibrary;
 using Problems.Helper;
+using Problems.Utils;
 using ProblemSdk;
 using ProblemSdk.Result;
 using System;
@@ -8,6 +9,9 @@ using System.Linq;
 
 namespace Problems
 {
+    /// <summary>
+    /// K\tau\equiv\frac{1}{2\pi}\int\limits_a^b{\ln\frac{1}{|t-s|}\tau(t)}dt + \frac{1}{2\pi}\int\limits_a^b{W(t,s)\tau(t)}dt=g(s)
+    /// </summary>
     public class ArbitraryContourExtendedCase : Problem
     {
         private readonly int POSITION_G = 0;
@@ -33,11 +37,10 @@ namespace Problems
         private SortedDictionary<double, double> Tx = new SortedDictionary<double, double>();
         private double[,] matrix;
 
-        public override string Name { get { return "Integral equation with logarithmic singularity for arbitrary open-circuited parameterized contour - extended form"; } }
-        public override string Equation { get { return @"K\tau\equiv\frac{1}{2\pi}\int\limits_a^b{\ln\frac{1}{|t-s|}\tau(t)}dt + \frac{1}{2\pi}\int\limits_a^b{W(t,s)\tau(t)}dt=g(s)"; } }
-
         public ArbitraryContourExtendedCase() : base()
         {
+            Name = "Integral equation with logarithmic singularity for arbitrary open-circuited parameterized contour - extended form";
+            Equation = EquationUtils.GetPathForCurrentProblemEquation(this);
             InputData.AddDataItemAt<string>(POSITION_G, "g");
             InputData.AddDataItemAt(POSITION_PHI1, "Phi1", "t^2");
             InputData.AddDataItemAt(POSITION_PHI2, "Phi2", "t");

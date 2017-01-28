@@ -1,15 +1,17 @@
 ﻿using HomericLibrary;
 using Problems.Helper;
+using Problems.Utils;
 using ProblemSdk;
 using ProblemSdk.Result;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Problems
 {
+    /// <summary>
+    /// K\tau=\frac{1}{2\pi}\int\limits_{\alpha}^{\beta}{\tau(t)\ln{\left(\frac{1}{\sqrt{(\varphi_1(t)-\varphi_1(s))^2+(\varphi_2(t)-\varphi_2(s))^2}}\right)}F(t)}dt=g(s)
+    /// </summary>
     public class ArbitraryContourAbsCase : Problem
     {
         private readonly int POSITION_G = 0;
@@ -37,14 +39,13 @@ namespace Problems
         private double H { get { return (B - A) / N; } }
         private string variable;
 
-        public override string Name { get { return "Integral equation with logarithmic singularity for open-circuited parameterized contour that can be divided into two parts"; } }
-        public override string Equation { get { return @"K\tau=\frac{1}{2\pi}\int\limits_{\alpha}^{\beta}{\tau(t)\ln{\left(\frac{1}{\sqrt{(\varphi_1(t)-\varphi_1(s))^2+(\varphi_2(t)-\varphi_2(s))^2}}\right)}F(t)}dt=g(s)"; } }
-
         private SortedDictionary<double, double> Tx = new SortedDictionary<double, double>();
         public double[,] matrix;
 
         public ArbitraryContourAbsCase() : base()
         {
+            Name = "Integral equation with logarithmic singularity for open-circuited parameterized contour that can be divided into two parts";
+            Equation = EquationUtils.GetPathForCurrentProblemEquation(this);
             InputData.AddDataItemAt<string>(POSITION_G, "g");
             InputData.AddDataItemAt(POSITION_VAR, "Variable", "t");
             InputData.AddDataItemAt<double>(POSITION_A, "a", 0);

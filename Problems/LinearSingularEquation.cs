@@ -1,17 +1,18 @@
 ﻿using HomericLibrary;
 using Problems.Helper;
+using Problems.Utils;
 using ProblemSdk;
 using ProblemSdk.Classes.Choice;
 using ProblemSdk.Data;
 using ProblemSdk.Result;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Problems
 {
+    /// <summary>
+    /// \sum\limits_{i=1}^{n}c_{i}a_{ij}=\begin{cases}\quad 0,\\ \quad 1\end{cases}
+    /// </summary>
     public class LinearSingularEquation : Problem
     {
         private readonly int POSITION_G = 0;
@@ -21,9 +22,6 @@ namespace Problems
         private readonly int POSITION_A = 4;
         private readonly int POSITION_B = 5;
         private readonly int POSITION_N = 6;
-
-        public override string Name { get { return "(Nameless) uniform equation"; } }
-        public override string Equation { get { return @"\sum\limits_{i=1}^{n}c_{i}a_{ij}=\begin{cases}\quad 0,\\ \quad 1\end{cases}"; } }
 
         private double A;
         private double B;
@@ -36,6 +34,8 @@ namespace Problems
 
         public LinearSingularEquation() : base()
         {
+            Name = "Linear singular equation";
+            Equation = EquationUtils.GetPathForCurrentProblemEquation(this);
             InputData.AddDataItemAt(POSITION_G, DataItemBuilder<ISingleChoice>
                 .Create()
                 .Name("G")
@@ -102,9 +102,7 @@ namespace Problems
         protected override void updateData()
         {
             InputData.GetValue(POSITION_VAR, out variable);
-            SingleChoice<int> g;
-            InputData.GetValue(POSITION_G, out g);
-            G = g.Value;
+            G = InputData.GetValue<SingleChoice<int>>(POSITION_G).Value;
             Phi1 = new HomericExpression(InputData.GetValue<string>(POSITION_PHI1), variable);
             Phi2 = new HomericExpression(InputData.GetValue<string>(POSITION_PHI2), variable);
             InputData.GetValue(POSITION_A, out A);

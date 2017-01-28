@@ -5,6 +5,8 @@ using System.Windows.Controls;
 using ProblemSdk.Data;
 using IntegralEquationsApp.Components.InputData.ItemView;
 using ProblemSdk.Classes.Choice;
+using ProblemSdk;
+using System.Windows.Media.Imaging;
 
 namespace IntegralEquationsApp.Components.InputData
 {
@@ -26,15 +28,28 @@ namespace IntegralEquationsApp.Components.InputData
             presenter = new InputDataPresenter(this);
         }
 
-        public void BuildLayoutForProblem(ProblemData problemData)
+        public void BuildLayoutForProblem(IProblem problem)
         {
             clearContentArea();
-            if (problemData == null)
+            if (problem == null || problem.InputData == null)
             {
                 return;
             }
             setUpColumns();
-            problemData.DataItems.ForEach(item =>
+            if (problem.Equation != null)
+            {
+                BitmapImage bitmap = new BitmapImage(new Uri(problem.Equation));
+                imageEquation.Source = bitmap;
+                Image imageTooltip = new Image();
+                imageTooltip.Source = bitmap;
+                imageEquation.ToolTip = imageTooltip;
+                imageEquation.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                imageEquation.Visibility = Visibility.Collapsed;
+            }
+            problem.InputData.DataItems.ForEach(item =>
             {
                 createNewRow();
                 addItemTitle(item);

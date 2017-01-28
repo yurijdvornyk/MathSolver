@@ -5,7 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:IntegralEquationsApp.Components.InputData"
              mc:Ignorable="d">
-    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-        <Grid Name="contentArea"/>
-    </ScrollViewer>
+    <DockPanel LastChildFill="True">
+        <Image Name="imageEquation" DockPanel.Dock="Top" MaxHeight="200"/>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <Grid Name="contentArea"/>
+        </ScrollViewer>
+    </DockPanel>
 </UserControl>
