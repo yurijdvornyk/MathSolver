@@ -14,16 +14,5 @@ namespace IntegralEquationsApp
         {
             InitializeComponent();
         }
-
-        private void btnSolve_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                SolutionManager.GetInstance().StartProblemSolving();
-            } catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
     }
 }

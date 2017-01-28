@@ -119,6 +119,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Components\Solution\SolutionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -179,6 +183,11 @@
     <Compile Include="Components\Result\ResultPresenter.cs" />
     <Compile Include="Components\Result\ResultView.xaml.cs">
       <DependentUpon>ResultView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Solution\ISolutionView.cs" />
+    <Compile Include="Components\Solution\SolutionPresenter.cs" />
+    <Compile Include="Components\Solution\SolutionView.xaml.cs">
+      <DependentUpon>SolutionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Data\AppData.cs" />
     <Compile Include="Data\ICurrentProblemListener.cs" />

@@ -21,7 +21,7 @@ namespace IntegralEquationsApp.Components.InputData
 
         private void buttonHint_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(hint);
+            MessageBox.Show(hint, "Hint");
         }
     }
 }

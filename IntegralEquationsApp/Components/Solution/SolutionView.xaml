@@ -1,0 +1,11 @@
+﻿<UserControl x:Class="IntegralEquationsApp.Components.Solution.SolutionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:IntegralEquationsApp.Components.Solution"
+             mc:Ignorable="d">
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+        <Button Name="btnSolve" Content="Solve" HorizontalAlignment="Center" Click="btnSolve_Click" IsEnabled="False"/>
+    </StackPanel>
+</UserControl>
