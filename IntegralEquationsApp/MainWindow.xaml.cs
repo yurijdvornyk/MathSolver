@@ -1,4 +1,5 @@
 ﻿using IntegralEquationsApp.Data;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 
@@ -16,7 +17,13 @@ namespace IntegralEquationsApp
 
         private void btnSolve_Click(object sender, RoutedEventArgs e)
         {
-            SolutionManager.GetInstance().StartProblemSolving();
+            try
+            {
+                SolutionManager.GetInstance().StartProblemSolving();
+            } catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

@@ -60,7 +60,7 @@ namespace ProblemSdk.Data
             }
             else
             {
-                throw new InvalidCastException(string.Format(INVALID_CAST_EXCEPTION_MESSAGE, typeof(T).GetType().Name));
+                throw new InvalidCastException(string.Format(INVALID_CAST_EXCEPTION_MESSAGE, typeof(T)));
             }
         }
 

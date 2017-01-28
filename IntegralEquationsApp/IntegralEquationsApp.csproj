@@ -91,6 +91,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Components\InputData\ItemView\SingleChoiceItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Components\InputData\ItemView\StringItemView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -138,6 +142,9 @@
     </Compile>
     <Compile Include="Components\InputData\ItemView\NumericIntegerItemView.xaml.cs">
       <DependentUpon>NumericIntegerItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\InputData\ItemView\SingleChoiceItemView.xaml.cs">
+      <DependentUpon>SingleChoiceItemView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\InputData\ItemView\StringItemView.xaml.cs">
       <DependentUpon>StringItemView.xaml</DependentUpon>

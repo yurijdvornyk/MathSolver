@@ -20,7 +20,6 @@ namespace IntegralEquationsApp.Components.InputData.ItemView
     /// </summary>
     public partial class NumericIntegerItemView
     {
-
         public NumericIntegerItemView(object defaultValue)
         {
             InitializeComponent();

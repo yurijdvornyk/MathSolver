@@ -40,6 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Choice\Choice.cs" />
+    <Compile Include="Classes\Choice\IChoice.cs" />
+    <Compile Include="Classes\Choice\IMultipleChoice.cs" />
+    <Compile Include="Classes\Choice\ISingleChoice.cs" />
+    <Compile Include="Classes\Choice\MultipleChoice.cs" />
+    <Compile Include="Classes\Choice\SingleChoice.cs" />
     <Compile Include="Data\DataItem.cs" />
     <Compile Include="Data\DataItemBuilder.cs" />
     <Compile Include="Data\IDataItem.cs" />

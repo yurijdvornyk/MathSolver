@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using ProblemSdk;
 using ProblemSdk.Data;
 using IntegralEquationsApp.Components.InputData.ItemView;
+using ProblemSdk.Classes.Choice;
 
 namespace IntegralEquationsApp.Components.InputData
 {
@@ -118,6 +119,9 @@ namespace IntegralEquationsApp.Components.InputData
             else if (itemType == typeof(string))
             {
                 return new StringItemView(defaultValue);
+            } else if (itemType == typeof(ISingleChoice))
+            {
+                return new SingleChoiceItemView(defaultValue as ISingleChoice);
             }
             else
             {

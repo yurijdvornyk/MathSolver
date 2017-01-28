@@ -1,6 +1,8 @@
 ﻿using HomericLibrary;
 using Problems.Helper;
 using ProblemSdk;
+using ProblemSdk.Classes.Choice;
+using ProblemSdk.Data;
 using ProblemSdk.Result;
 using System;
 using System.Collections.Generic;
@@ -34,12 +36,17 @@ namespace Problems
 
         public LinearSingularEquation() : base()
         {
-            InputData.AddDataItemAt(POSITION_G, "g", 0, true, x => x == 0 || x == 1);
+            //InputData.AddDataItemAt(POSITION_G, "g", 0, true, x => x == 0 || x == 1);
+            InputData.AddDataItemAt(POSITION_G, DataItemBuilder<ISingleChoice>
+                .Create()
+                .Name("G")
+                .DefValue(new SingleChoice<int>(new List<int>() { 0, 1 }, 0))
+                .Build());
             InputData.AddDataItemAt(POSITION_PHI1, "Phi1", "t");
             InputData.AddDataItemAt(POSITION_PHI2, "Phi2", "1");
             InputData.AddDataItemAt(POSITION_VAR, "Variable", "t");
             InputData.AddDataItemAt<double>(POSITION_A, "a", -1);
-            InputData.AddDataItemAt(POSITION_B, "b", 1);
+            InputData.AddDataItemAt<double>(POSITION_B, "b", 1);
             InputData.AddDataItemAt(POSITION_N, "N", 100);
         }
 
@@ -95,7 +102,9 @@ namespace Problems
         protected override void updateData()
         {
             InputData.GetValue(POSITION_VAR, out variable);
-            InputData.GetValue(POSITION_G, out G);
+            SingleChoice<int> g;
+            InputData.GetValue(POSITION_G, out g);
+            G = g.Value;
             Phi1 = new HomericExpression(InputData.GetValue<string>(POSITION_PHI1), variable);
             Phi2 = new HomericExpression(InputData.GetValue<string>(POSITION_PHI2), variable);
             InputData.GetValue(POSITION_A, out A);
