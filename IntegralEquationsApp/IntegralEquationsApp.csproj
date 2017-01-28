@@ -71,6 +71,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Components\InputData\DataItemHint.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Components\InputData\InputDataView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -124,6 +128,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Components\BaseMvpContract.cs" />
+    <Compile Include="Components\InputData\DataItemHint.xaml.cs">
+      <DependentUpon>DataItemHint.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Components\InputData\IInputDataView.cs" />
     <Compile Include="Components\InputData\InputDataView.xaml.cs">
       <DependentUpon>InputDataView.xaml</DependentUpon>

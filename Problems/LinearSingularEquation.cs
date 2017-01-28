@@ -36,11 +36,11 @@ namespace Problems
 
         public LinearSingularEquation() : base()
         {
-            //InputData.AddDataItemAt(POSITION_G, "g", 0, true, x => x == 0 || x == 1);
             InputData.AddDataItemAt(POSITION_G, DataItemBuilder<ISingleChoice>
                 .Create()
                 .Name("G")
                 .DefValue(new SingleChoice<int>(new List<int>() { 0, 1 }, 0))
+                .Hint("Can be either 0, or 1")
                 .Build());
             InputData.AddDataItemAt(POSITION_PHI1, "Phi1", "t");
             InputData.AddDataItemAt(POSITION_PHI2, "Phi2", "1");

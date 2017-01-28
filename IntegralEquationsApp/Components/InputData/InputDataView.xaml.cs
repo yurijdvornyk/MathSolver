@@ -1,18 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using ProblemSdk;
 using ProblemSdk.Data;
 using IntegralEquationsApp.Components.InputData.ItemView;
 using ProblemSdk.Classes.Choice;
@@ -25,6 +14,9 @@ namespace IntegralEquationsApp.Components.InputData
     public partial class InputDataView : UserControl, IInputDataView
     {
         private readonly int INPUT_DATA_ITEM_MARGIN = 5;
+        private readonly int TITLE_COLUMN_INDEX = 0;
+        private readonly int VALUE_COLUMN_INDEX = 1;
+        private readonly int HINT_COLUMN_INDEX = 2;
 
         private InputDataPresenter presenter;
 
@@ -36,40 +28,82 @@ namespace IntegralEquationsApp.Components.InputData
 
         public void BuildLayoutForProblem(ProblemData problemData)
         {
-            contentArea.Children.Clear();
-            contentArea.ColumnDefinitions.Clear();
-            contentArea.RowDefinitions.Clear();
+            clearContentArea();
             if (problemData == null)
             {
                 return;
             }
+            setUpColumns();
+            problemData.DataItems.ForEach(item =>
+            {
+                createNewRow();
+                addItemTitle(item);
+                addItemValue(item);
+                addItemHint(item);
+            });
+        }
+
+        private void addItemHint(IDataItem item)
+        {
+            DataItemHint hint = new DataItemHint(item.IsRequired, item.Hint);
+            hint.HorizontalAlignment = HorizontalAlignment.Center;
+            hint.VerticalAlignment = VerticalAlignment.Center;
+            Grid.SetColumn(hint, HINT_COLUMN_INDEX);
+            Grid.SetRow(hint, getLastRowIndex());
+            contentArea.Children.Add(hint);
+        }
+
+        private void addItemValue(IDataItem item)
+        {
+            FrameworkElement itemValue = getItemValueView(item);
+            itemValue.Margin = new Thickness(INPUT_DATA_ITEM_MARGIN);
+            Grid.SetColumn(itemValue, VALUE_COLUMN_INDEX);
+            Grid.SetRow(itemValue, getLastRowIndex());
+            contentArea.Children.Add(itemValue);
+        }
+
+        private void addItemTitle(IDataItem item)
+        {
+            FrameworkElement itemTitle = getItemTitleView(item);
+            itemTitle.Margin = new Thickness(INPUT_DATA_ITEM_MARGIN);
+            itemTitle.HorizontalAlignment = HorizontalAlignment.Left;
+            itemTitle.VerticalAlignment = VerticalAlignment.Center;
+            Grid.SetColumn(itemTitle, TITLE_COLUMN_INDEX);
+            Grid.SetRow(itemTitle, getLastRowIndex());
+            contentArea.Children.Add(itemTitle);
+        }
+
+        private void createNewRow()
+        {
+            RowDefinition row = new RowDefinition();
+            row.Height = GridLength.Auto;
+            contentArea.RowDefinitions.Add(row);
+        }
+
+        private int getLastRowIndex()
+        {
+            return contentArea.RowDefinitions.Count - 1;
+        }
+
+        private void setUpColumns()
+        {
+            // Title column
             ColumnDefinition titleColumn = new ColumnDefinition();
             titleColumn.Width = GridLength.Auto;
             contentArea.ColumnDefinitions.Add(titleColumn);
-            ColumnDefinition valueColumn = new ColumnDefinition();
-            contentArea.ColumnDefinitions.Add(valueColumn);
-            foreach (IDataItem item in problemData.DataItems)
-            {
-                RowDefinition row = new RowDefinition();
-                row.Height = GridLength.Auto;
-                contentArea.RowDefinitions.Add(row);
+            // Value column
+            contentArea.ColumnDefinitions.Add(new ColumnDefinition());
+            // Hint column
+            ColumnDefinition hintColumn = new ColumnDefinition();
+            hintColumn.Width = GridLength.Auto;
+            contentArea.ColumnDefinitions.Add(hintColumn);
+        }
 
-                FrameworkElement itemTitle = getItemTitleView(item);
-                itemTitle.Margin = new Thickness(INPUT_DATA_ITEM_MARGIN);
-                itemTitle.HorizontalAlignment = HorizontalAlignment.Left;
-                itemTitle.VerticalAlignment = VerticalAlignment.Center;
-                Grid.SetColumn(itemTitle, 0);
-                Grid.SetRow(itemTitle, contentArea.RowDefinitions.Count - 1);
-                contentArea.Children.Add(itemTitle);
-
-                FrameworkElement itemValue = getItemValueView(item);
-                itemValue.Margin = new Thickness(INPUT_DATA_ITEM_MARGIN);
-                itemValue.HorizontalAlignment = HorizontalAlignment.Stretch;
-                itemValue.VerticalAlignment = VerticalAlignment.Center;
-                Grid.SetColumn(itemValue, 1);
-                Grid.SetRow(itemValue, contentArea.RowDefinitions.Count - 1);
-                contentArea.Children.Add(itemValue);
-            }
+        private void clearContentArea()
+        {
+            contentArea.Children.Clear();
+            contentArea.ColumnDefinitions.Clear();
+            contentArea.RowDefinitions.Clear();
         }
 
         public List<object> GetItemValues()

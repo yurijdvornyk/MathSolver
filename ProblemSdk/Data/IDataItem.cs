@@ -6,6 +6,7 @@ namespace ProblemSdk.Data
     {
         string Name { get; }
         string Hint { get; }
+        bool IsRequired { get; }
         Type GetDataItemType();
         bool IsSet();
         void Reset();
