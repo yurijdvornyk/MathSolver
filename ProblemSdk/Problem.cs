@@ -1,5 +1,9 @@
 ﻿using ProblemSdk.Data;
 using ProblemSdk.Result;
+using ProblemSdk.Utils;
+using System;
+using System.ComponentModel;
+using System.Threading;
 
 namespace ProblemSdk
 {
@@ -10,21 +14,34 @@ namespace ProblemSdk
         public string Equation { get; protected set; }
         public ProblemData InputData { get; private set; }
         public ProblemResult Result { get; private set; }
-        public SolutionNotifier SolutionNotifier { get; private set; }
+        protected SolutionNotifier solutionNotifier { get; private set; }
+        private CancellationTokenSource cancellationTokenSource;
+        private BackgroundWorker backgroundWorker;
 
         public Problem()
         {
             InputData = new ProblemData();
-            SolutionNotifier = SolutionNotifier.GetInstance();
+            solutionNotifier = SolutionNotifier.GetInstance();
         }
 
         public void Solve(params object[] args)
         {
             setInputData(args);
             updateData();
-            SolutionNotifier.NotifyStartProblemSolving(this);
-            Result = execute(); // TODO: Do it with Rx.
-            SolutionNotifier.NotifyProblemSolved(this);
+            cancellationTokenSource = new CancellationTokenSource();
+            solutionNotifier.NotifyStartProblemSolving(this);
+            Result = execute();
+            cancellationTokenSource = null;
+            solutionNotifier.NotifyProblemSolved(this);
+        }
+
+        public void SolveAsync(params object[] args)
+        {
+            backgroundWorker = new BackgroundWorker();
+            backgroundWorker.WorkerSupportsCancellation = true;
+            backgroundWorker.DoWork += backgroundWorker_DoWork;
+            backgroundWorker.RunWorkerCompleted += backgroundWorker_RunWorkerCompleted;
+            backgroundWorker.RunWorkerAsync();
         }
 
         public void CancelSolution()
@@ -45,7 +62,34 @@ namespace ProblemSdk
             }
         }
 
+        protected void checkIfCanSolve(Action action)
+        {
+            if (ValidationUtils.NotNull(cancellationTokenSource) && 
+                ValidationUtils.NotNull(cancellationTokenSource.Token) && 
+                !cancellationTokenSource.Token.IsCancellationRequested)
+            {
+                action.Invoke();
+            }
+        }
+
         protected abstract ProblemResult execute();
         protected abstract void updateData();
+
+        private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            Solve(e);
+        }
+
+        private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Cancelled)
+            {
+                solutionNotifier.NotifyError(this, e.Error);
+            }
+            else if (e.Error != null)
+            {
+                SolutionNotifier.GetInstance().NotifyError(this, e.Error);
+            }
+        }
     }
 }

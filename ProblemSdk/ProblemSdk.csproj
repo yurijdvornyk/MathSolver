@@ -65,6 +65,7 @@
     <Compile Include="Result\ProblemResult.cs" />
     <Compile Include="Result\ResultDataItem.cs" />
     <Compile Include="SolutionNotifier.cs" />
+    <Compile Include="Utils\ValidationUtils.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -16,6 +16,11 @@ namespace IntegralEquationsApp.Components.Result.Data
             SolutionManager.GetInstance().AddSolutionListener(this);
         }
 
+        public void OnError(object erorr)
+        {
+            // TODO: Add error handling
+        }
+
         public void OnProblemSolved(ProblemResult result)
         {
             List<ResultDataTable> tables = new List<ResultDataTable>();

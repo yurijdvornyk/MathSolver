@@ -7,5 +7,6 @@ namespace IntegralEquationsApp.Data
     {
         void OnStartProblemSolving(IProblem problem);
         void OnProblemSolved(ProblemResult result);
+        void OnError(object erorr);
     }
 }

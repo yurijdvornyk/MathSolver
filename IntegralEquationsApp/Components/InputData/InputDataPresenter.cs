@@ -1,4 +1,5 @@
-﻿using IntegralEquationsApp.Data;
+﻿using System;
+using IntegralEquationsApp.Data;
 using ProblemSdk;
 using ProblemSdk.Result;
 
@@ -29,6 +30,11 @@ namespace IntegralEquationsApp.Components.InputData
         public void UpdateArguments()
         {
             DataManager.GetInstance().CurrentProblemArguments = view.GetItemValues();
+        }
+
+        public void OnError(object erorr)
+        {
+            // TODO: Add error handling
         }
     }
 }

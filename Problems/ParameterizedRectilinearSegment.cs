@@ -146,7 +146,7 @@ namespace Problems
                 chartPoints.Add(new ProblemChartPoint((double)matrix[i, 0], (double)matrix[i, 1]));
             }
             ProblemResult problemResult = new ProblemResult("Result", "t", "tau(t)");
-            problemResult.ResultData.Items.Add(ResultDataItem.Builder.Create().ColumnTitles("t", "tau(t)").SetMatrix(matrix).Build());
+            problemResult.ResultData.Items.Add(ResultDataItem.Builder.Create().ColumnTitles("t", "tau(t)").Matrix(matrix).Build());
             problemResult.ResultChart.Items.Add(ResultChartItem.Builder.Create().Points(chartPoints).Build());
             return problemResult;
         }

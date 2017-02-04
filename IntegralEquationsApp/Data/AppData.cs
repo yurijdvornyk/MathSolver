@@ -13,7 +13,8 @@ namespace IntegralEquationsApp.Data
             new ArbitraryContour(),
             new ArbitraryContourAbsCase(),
             new ArbitraryContourExtendedCase(),
-            new LinearSingularEquation()
+            new LinearSingularEquation(),
+            new SampleProblem()
         };
 
         public static void Initialize()

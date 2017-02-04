@@ -61,7 +61,7 @@ namespace ProblemSdk.Result
                 return this;
             }
 
-            public Builder SetMatrix(object[,] matrix)
+            public Builder Matrix(object[,] matrix)
             {
                 List<List<object>> rows = new List<List<object>>();
                 for (int i = 0; i < matrix.GetLength(0); ++i)

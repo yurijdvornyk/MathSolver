@@ -94,7 +94,7 @@ namespace Problems
                 chartPoints.Add(new ProblemChartPoint(x, resArray[i]));
             }
             ProblemResult problemResult = new ProblemResult("Result", "x", "f(x)");
-            problemResult.ResultData.Items.Add(ResultDataItem.Builder.Create().ColumnTitles("x", "f(x)").SetMatrix(result).Build());
+            problemResult.ResultData.Items.Add(ResultDataItem.Builder.Create().ColumnTitles("x", "f(x)").Matrix(result).Build());
             problemResult.ResultChart.Items.Add(ResultChartItem.Builder.Create().Points(chartPoints).Build());
             return problemResult;
         }

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProblemSdk
 {
@@ -49,6 +46,11 @@ namespace ProblemSdk
         internal void NotifyProblemSolved(IProblem problem)
         {
             solutionListeners.ForEach(listener => listener.OnProblemSolved(problem));
+        }
+
+        internal void NotifyError(IProblem problem, Exception error)
+        {
+            solutionListeners.ForEach(listener => listener.OnError(problem, error));
         }
     }
 }

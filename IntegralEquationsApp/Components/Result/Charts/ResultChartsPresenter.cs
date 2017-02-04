@@ -12,6 +12,11 @@ namespace IntegralEquationsApp.Components.Result.Charts
             SolutionManager.GetInstance().AddSolutionListener(this);
         }
 
+        public void OnError(object erorr)
+        {
+            // TODO: Add error handling
+        }
+
         public void OnProblemSolved(ProblemResult result)
         {
             view.setChartData(result.ResultChart);

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,8 +36,9 @@ namespace IntegralEquationsApp.Data
             solutionListeners.Add(listener);
         }
 
-        public void OnError(IProblem problem)
+        public void OnError(IProblem problem, Exception error)
         {
+            solutionListeners.ForEach(listener => listener.OnError(error));
         }
 
         public void OnProgressChanged(IProblem problem, double progress)
