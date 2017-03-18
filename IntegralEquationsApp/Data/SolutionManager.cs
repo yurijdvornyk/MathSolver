@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace IntegralEquationsApp.Data
 {
@@ -14,12 +15,14 @@ namespace IntegralEquationsApp.Data
 
         private DataManager dataManager;
         private List<IProblemSolutionListener> solutionListeners;
+        private Dispatcher dispatcher;
 
         private SolutionManager()
         {
             dataManager = DataManager.GetInstance();
             solutionListeners = new List<IProblemSolutionListener>();
             SolutionNotifier.GetInstance().AddListener(this);
+            dispatcher = System.Windows.Application.Current.Dispatcher;
         }
 
         public static SolutionManager GetInstance()
@@ -38,7 +41,7 @@ namespace IntegralEquationsApp.Data
 
         public void OnError(IProblem problem, Exception error)
         {
-            solutionListeners.ForEach(listener => listener.OnError(error));
+            dispatcher.Invoke(() => solutionListeners.ForEach(listener => listener.OnError(error)));
         }
 
         public void OnProgressChanged(IProblem problem, double progress)
@@ -47,12 +50,14 @@ namespace IntegralEquationsApp.Data
 
         public void OnProblemSolved(IProblem problem)
         {
-            solutionListeners.ForEach(listener => listener.OnProblemSolved(dataManager.CurrentProblem.Result));
+            dispatcher.Invoke(() => 
+            solutionListeners.ForEach(listener => listener.OnProblemSolved(dataManager.CurrentProblem.Result)));
         }
 
         public void OnStartSolving(IProblem problem)
         {
-            solutionListeners.ForEach(listener => listener.OnStartProblemSolving(dataManager.CurrentProblem));
+            dispatcher.Invoke(() =>
+            solutionListeners.ForEach(listener => listener.OnStartProblemSolving(dataManager.CurrentProblem)));
         }
 
         public void RemoveSolutionListener(IProblemSolutionListener listener)

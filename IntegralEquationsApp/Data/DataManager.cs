@@ -66,7 +66,7 @@ namespace IntegralEquationsApp.Data
             {
                 ArgumentsUpdater.UpdateArguments();
             }
-            currentProblem.Solve(CurrentProblemArguments.ToArray());
+            currentProblem.SolveAsync(CurrentProblemArguments.ToArray());
         }
 
         internal void setProblems(List<IProblem> problems)

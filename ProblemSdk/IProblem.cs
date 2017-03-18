@@ -15,6 +15,7 @@ namespace ProblemSdk
         ProblemData InputData { get; }
         ProblemResult Result { get; }
         void Solve(params object[] args);
+        void SolveAsync(params object[] args);
         void CancelSolution();
     }
 }

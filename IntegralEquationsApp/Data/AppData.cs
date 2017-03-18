@@ -9,6 +9,7 @@ namespace IntegralEquationsApp.Data
         private static readonly List<IProblem> problems = new List<IProblem>()
         {
             new RectilinearSegment(),
+            new PotentialAbsForRectilinearSegment(),
             new ParameterizedRectilinearSegment(),
             new ArbitraryContour(),
             new ArbitraryContourAbsCase(),

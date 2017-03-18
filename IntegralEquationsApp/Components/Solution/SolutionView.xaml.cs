@@ -28,9 +28,26 @@ namespace IntegralEquationsApp.Components.Solution
             presenter = new SolutionPresenter(this);
         }
 
+        public void FinishProgress()
+        {
+            progressBar.IsIndeterminate = false;
+            progressBar.Value = 0;
+        }
+
+        public void SetProgress(double progress)
+        {
+            progressBar.IsIndeterminate = false;
+            progressBar.Value = progress;
+        }
+
         public void SetSolveButtonEnabled(bool enabled)
         {
             btnSolve.IsEnabled = enabled;
+        }
+
+        public void StartProgress()
+        {
+            progressBar.IsIndeterminate = true;
         }
 
         private void btnSolve_Click(object sender, RoutedEventArgs e)

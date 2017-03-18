@@ -39,7 +39,7 @@ namespace ProblemSdk
         {
             backgroundWorker = new BackgroundWorker();
             backgroundWorker.WorkerSupportsCancellation = true;
-            backgroundWorker.DoWork += backgroundWorker_DoWork;
+            backgroundWorker.DoWork += new DoWorkEventHandler((sender, e) => Solve(args));
             backgroundWorker.RunWorkerCompleted += backgroundWorker_RunWorkerCompleted;
             backgroundWorker.RunWorkerAsync();
         }
@@ -62,7 +62,7 @@ namespace ProblemSdk
             }
         }
 
-        protected void checkIfCanSolve(Action action)
+        protected void doOperation(Action action)
         {
             if (ValidationUtils.NotNull(cancellationTokenSource) && 
                 ValidationUtils.NotNull(cancellationTokenSource.Token) && 
@@ -74,11 +74,6 @@ namespace ProblemSdk
 
         protected abstract ProblemResult execute();
         protected abstract void updateData();
-
-        private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            Solve(e);
-        }
 
         private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {

@@ -25,7 +25,8 @@ namespace Problems
         protected override ProblemResult execute()
         {
             ProblemResult problemResult = new ProblemResult("Result", "", "");
-            checkIfCanSolve(() => {
+            doOperation(() =>
+            {
                 double d = b * b - 4 * a * c;
                 if (d >= 0)
                 {
@@ -35,9 +36,12 @@ namespace Problems
                     problemResult.ResultData.Items.Add(
                         ResultDataItem.Builder.Create().ColumnTitles("x").Matrix(new object[,] { { x1 }, { x2 } }).Build());
                 }
-                problemResult.ResultData.Items.Add(
-                    ResultDataItem.Builder.Create().ColumnTitles("x").Matrix(new object[,] { { "No real roots." } }).Build());
-                });
+                else
+                {
+                    problemResult.ResultData.Items.Add(
+                        ResultDataItem.Builder.Create().ColumnTitles("x").Matrix(new object[,] { { "No real roots." } }).Build());
+                }
+            });
             return problemResult;
         }
 
