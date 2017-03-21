@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System;
 
 namespace IntegralEquationsApp.Components.Result.Charts
 {
@@ -22,29 +23,28 @@ namespace IntegralEquationsApp.Components.Result.Charts
             presenter = new ResultChartsPresenter(this);
         }
 
-        public void setChartData(ResultChart chartData)
+        public void set2dChart(ResultChart<Chart2dPoint> chartData)
         {
             oxyChart.Series.Clear();
-            chartData.Items.ForEach(item => addChart(item));
-            foreach (var value in chartData.Items)
+            chartData.Items.ForEach(item =>
             {
-                addChart(value);
-            }
+                LineSeries lineSeries = new LineSeries();
+                lineSeries.StrokeThickness = 2;
+                lineSeries.Color = Colors.DarkGreen;
+                List<DataPoint> linePoints = new List<DataPoint>();
+                item.ChartPoints.ForEach(point =>
+                {
+                    linePoints.Add(new DataPoint(point.X, point.Y));
+                });
+                lineSeries.ItemsSource = linePoints;
+                oxyChart.Series.Add(lineSeries);
+            });
             oxyChart.IsLegendVisible = chartData.Items.Count > 1;
         }
 
-        private void addChart(ResultChartItem item)
+        public void set3dChart(ResultChart<Chart3dPoint> resultChart)
         {
-            LineSeries lineSeries = new LineSeries();
-            lineSeries.StrokeThickness = 2;
-            lineSeries.Color = Colors.DarkGreen;
-            List<DataPoint> linePoints = new List<DataPoint>();
-            item.ChartPoints.ForEach(point =>
-            {
-                linePoints.Add(new DataPoint(point.X, point.Y));
-            });
-            lineSeries.ItemsSource = linePoints;
-            oxyChart.Series.Add(lineSeries);
+            // TODO: Add code
         }
     }
 }

@@ -19,7 +19,14 @@ namespace IntegralEquationsApp.Components.Result.Charts
 
         public void OnProblemSolved(ProblemResult result)
         {
-            view.setChartData(result.ResultChart);
+            IResultChart chart = result.ResultChart;
+            if (chart.GetChartPointType() == typeof(Chart2dPoint))
+            {
+                view.set2dChart(chart as ResultChart<Chart2dPoint>);
+            } else if (chart.GetChartPointType() == typeof(Chart3dPoint))
+            {
+                view.set3dChart(chart as ResultChart<Chart3dPoint>);
+            }
         }
 
         public void OnStartProblemSolving(IProblem problem) { }

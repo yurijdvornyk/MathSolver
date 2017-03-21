@@ -31,11 +31,11 @@ namespace Problems
         {
             Name = "Integral equation with logarithmic singularity for rectilinear segment";
             Equation = EquationUtils.GetPathForCurrentProblemEquation(this);
-            InputData.AddDataItemAt(POSITION_G, 
+            InputData.AddDataItemAt(POSITION_G,
                 DataItemBuilder<string>.Create().Name("g").Build());
-            InputData.AddDataItemAt(POSITION_VAR, 
+            InputData.AddDataItemAt(POSITION_VAR,
                 DataItemBuilder<string>.Create().Name("Variable").DefValue("x").Build());
-            InputData.AddDataItemAt(POSITION_N, 
+            InputData.AddDataItemAt(POSITION_N,
                 DataItemBuilder<int>.Create().Name("N").DefValue(100).Build());
         }
 
@@ -77,9 +77,9 @@ namespace Problems
             matrix = M;
         }
 
-        public List<ProblemChartPoint> GetTx()
+        public List<Chart2dPoint> GetTx()
         {
-            List<ProblemChartPoint> tx = new List<ProblemChartPoint>();
+            List<Chart2dPoint> tx = new List<Chart2dPoint>();
             fillMatrix();
 
             double[] b = new double[N];
@@ -100,7 +100,7 @@ namespace Problems
                 double ti = A + i * H;
                 double ti1 = A + (i + 1) * H;
                 double x = (ti + ti1) / 2;
-                tx.Add(new ProblemChartPoint(x, b[i]));
+                tx.Add(new Chart2dPoint(x, b[i]));
             }
             return tx;
         }
@@ -109,14 +109,18 @@ namespace Problems
         {
             var result = GetTx();
             object[,] resultMatrix = new object[result.Count, 2];
+            List<Chart2dPoint> chartPoints = new List<Chart2dPoint>();
             for (int i = 0; i < result.Count; ++i)
             {
                 resultMatrix[i, 0] = result[i].X;
                 resultMatrix[i, 1] = result[i].Y;
+                chartPoints.Add(new Chart2dPoint(result[i].X, result[i].Y));
             }
-            ProblemResult problemResult = new ProblemResult("Result", "x", "tau(x)");
+            ProblemResult problemResult = new ProblemResult(); // ("Result", "x", "tau(x)");
             problemResult.ResultData.Items.Add(ResultDataItem.Builder.Create().ColumnTitles("x", "tau(x)").Matrix(resultMatrix).Build());
-            problemResult.ResultChart.Items.Add(ResultChartItem.Builder.Create().Points(result).Build());
+            ResultChart<Chart2dPoint> chart = new ResultChart<Chart2dPoint>("Result", new List<string>() { "x", "tau(x)" });
+            chart.Items.Add(ResultChartItem<Chart2dPoint>.Builder.Create().Points(chartPoints).Build());
+            problemResult.SetChart(chart);
             return problemResult;
         }
 

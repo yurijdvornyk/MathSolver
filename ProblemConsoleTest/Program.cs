@@ -7,15 +7,15 @@ namespace ProblemConsoleTest
     {
         static void Main(string[] args)
         {
-            RectilinearSegment problem = new RectilinearSegment();
-            problem.Solve();
-            foreach (var item in problem.Result.ResultChart.Items)
-            {
-                foreach (var point in item.ChartPoints)
-                {
-                    Console.WriteLine(point);
-                }
-            }
+            //RectilinearSegment problem = new RectilinearSegment();
+            //problem.Solve();
+            //foreach (var item in problem.Result.ResultChart.Items)
+            //{
+            //    foreach (var point in item.ChartPoints)
+            //    {
+            //        Console.WriteLine(point);
+            //    }
+            //}
         }
     }
 }

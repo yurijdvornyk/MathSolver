@@ -33,19 +33,21 @@ namespace Problems
 
         protected override ProblemResult execute()
         {
-            ProblemResult result = new ProblemResult("x", "u(x)");
+            ProblemResult result = new ProblemResult(); // ("x", "u(x)");
             List<Tuple<double, double, double>> potentials = getPotentialPoints();
             object[,] resultMatrix = new object[potentials.Count, 3];
-            List<ProblemChartPoint> points = new List<ProblemChartPoint>();
+            List<Chart3dPoint> points = new List<Chart3dPoint>();
             for (int i = 0; i < potentials.Count; ++i)
             {
                 resultMatrix[i, 0] = potentials[i].Item1;
                 resultMatrix[i, 1] = potentials[i].Item2;
                 resultMatrix[i, 2] = potentials[i].Item3;
-                points.Add(new ProblemChartPoint(potentials[i].Item2, potentials[i].Item3));
+                points.Add(new Chart3dPoint(potentials[i].Item1, potentials[i].Item2, potentials[i].Item3));
             }
             result.ResultData.Items.Add(ResultDataItem.Builder.Create().ColumnTitles("x1", "x2", "u(x1, x2)").Matrix(resultMatrix).Build());
-            result.ResultChart.Items.Add(ResultChartItem.Builder.Create().Points(points).Build());
+            ResultChart<Chart3dPoint> chart = new ResultChart<Chart3dPoint>("Result", new List<string>() { "x1", "x2", "u(x)" });
+            chart.Items.Add(ResultChartItem<Chart3dPoint>.Builder.Create().Points(points).Build());
+            result.SetChart(chart);
             return result;
         }
 
@@ -89,7 +91,7 @@ namespace Problems
 
         private List<double> getTauFunc()
         {
-            List<ProblemChartPoint> tx = new List<ProblemChartPoint>();
+            List<Chart2dPoint> tx = new List<Chart2dPoint>();
             double[] b = new double[n];
             for (int i = 0; i < n; ++i)
             {

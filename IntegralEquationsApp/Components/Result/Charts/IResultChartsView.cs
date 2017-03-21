@@ -4,6 +4,7 @@ namespace IntegralEquationsApp.Components.Result.Charts
 {
     public interface IResultChartsView : IView
     {
-        void setChartData(ResultChart chartData);
+        void set2dChart(ResultChart<Chart2dPoint> chartData);
+        void set3dChart(ResultChart<Chart3dPoint> resultChart);
     }
 }

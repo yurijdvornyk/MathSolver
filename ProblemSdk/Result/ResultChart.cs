@@ -1,20 +1,28 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ProblemSdk.Result
 {
-    public class ResultChart
+    public class ResultChart<T> : IResultChart where T : IChartPoint
     {
         public string Title { get; set; }
-        public string XAxisTitle { get; set; }
-        public string YAxisTitle { get; set; }
-        public List<ResultChartItem> Items { get; private set; }
+        public List<ResultChartItem<T>> Items { get; private set; }
+        public List<string> ChartLabels { get; private set; }
 
-        public ResultChart(string title, string xAxisTitle, string yAxisTitle)
+        public ResultChart(string title, List<string> chartLabels)
         {
             Title = title;
-            XAxisTitle = xAxisTitle;
-            YAxisTitle = yAxisTitle;
-            Items = new List<ResultChartItem>();
+            ChartLabels = new List<string>();
+            if (chartLabels != null)
+            {
+                chartLabels.ForEach(label => ChartLabels.Add(label));
+            }
+            Items = new List<ResultChartItem<T>>();
+        }
+
+        public Type GetChartPointType()
+        {
+            return typeof(T);
         }
     }
 }
