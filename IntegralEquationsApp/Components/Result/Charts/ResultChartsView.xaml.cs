@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System;
+using IntegralEquationsApp.Utils;
 
 namespace IntegralEquationsApp.Components.Result.Charts
 {
@@ -25,6 +26,9 @@ namespace IntegralEquationsApp.Components.Result.Charts
 
         public void set2dChart(ResultChart<Chart2dPoint> chartData)
         {
+            oxyChart.Visibility = System.Windows.Visibility.Visible;
+            surfaceView.Visibility = System.Windows.Visibility.Collapsed;
+
             oxyChart.Series.Clear();
             chartData.Items.ForEach(item =>
             {
@@ -44,7 +48,13 @@ namespace IntegralEquationsApp.Components.Result.Charts
 
         public void set3dChart(ResultChart<Chart3dPoint> resultChart)
         {
-            // TODO: Add code
+            oxyChart.Visibility = System.Windows.Visibility.Collapsed;
+            surfaceView.Visibility = System.Windows.Visibility.Visible;
+            if (resultChart.Items.Count > 0)
+            {
+                surfaceView.SetData(SurfaceUtils.GetValueMatrixFromPoints(resultChart.Items[0].ChartPoints));
+                surfaceView.Show3dSurface();
+            }
         }
     }
 }

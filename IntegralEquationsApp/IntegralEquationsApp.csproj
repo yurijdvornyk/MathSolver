@@ -92,6 +92,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Utils\SurfaceUtils.cs" />
     <Page Include="Components\InputData\DataItemHint.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -129,6 +130,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Components\Result\Charts\ResultChartsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\Result\Charts\SurfaceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -187,10 +192,14 @@
     <Compile Include="Components\ProblemSelector\ProblemSelectorView.xaml.cs">
       <DependentUpon>ProblemSelectorView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Components\Result\Charts\BitmapPixelCreator.cs" />
     <Compile Include="Components\Result\Charts\IResultChartsView.cs" />
     <Compile Include="Components\Result\Charts\ResultChartsPresenter.cs" />
     <Compile Include="Components\Result\Charts\ResultChartsView.xaml.cs">
       <DependentUpon>ResultChartsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Result\Charts\SurfaceView.xaml.cs">
+      <DependentUpon>SurfaceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\Result\Data\IResultDataView.cs" />
     <Compile Include="Components\Result\Data\ResultDataPresenter.cs" />

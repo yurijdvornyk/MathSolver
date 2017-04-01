@@ -8,5 +8,6 @@
              mc:Ignorable="d">
     <Grid>
         <oxy:Plot x:Name="oxyChart"/>
+        <local:SurfaceView x:Name="surfaceView"/>
     </Grid>
 </UserControl>
