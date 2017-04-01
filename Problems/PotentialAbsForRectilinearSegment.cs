@@ -14,8 +14,13 @@ namespace Problems
         private static readonly int POSITION_VAR = 1;
         private static readonly int POSITION_N = 2;
 
-        private readonly double a = -1;
-        private readonly double b = 1;
+        private const double a = -1;
+        private const double b = 1;
+        private const double potentialMinX = 0.7;
+        private const double potentialMinY = -0.3;
+        private const double potentialMaxX = 1.3;
+        private const double potentialMaxY = 0.3;
+        private const int potentialDivisions = 10;
         private HomericExpression g;
         private string variable;
         private int n;
@@ -105,22 +110,17 @@ namespace Problems
 
         private List<Tuple<double, double, double>> getPotentialPoints()
         {
-            double bottom = -1;
-            double top = 1;
-            int steps = 100;
-            double step = (top - bottom) / steps;
             List<Tuple<double, double, double>> result = new List<Tuple<double, double, double>>();
-            for (int i = 0; i < steps; ++i)
+            double stepX = (potentialMaxX - potentialMinX) / potentialDivisions;
+            double stepY = (potentialMaxY - potentialMinY) / potentialDivisions;
+            for (int i = 0; i < potentialDivisions; ++i)
             {
-                double y = bottom + i * step;
-                if (y != 0)
+                for (int j = 0; j < potentialDivisions; ++j)
                 {
-                    result.Add(new Tuple<double, double, double>(0.5, y, getPotentialAbsolute(0.5, bottom + i * step)));
+                    double x = potentialMinX + i * stepX;
+                    double y = potentialMinY + i * stepY;
+                    result.Add(new Tuple<double, double, double>(x, y, getPotentialAbsolute(x, y)));
                 }
-                //else
-                //{
-                //    result.Add(new Tuple<double, double, double>(0.5, -1, getPotentialAbsolute(0.5, bottom + i * step)));
-                //}
             }
             return result;
         }

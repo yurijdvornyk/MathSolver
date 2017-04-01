@@ -1,6 +1,7 @@
 ﻿using IntegralEquationsApp.Utils;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,6 +19,7 @@ namespace IntegralEquationsApp.Components.Result.Charts
     {
         public double[,] Data { get; private set; }
 
+        //private const string TEMP_IMAGE_FILE = "texture.png";
         private const double cameraVerticalChange = 0.1;
         private const double cameraHorizontalChange = 0.1;
         private const double cameraScalingChange = 0.1;
@@ -35,16 +37,22 @@ namespace IntegralEquationsApp.Components.Result.Charts
         private int zmax;
         private int dz;
         private double textureScaleX, textureScaleZ;
+        private WriteableBitmap surfaceImage;
 
         public SurfaceView()
         {
             InitializeComponent();
-            mainModel3Dgroup = new Model3DGroup();
-            pointDictionary = new Dictionary<Point3D, int>();
-
             cameraVerticalPosition = Math.PI / 6.0;
             cameraHorizontalPosition = Math.PI / 6.0;
             cameraDistance = 17.0;
+        }
+
+        public void Update(double[,] data)
+        {
+            mainModel3Dgroup = new Model3DGroup();
+            pointDictionary = new Dictionary<Point3D, int>();
+            SetData(data);
+            Show3dSurface();
         }
 
         public void SetData(double[,] data)
@@ -69,9 +77,9 @@ namespace IntegralEquationsApp.Components.Result.Charts
             initLights();
             сreateAltitudeMap(Data);
             defineModel(mainModel3Dgroup, Data);
-            ModelVisual3D model_visual = new ModelVisual3D();
-            model_visual.Content = mainModel3Dgroup;
-            viewport.Children.Add(model_visual);
+            ModelVisual3D modelVisual = new ModelVisual3D();
+            modelVisual.Content = mainModel3Dgroup;
+            viewport.Children.Add(modelVisual);
         }
 
         public void OnKeyDown(Key key)
@@ -120,11 +128,11 @@ namespace IntegralEquationsApp.Components.Result.Charts
 
         private void initLights()
         {
-            AmbientLight ambient_light = new AmbientLight(Colors.Gray);
-            DirectionalLight directional_light =
+            AmbientLight ambientLight = new AmbientLight(Colors.Gray);
+            DirectionalLight directionalLight =
                 new DirectionalLight(Colors.Gray, new Vector3D(-1.0, -3.0, -2.0));
-            mainModel3Dgroup.Children.Add(ambient_light);
-            mainModel3Dgroup.Children.Add(directional_light);
+            mainModel3Dgroup.Children.Add(ambientLight);
+            mainModel3Dgroup.Children.Add(directionalLight);
         }
 
         private void сreateAltitudeMap(double[,] data)
@@ -148,8 +156,8 @@ namespace IntegralEquationsApp.Components.Result.Charts
                     bitmapPixelCreator.SetPixel(ix, iz, red, green, blue, 255);
                 }
             }
-            WriteableBitmap writableBitmap = bitmapPixelCreator.MakeBitmap(96, 96);
-            SurfaceUtils.SaveWritableBitmapToFile(writableBitmap, "Texture.png");
+            surfaceImage = bitmapPixelCreator.MakeBitmap(96, 96);
+            //SurfaceUtils.SaveWritableBitmapToFile(writableBitmap, TEMP_IMAGE_FILE);
         }
 
         private void MapRainbowColor(double value, double minValue, double maxValue, out byte red, out byte green, out byte blue)
@@ -202,8 +210,8 @@ namespace IntegralEquationsApp.Components.Result.Charts
                 }
             }
             ImageBrush textureBrush = new ImageBrush();
-            textureBrush.ImageSource =
-                new BitmapImage(new Uri("Texture.png", UriKind.Relative));
+            textureBrush.ImageSource = surfaceImage;
+                //new BitmapImage(new Uri(TEMP_IMAGE_FILE, UriKind.Relative));
             DiffuseMaterial surfaceMaterial = new DiffuseMaterial(textureBrush);
             GeometryModel3D surfaceModel = new GeometryModel3D(mesh, surfaceMaterial);
             surfaceModel.BackMaterial = surfaceMaterial;

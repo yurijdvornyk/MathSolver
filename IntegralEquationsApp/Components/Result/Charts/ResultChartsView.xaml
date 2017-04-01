@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:IntegralEquationsApp.Components.Result.Charts"
              xmlns:oxy="http://oxyplot.org/wpf"
-             mc:Ignorable="d">
+             mc:Ignorable="d" KeyDown="onKeyDown">
     <Grid>
         <oxy:Plot x:Name="oxyChart"/>
         <local:SurfaceView x:Name="surfaceView"/>

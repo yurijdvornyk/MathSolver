@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System;
 using IntegralEquationsApp.Utils;
+using System.Windows.Input;
 
 namespace IntegralEquationsApp.Components.Result.Charts
 {
@@ -24,7 +25,7 @@ namespace IntegralEquationsApp.Components.Result.Charts
             presenter = new ResultChartsPresenter(this);
         }
 
-        public void set2dChart(ResultChart<Chart2dPoint> chartData)
+        public void Set2dChart(ResultChart<Chart2dPoint> chartData)
         {
             oxyChart.Visibility = System.Windows.Visibility.Visible;
             surfaceView.Visibility = System.Windows.Visibility.Collapsed;
@@ -46,14 +47,21 @@ namespace IntegralEquationsApp.Components.Result.Charts
             oxyChart.IsLegendVisible = chartData.Items.Count > 1;
         }
 
-        public void set3dChart(ResultChart<Chart3dPoint> resultChart)
+        public void Set3dChart(ResultChart<Chart3dPoint> resultChart)
         {
             oxyChart.Visibility = System.Windows.Visibility.Collapsed;
             surfaceView.Visibility = System.Windows.Visibility.Visible;
             if (resultChart.Items.Count > 0)
             {
-                surfaceView.SetData(SurfaceUtils.GetValueMatrixFromPoints(resultChart.Items[0].ChartPoints));
-                surfaceView.Show3dSurface();
+                surfaceView.Update(SurfaceUtils.GetValueMatrixFromPoints(resultChart.Items[0].ChartPoints));
+            }
+        }
+
+        private void onKeyDown(object sender, KeyEventArgs e)
+        {
+            if (surfaceView.Visibility == System.Windows.Visibility.Visible)
+            {
+                surfaceView.OnKeyDown(e.Key);
             }
         }
     }
