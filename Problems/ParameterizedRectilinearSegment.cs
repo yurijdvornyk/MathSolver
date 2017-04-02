@@ -147,10 +147,9 @@ namespace Problems
             }
             ProblemResult problemResult = new ProblemResult(); // "Result", "t", "tau(t)");
             problemResult.ResultData.Items.Add(ResultDataItem.Builder.Create().ColumnTitles("t", "tau(t)").Matrix(matrix).Build());
-            //problemResult.ResultChart.Items.Add(ResultChartItem.Builder.Create().Points(chartPoints).Build());
             ResultChart<Chart2dPoint> chart = new ResultChart<Chart2dPoint>("Result", new List<string>() { "t", "tau(t)" });
             chart.Items.Add(ResultChartItem<Chart2dPoint>.Builder.Create().Points(chartPoints).Build());
-            problemResult.SetChart(chart);
+            problemResult.ResultPlot.Charts.Add(chart);
             return problemResult;
         }
 

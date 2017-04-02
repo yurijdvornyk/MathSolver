@@ -143,12 +143,11 @@ namespace Problems
                 matrix[i, 1] = resultRaw.Values.ToList()[i];
                 chartPoints.Add(new Chart2dPoint((double)matrix[i, 0], (double)matrix[i, 1]));
             }
-            ProblemResult problemResult = new ProblemResult(); // "Result", "t", "tau(t)");
+            ProblemResult problemResult = new ProblemResult();
             problemResult.ResultData.Items.Add(ResultDataItem.Builder.Create().ColumnTitles("t", "tau(t)").Matrix(matrix).Build());
-            //problemResult.ResultChart.Items.Add(ResultChartItem.Builder.Create().Points(chartPoints).Build());
             ResultChart<Chart2dPoint> chart = new ResultChart<Chart2dPoint>("Result", new List<string>() { "t", "tau(t)" });
             chart.Items.Add(ResultChartItem<Chart2dPoint>.Builder.Create().Points(chartPoints).Build());
-            problemResult.SetChart(chart);
+            problemResult.ResultPlot.Charts.Add(chart);
             return problemResult;
         }
 

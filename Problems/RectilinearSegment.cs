@@ -116,11 +116,11 @@ namespace Problems
                 resultMatrix[i, 1] = result[i].Y;
                 chartPoints.Add(new Chart2dPoint(result[i].X, result[i].Y));
             }
-            ProblemResult problemResult = new ProblemResult(); // ("Result", "x", "tau(x)");
+            ProblemResult problemResult = new ProblemResult();
             problemResult.ResultData.Items.Add(ResultDataItem.Builder.Create().ColumnTitles("x", "tau(x)").Matrix(resultMatrix).Build());
             ResultChart<Chart2dPoint> chart = new ResultChart<Chart2dPoint>("Result", new List<string>() { "x", "tau(x)" });
             chart.Items.Add(ResultChartItem<Chart2dPoint>.Builder.Create().Points(chartPoints).Build());
-            problemResult.SetChart(chart);
+            problemResult.ResultPlot.Charts.Add(chart);
             return problemResult;
         }
 

@@ -52,7 +52,7 @@ namespace Problems
             result.ResultData.Items.Add(ResultDataItem.Builder.Create().ColumnTitles("x1", "x2", "u(x1, x2)").Matrix(resultMatrix).Build());
             ResultChart<Chart3dPoint> chart = new ResultChart<Chart3dPoint>("Result", new List<string>() { "x1", "x2", "u(x)" });
             chart.Items.Add(ResultChartItem<Chart3dPoint>.Builder.Create().Points(points).Build());
-            result.SetChart(chart);
+            result.ResultPlot.Charts.Add(chart);
             return result;
         }
 

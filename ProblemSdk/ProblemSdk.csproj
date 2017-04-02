@@ -68,6 +68,7 @@
     <Compile Include="Result\ResultData.cs" />
     <Compile Include="Result\ProblemResult.cs" />
     <Compile Include="Result\ResultDataItem.cs" />
+    <Compile Include="Result\ResultPlot.cs" />
     <Compile Include="SolutionNotifier.cs" />
     <Compile Include="Utils\ValidationUtils.cs" />
   </ItemGroup>

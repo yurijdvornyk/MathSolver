@@ -24,7 +24,6 @@ namespace IntegralEquationsApp.Components.Result.Data
         public void OnProblemSolved(ProblemResult result)
         {
             List<ResultDataTable> tables = new List<ResultDataTable>();
-            ResultData resultData = result.ResultData;
             result.ResultData.Items.ForEach(item =>
             {
                 ResultDataTable table = new ResultDataTable(result.ResultData.Title);

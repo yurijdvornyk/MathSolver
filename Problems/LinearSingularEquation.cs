@@ -93,12 +93,11 @@ namespace Problems
                 result[i, 1] = resArray[i];
                 chartPoints.Add(new Chart2dPoint(x, resArray[i]));
             }
-            ProblemResult problemResult = new ProblemResult(); // "Result", "x", "f(x)");
+            ProblemResult problemResult = new ProblemResult();
             problemResult.ResultData.Items.Add(ResultDataItem.Builder.Create().ColumnTitles("x", "f(x)").Matrix(result).Build());
-            //problemResult.ResultChart.Items.Add(ResultChartItem.Builder.Create().Points(chartPoints).Build());
             ResultChart<Chart2dPoint> chart = new ResultChart<Chart2dPoint>("Result", new List<string>() { "t", "tau(t)" });
             chart.Items.Add(ResultChartItem<Chart2dPoint>.Builder.Create().Points(chartPoints).Build());
-            problemResult.SetChart(chart);
+            problemResult.ResultPlot.Charts.Add(chart);
             return problemResult;
         }
 
