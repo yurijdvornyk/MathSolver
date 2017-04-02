@@ -16,11 +16,9 @@ namespace Problems
 
         private const double a = -1;
         private const double b = 1;
-        private const double potentialMinX = 0.7;
-        private const double potentialMinY = -0.3;
-        private const double potentialMaxX = 1.3;
-        private const double potentialMaxY = 0.3;
-        private const int potentialDivisions = 10;
+        private const double potentialDeltaX = 0.3;
+        private const double potentialDeltaY = 0.3;
+        private const int potentialDivisions = 50;
         private HomericExpression g;
         private string variable;
         private int n;
@@ -38,7 +36,7 @@ namespace Problems
 
         protected override ProblemResult execute()
         {
-            ProblemResult result = new ProblemResult(); // ("x", "u(x)");
+            ProblemResult result = new ProblemResult();
             List<Tuple<double, double, double>> potentials = getPotentialPoints();
             object[,] resultMatrix = new object[potentials.Count, 3];
             List<Chart3dPoint> points = new List<Chart3dPoint>();
@@ -53,6 +51,14 @@ namespace Problems
             ResultChart<Chart3dPoint> chart = new ResultChart<Chart3dPoint>("Result", new List<string>() { "x1", "x2", "u(x)" });
             chart.Items.Add(ResultChartItem<Chart3dPoint>.Builder.Create().Points(points).Build());
             result.ResultPlot.Charts.Add(chart);
+
+            ResultChart<Chart2dPoint> projectionXZ = new ResultChart<Chart2dPoint>("X1_U projection", new List<string>() { "x1", "u(x1, x2)" });
+            projectionXZ.Items.Add(ResultChartItem<Chart2dPoint>.Builder.Create().Points(getXZProjection()).Build());
+            result.ResultPlot.Charts.Add(projectionXZ);
+
+            ResultChart<Chart2dPoint> projectionYZ = new ResultChart<Chart2dPoint>("X2_U projection", new List<string>() { "x2", "u(x1, x2)" });
+            projectionYZ.Items.Add(ResultChartItem<Chart2dPoint>.Builder.Create().Points(getYZProjection()).Build());
+            result.ResultPlot.Charts.Add(projectionYZ);
             return result;
         }
 
@@ -111,16 +117,40 @@ namespace Problems
         private List<Tuple<double, double, double>> getPotentialPoints()
         {
             List<Tuple<double, double, double>> result = new List<Tuple<double, double, double>>();
-            double stepX = (potentialMaxX - potentialMinX) / potentialDivisions;
-            double stepY = (potentialMaxY - potentialMinY) / potentialDivisions;
+            double stepX = 2 * potentialDeltaX / potentialDivisions;
+            double stepY = 2 * potentialDeltaY / potentialDivisions;
             for (int i = 0; i < potentialDivisions; ++i)
             {
                 for (int j = 0; j < potentialDivisions; ++j)
                 {
-                    double x = potentialMinX + i * stepX;
-                    double y = potentialMinY + i * stepY;
+                    double x = b - potentialDeltaX + i * stepX;
+                    double y = -potentialDeltaY + i * stepY;
                     result.Add(new Tuple<double, double, double>(x, y, getPotentialAbsolute(x, y)));
                 }
+            }
+            return result;
+        }
+
+        private List<Chart2dPoint> getXZProjection()
+        {
+            List<Chart2dPoint> result = new List<Chart2dPoint>();
+            double stepX = 2 * potentialDeltaX / potentialDivisions;
+            for (int i = 0; i < potentialDivisions; ++i)
+            {
+                double x = b - potentialDeltaX + i * stepX;
+                result.Add(new Chart2dPoint(x, getPotentialAbsolute(x, 0)));
+            }
+            return result;
+        }
+
+        private List<Chart2dPoint> getYZProjection()
+        {
+            List<Chart2dPoint> result = new List<Chart2dPoint>();
+            double stepY = 2 * potentialDeltaY / potentialDivisions;
+            for (int i = 0; i < potentialDivisions; ++i)
+            {
+                double y = -potentialDeltaY + i * stepY;
+                result.Add(new Chart2dPoint(y, getPotentialAbsolute(0, y)));
             }
             return result;
         }
