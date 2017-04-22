@@ -53,7 +53,7 @@ namespace IntegralEquationsApp.Components.Result.Charts
             {
                 TabItem tabItem = new TabItem();
                 tabItem.Style = new Style(typeof(TabItem));
-                tabItem.Header = getTabHeader();
+                tabItem.Header = getTabHeader(chart.Title);
                 if (chart.GetChartPointType() == typeof(Chart2dPoint))
                 {
                     ChartPlotter plotter = new ChartPlotter();
@@ -70,9 +70,10 @@ namespace IntegralEquationsApp.Components.Result.Charts
             });
         }
 
-        private string getTabHeader()
+        private string getTabHeader(string title)
         {
-            return (tcResultsTabs.Items.Count + 1).ToString();
+
+            return string.IsNullOrEmpty(title) ? (tcResultsTabs.Items.Count + 1).ToString() : title;
         }
 
         private void onKeyDown(object sender, KeyEventArgs e)

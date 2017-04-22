@@ -240,39 +240,44 @@ namespace IntegralEquationsApp.Components.Result.Charts
             return points.Count - 1;
         }
 
-        private void onKeyDown(object sender, KeyEventArgs e)
+        private void vscroll_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            OnKeyDown(e.Key);
+            if (e.NewValue > e.OldValue)
+            {
+                cameraVerticalPosition += cameraVerticalChange;
+                if (cameraVerticalPosition > Math.PI / 2.0) cameraVerticalPosition = Math.PI / 2.0;
+            } else if (e.NewValue < e.OldValue)
+            {
+                cameraVerticalPosition -= cameraVerticalChange;
+                if (cameraVerticalPosition < -Math.PI / 2.0) cameraVerticalPosition = -Math.PI / 2.0;
+            }
+            positionCamera();
         }
 
-        private void btnUp_Click(object sender, RoutedEventArgs e)
+        private void hscroll_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            OnKeyDown(Key.Up);
+            if (e.NewValue > e.OldValue)
+            {
+                cameraHorizontalPosition += cameraHorizontalChange;
+            } else if (e.NewValue < e.OldValue)
+            {
+                cameraHorizontalPosition -= cameraHorizontalChange;
+            }
+            positionCamera();
         }
 
-        private void btnDown_Click(object sender, RoutedEventArgs e)
+        private void slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            OnKeyDown(Key.Down);
-        }
-
-        private void btnLeft_Click(object sender, RoutedEventArgs e)
-        {
-            OnKeyDown(Key.Left);
-        }
-
-        private void btnRight_Click(object sender, RoutedEventArgs e)
-        {
-            OnKeyDown(Key.Right);
-        }
-
-        private void btnPlus_Click(object sender, RoutedEventArgs e)
-        {
-            OnKeyDown(Key.Add);
-        }
-
-        private void btnMinus_Click(object sender, RoutedEventArgs e)
-        {
-            OnKeyDown(Key.Subtract);
+            if (e.NewValue > e.OldValue)
+            {
+                cameraDistance -= cameraScalingChange;
+                if (cameraDistance < cameraScalingChange) cameraDistance = cameraScalingChange;
+            }
+            else if (e.NewValue < e.OldValue)
+            {
+                cameraDistance += cameraScalingChange;
+            }
+            positionCamera();
         }
 
         private void positionCamera()

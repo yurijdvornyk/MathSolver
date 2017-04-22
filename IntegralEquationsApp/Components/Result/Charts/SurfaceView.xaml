@@ -5,23 +5,59 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:IntegralEquationsApp.Components.Result.Charts"
              Loaded="Window_Loaded"
-             KeyDown="onKeyDown"
              d:DesignWidth="300"
              d:DesignHeight="300"
              mc:Ignorable="d">
     <Grid>
-        <Viewport3D Name="viewport"/>
-        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Vertical">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Content="+" Click="btnPlus_Click"/>
-                <Button Content="Up" Click="btnUp_Click"/>
-                <Button Content="-" Click="btnMinus_Click"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Content="Left" Click="btnLeft_Click"/>
-                <Button Content="Down" Click="btnDown_Click"/>
-                <Button Content="Right" Click="btnRight_Click"/>
-            </StackPanel>
-        </StackPanel>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+
+        <ScrollBar Name="vscroll" 
+            Grid.Row="0" Grid.Column="1"
+            Orientation="Vertical"  
+            Minimum="-180" Maximum="180" 
+            LargeChange="10" SmallChange="1" Value="0" ValueChanged="vscroll_ValueChanged" />
+
+        <ScrollBar Name="hscroll" 
+            Grid.Row="1" Grid.Column="0"
+            Orientation="Horizontal" 
+            Minimum="-180" Maximum="180" 
+            LargeChange="10" SmallChange="1" Value="0" ValueChanged="hscroll_ValueChanged" />
+
+        <Viewport3D Grid.Row="0" Grid.Column="0" x:Name="viewport">
+            <Viewport3D.Camera>
+                <PerspectiveCamera 
+                  Position = "1.5, 2, 3"
+                  LookDirection = "-1.5, -2, -3"
+                  UpDirection = "0, 1, 0"
+                  FieldOfView = "60">
+                    <PerspectiveCamera.Transform>
+                        <Transform3DGroup>
+                            <RotateTransform3D>
+                                <RotateTransform3D.Rotation>
+                                    <AxisAngleRotation3D
+                                      Axis="0 1 0" 
+                                      Angle="{Binding ElementName=hscroll, Path=Value}" />
+                                </RotateTransform3D.Rotation>
+                            </RotateTransform3D>
+                            <RotateTransform3D>
+                                <RotateTransform3D.Rotation>
+                                    <AxisAngleRotation3D
+                                      Axis="1 0 0" 
+                                      Angle="{Binding ElementName=vscroll, Path=Value}" />
+                                </RotateTransform3D.Rotation>
+                            </RotateTransform3D>
+                        </Transform3DGroup>
+                    </PerspectiveCamera.Transform>
+                </PerspectiveCamera>
+            </Viewport3D.Camera>
+        </Viewport3D>
+        <Slider x:Name="slider" Orientation="Vertical" HorizontalAlignment="Right" Margin="10" Minimum="-100" Maximum="100" Value="0" ValueChanged="slider_ValueChanged"/>
     </Grid>
 </UserControl>

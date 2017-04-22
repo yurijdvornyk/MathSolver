@@ -18,13 +18,14 @@ namespace Problems
         private const double b = 1;
         private const double potentialDeltaX = 0.3;
         private const double potentialDeltaY = 0.3;
-        private const int potentialDivisions = 50;
+        private const int potentialDivisions = 100;
         private HomericExpression g;
         private string variable;
         private int n;
         private double h;
 
         private List<double> tau;
+        private List<Tuple<double, double>> t;
 
         public PotentialAbsForRectilinearSegment(): base()
         {
@@ -36,7 +37,8 @@ namespace Problems
 
         protected override ProblemResult execute()
         {
-            ProblemResult result = new ProblemResult();
+            calculateTArray();
+            tau = getTauFunc();
             List<Tuple<double, double, double>> potentials = getPotentialPoints();
             object[,] resultMatrix = new object[potentials.Count, 3];
             List<Chart3dPoint> points = new List<Chart3dPoint>();
@@ -47,19 +49,29 @@ namespace Problems
                 resultMatrix[i, 2] = potentials[i].Item3;
                 points.Add(new Chart3dPoint(potentials[i].Item1, potentials[i].Item2, potentials[i].Item3));
             }
+            ProblemResult result = new ProblemResult();
             result.ResultData.Items.Add(ResultDataItem.Builder.Create().ColumnTitles("x1", "x2", "u(x1, x2)").Matrix(resultMatrix).Build());
-            ResultChart<Chart3dPoint> chart = new ResultChart<Chart3dPoint>("Result", new List<string>() { "x1", "x2", "u(x)" });
+            ResultChart<Chart3dPoint> chart = new ResultChart<Chart3dPoint>("u(x1, x2)", new List<string>() { "x1", "x2", "u(x)" });
             chart.Items.Add(ResultChartItem<Chart3dPoint>.Builder.Create().Points(points).Build());
             result.ResultPlot.Charts.Add(chart);
 
-            ResultChart<Chart2dPoint> projectionXZ = new ResultChart<Chart2dPoint>("X1_U projection", new List<string>() { "x1", "u(x1, x2)" });
+            ResultChart<Chart2dPoint> projectionXZ = new ResultChart<Chart2dPoint>("u(x1, 0)", new List<string>() { "x1", "u(x1, x2)" });
             projectionXZ.Items.Add(ResultChartItem<Chart2dPoint>.Builder.Create().Points(getXZProjection()).Build());
             result.ResultPlot.Charts.Add(projectionXZ);
 
-            ResultChart<Chart2dPoint> projectionYZ = new ResultChart<Chart2dPoint>("X2_U projection", new List<string>() { "x2", "u(x1, x2)" });
+            ResultChart<Chart2dPoint> projectionYZ = new ResultChart<Chart2dPoint>("u(0, x2)", new List<string>() { "x2", "u(x1, x2)" });
             projectionYZ.Items.Add(ResultChartItem<Chart2dPoint>.Builder.Create().Points(getYZProjection()).Build());
             result.ResultPlot.Charts.Add(projectionYZ);
             return result;
+        }
+
+        private void calculateTArray()
+        {
+            t = new List<Tuple<double, double>>();
+            for (int i = 0; i < n; ++i)
+            {
+                t.Add(new Tuple<double, double>(a + i * h, a + (i + 1) * h));
+            }
         }
 
         protected override void updateData()
@@ -76,8 +88,9 @@ namespace Problems
 
             for (int i = 0; i < n; ++i)
             {
-                double ti = a + i * h;
-                double ti1 = a + (i + 1) * h;
+                double ti = t[i].Item1;
+                double ti1 = t[i].Item2;
+                t.Add(new Tuple<double, double>(ti, ti1));
                 for (int j = 0; j < n; ++j)
                 {
                     double tj = a + j * h;
@@ -106,29 +119,10 @@ namespace Problems
             double[] b = new double[n];
             for (int i = 0; i < n; ++i)
             {
-                double ti = a + i * h;
-                double ti1 = a + (i + 1) * h;
-                double x = (ti + ti1) / 2;
+                double x = (t[i].Item1 + t[i].Item2) / 2;
                 b[i] = g.Calculate(x);
             }
             return new List<double>(LinearEquationHelper.SolveWithGaussMethod(getMatrix(), b));
-        }
-
-        private List<Tuple<double, double, double>> getPotentialPoints()
-        {
-            List<Tuple<double, double, double>> result = new List<Tuple<double, double, double>>();
-            double stepX = 2 * potentialDeltaX / potentialDivisions;
-            double stepY = 2 * potentialDeltaY / potentialDivisions;
-            for (int i = 0; i < potentialDivisions; ++i)
-            {
-                for (int j = 0; j < potentialDivisions; ++j)
-                {
-                    double x = b - potentialDeltaX + i * stepX;
-                    double y = -potentialDeltaY + i * stepY;
-                    result.Add(new Tuple<double, double, double>(x, y, getPotentialAbsolute(x, y)));
-                }
-            }
-            return result;
         }
 
         private List<Chart2dPoint> getXZProjection()
@@ -150,39 +144,60 @@ namespace Problems
             for (int i = 0; i < potentialDivisions; ++i)
             {
                 double y = -potentialDeltaY + i * stepY;
-                result.Add(new Chart2dPoint(y, getPotentialAbsolute(0, y)));
+                result.Add(new Chart2dPoint(y, getPotentialAbsolute(1, y)));
+            }
+            return result;
+        }
+
+        private List<Tuple<double, double, double>> getPotentialPoints()
+        {
+            List<Tuple<double, double, double>> result = new List<Tuple<double, double, double>>();
+            double stepX = 2 * potentialDeltaX / potentialDivisions;
+            double stepY = 2 * potentialDeltaY / potentialDivisions;
+            for (int i = 0; i < potentialDivisions; ++i)
+            {
+                double x = b - potentialDeltaX + i * stepX;
+                for (int j = 0; j < potentialDivisions; ++j)
+                {
+                    double y = -potentialDeltaY + j * stepY;
+                    result.Add(new Tuple<double, double, double>(x, y, getPotentialAbsolute(x, y)));
+                }
             }
             return result;
         }
 
         private double getPotentialAbsolute(double x1, double x2)
         {
-            if (tau == null)
+            double absolute = Math.Sqrt(Math.Pow(getDuDx1(x1, x2), 2) + Math.Pow(getDuDx2(x1, x2), 2));
+            if (double.IsNaN(absolute))
             {
-                tau = getTauFunc();
+                absolute = 0;
             }
-            return Math.Sqrt(Math.Pow(getDuDx1(x1, x2), 2) + Math.Pow(getDuDx2(x1, x2), 2));
+            return absolute;
         }
 
         private double getDuDx1(double x1, double x2)
         {
             double sum = 0;
-            for (int i = 0; i < n - 1; ++i)
+            for (int i = 0; i < n; ++i)
             {
-                sum += tau[i] * Math.Log((Math.Pow(tau[i + 1] - x1, 2) + Math.Pow(x2, 2))
-                    / (Math.Pow(tau[i] - x1, 2) + Math.Pow(x2, 2)));
+                double up = Math.Pow(t[i].Item1 - x1, 2) + Math.Pow(t[i].Item2, 2);
+                double down = Math.Pow(t[i].Item1 - x1, 2) + Math.Pow(t[i].Item2, 2);
+                sum += tau[i] * Math.Log(up / down);
             }
-            return (-0.25 / Math.PI) * sum;
+            return sum / (4 * Math.PI);
         }
 
         private double getDuDx2(double x1, double x2)
         {
             double sum = 0;
-            for (int i = 0; i < n - 1; ++i)
+            for (int i = 0; i < n; ++i)
             {
-                sum += tau[i] * (Math.Atan(Math.Abs(tau[i + 1] - x1) / Math.Abs(x2)) - Math.Atan(Math.Abs(tau[i] - x1) / Math.Abs(x2)));
+                double atan1 = Math.Atan(Math.Abs(t[i].Item2 - x1) / Math.Abs(x2));
+                double atan2 = Math.Atan(Math.Abs(t[i].Item1 - x1) / Math.Abs(x2));
+                sum += tau[i] * (atan1 - atan2);
             }
-            return (0.5 / Math.PI) * sum;
+            return sum / (2 * Math.PI);
         }
     }
 }
