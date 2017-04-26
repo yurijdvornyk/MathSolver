@@ -112,6 +112,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Components\Result\Charts\SurfaceWebView.xaml.cs">
+      <DependentUpon>SurfaceWebView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Result\Charts\Surface\SurfaceHelper.cs" />
     <Compile Include="Utils\SurfaceUtils.cs" />
     <Page Include="Components\InputData\DataItemHint.xaml">
       <SubType>Designer</SubType>
@@ -154,6 +158,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Components\Result\Charts\SurfaceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\Result\Charts\SurfaceWebView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -278,7 +286,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Components\Result\Charts\Surface\surface-web-page.html" />
+    <Content Include="Components\Result\Charts\Surface\vis.min.css" />
+    <Content Include="Components\Result\Charts\Surface\vis.min.js" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ProblemSdk\ProblemSdk.csproj">
       <Project>{82994d35-440b-41b6-b057-993d6c26d830}</Project>

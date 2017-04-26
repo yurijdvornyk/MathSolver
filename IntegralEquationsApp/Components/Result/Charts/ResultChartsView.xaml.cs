@@ -38,11 +38,12 @@ namespace IntegralEquationsApp.Components.Result.Charts
             });
         }
 
-        public void Set3dChart(ResultChart<Chart3dPoint> resultChart, SurfaceView surfaceView)
+        public void Set3dChart(ResultChart<Chart3dPoint> resultChart, SurfaceWebView surfaceView)
         {
             if (resultChart.Items.Count > 0)
             {
-                surfaceView.Update(SurfaceUtils.GetValueMatrixFromPoints(resultChart.Items[0].ChartPoints));
+                surfaceView.SetData(resultChart.Items[0].ChartPoints);
+                //surfaceView.Update(SurfaceUtils.GetValueMatrixFromPoints(resultChart.Items[0].ChartPoints));
             }
         }
 
@@ -62,7 +63,7 @@ namespace IntegralEquationsApp.Components.Result.Charts
                     tcResultsTabs.Items.Add(tabItem);
                 } else if (chart.GetChartPointType() == typeof(Chart3dPoint))
                 {
-                    SurfaceView surfaceView = new SurfaceView();
+                    SurfaceWebView surfaceView = new SurfaceWebView();
                     Set3dChart(chart as ResultChart<Chart3dPoint>, surfaceView);
                     tabItem.Content = surfaceView;
                     tcResultsTabs.Items.Add(tabItem);
