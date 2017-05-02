@@ -10,15 +10,18 @@ namespace Problems
 {
     public class PotentialAbsForRectilinearSegment : Problem
     {
-        private static readonly int POSITION_G = 0;
-        private static readonly int POSITION_VAR = 1;
-        private static readonly int POSITION_N = 2;
+        private const int POSITION_G = 0;
+        private const int POSITION_VAR = 1;
+        private const int POSITION_N = 2;
+        private const int POSITION_DELTA_X = 3;
+        private const int POSITION_DELTA_Y = 4;
+        private const int POSITION_POTENTIAL_N = 5;
 
         private const double a = -1;
         private const double b = 1;
-        private const double potentialDeltaX = 0.3;
-        private const double potentialDeltaY = 0.3;
-        private const int potentialDivisions = 100;
+        private double potentialDeltaX;
+        private double potentialDeltaY;
+        private int potentialN;
         private HomericExpression g;
         private string variable;
         private int n;
@@ -32,7 +35,10 @@ namespace Problems
             Name = "Potential absolute for Rectilinear segment problem";
             InputData.AddDataItemAt(POSITION_G, DataItemBuilder<string>.Create().Name("g").Build());
             InputData.AddDataItemAt(POSITION_VAR, DataItemBuilder<string>.Create().Name("variable").DefValue("t").Build());
-            InputData.AddDataItemAt(POSITION_N, DataItemBuilder<int>.Create().Name("n").Validation(number => number > 0).Build());
+            InputData.AddDataItemAt(POSITION_N, DataItemBuilder<int>.Create().Name("n").DefValue(100).Validation(number => number > 0).Build());
+            InputData.AddDataItemAt(POSITION_DELTA_X, DataItemBuilder<double>.Create().Name("x1 shift for potential").DefValue(0.3).Build());
+            InputData.AddDataItemAt(POSITION_DELTA_Y, DataItemBuilder<double>.Create().Name("x2 shift for potential").DefValue(0.3).Build());
+            InputData.AddDataItemAt(POSITION_POTENTIAL_N, DataItemBuilder<int>.Create().Name("n for calculating potential").DefValue(100).Build());
         }
 
         protected override ProblemResult execute()
@@ -80,6 +86,9 @@ namespace Problems
             g = new HomericExpression(InputData.GetValue<string>(POSITION_G), variable);
             InputData.GetValue(POSITION_N, out n);
             h = (b - a) / n;
+            potentialDeltaX = InputData.GetValue<double>(POSITION_DELTA_X);
+            potentialDeltaY = InputData.GetValue<double>(POSITION_DELTA_Y);
+            potentialN = InputData.GetValue<int>(POSITION_POTENTIAL_N);
         }
 
         private double[,] getMatrix()
@@ -128,8 +137,8 @@ namespace Problems
         private List<Chart2dPoint> getXZProjection()
         {
             List<Chart2dPoint> result = new List<Chart2dPoint>();
-            double stepX = 2 * potentialDeltaX / potentialDivisions;
-            for (int i = 0; i < potentialDivisions; ++i)
+            double stepX = 2 * potentialDeltaX / potentialN;
+            for (int i = 0; i < potentialN; ++i)
             {
                 double x = b - potentialDeltaX + i * stepX;
                 result.Add(new Chart2dPoint(x, getPotentialAbsolute(x, 0)));
@@ -140,8 +149,8 @@ namespace Problems
         private List<Chart2dPoint> getYZProjection()
         {
             List<Chart2dPoint> result = new List<Chart2dPoint>();
-            double stepY = 2 * potentialDeltaY / potentialDivisions;
-            for (int i = 0; i < potentialDivisions; ++i)
+            double stepY = 2 * potentialDeltaY / potentialN;
+            for (int i = 0; i < potentialN; ++i)
             {
                 double y = -potentialDeltaY + i * stepY;
                 result.Add(new Chart2dPoint(y, getPotentialAbsolute(1, y)));
@@ -152,12 +161,12 @@ namespace Problems
         private List<Tuple<double, double, double>> getPotentialPoints()
         {
             List<Tuple<double, double, double>> result = new List<Tuple<double, double, double>>();
-            double stepX = 2 * potentialDeltaX / potentialDivisions;
-            double stepY = 2 * potentialDeltaY / potentialDivisions;
-            for (int i = 0; i < potentialDivisions; ++i)
+            double stepX = 2 * potentialDeltaX / potentialN;
+            double stepY = 2 * potentialDeltaY / potentialN;
+            for (int i = 0; i < potentialN; ++i)
             {
                 double x = b - potentialDeltaX + i * stepX;
-                for (int j = 0; j < potentialDivisions; ++j)
+                for (int j = 0; j < potentialN; ++j)
                 {
                     double y = -potentialDeltaY + j * stepY;
                     result.Add(new Tuple<double, double, double>(x, y, getPotentialAbsolute(x, y)));

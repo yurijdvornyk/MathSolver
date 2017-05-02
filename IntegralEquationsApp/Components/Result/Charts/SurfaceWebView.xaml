@@ -6,5 +6,6 @@
              xmlns:local="clr-namespace:IntegralEquationsApp.Components.Result.Charts"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <WebBrowser Name="broswer"/>
+    <!--<cefSharp:ChromiumWebBrowser x:Name="browser"/>-->
+    <WebBrowser Name="browser"/>
 </UserControl>

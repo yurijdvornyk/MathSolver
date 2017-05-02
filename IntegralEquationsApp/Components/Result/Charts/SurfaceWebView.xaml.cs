@@ -2,6 +2,7 @@
 using ProblemSdk.Result;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,7 +33,14 @@ namespace IntegralEquationsApp.Components.Result.Charts
         public void SetData(List<Chart3dPoint> data)
         {
             Data = data;
-            broswer.NavigateToString(SurfaceHelper.GetPageContent(data));
+            StreamWriter file = new StreamWriter("result.html");
+            string pageContent = SurfaceHelper.GetPageContent(data);
+            file.WriteLine(pageContent);
+            file.Close();
+
+            //HtmlBridge b = new HtmlBridge();
+            //browser.ObjectForScripting = b;
+            browser.NavigateToString(pageContent);
         }
 
         internal void Update(double[,] v)
