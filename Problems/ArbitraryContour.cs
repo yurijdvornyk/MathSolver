@@ -40,7 +40,6 @@ namespace Problems
         private double h { get { return (b - a) / n; } }
         private string variable;
 
-        private SortedDictionary<double, double> Tx = new SortedDictionary<double, double>();
         public double[,] matrix;
         private List<Tuple<double, double>> t;
         private PotentialHelper potentialHelper;
@@ -110,30 +109,14 @@ namespace Problems
 
         private List<double> getTauFunc()
         {
-            //Tx.Clear();
             fillMatrix();
-
             double[] b = new double[n];
             // Fill b in Ac=b
             for (int i = 0; i < n; ++i)
             {
-                double ti = a + i * h;
-                double ti1 = a + (i + 1) * h;
-                double t = (ti + ti1) / 2;
-                b[i] = jacobian(t);
+                b[i] = jacobian((t[i].Item1 + t[i].Item2) / 2);
             }
             return LinearEquationHelper.SolveWithGaussMethod(matrix, b).ToList();
-
-            b = LinearEquationHelper.SolveWithGaussMethod(matrix, b);
-            // Save c[] as Dictionary(x, y)
-            for (int i = 0; i < n; ++i)
-            {
-                double ti = a + i * h;
-                double ti1 = a + (i + 1) * h;
-                double x = (ti + ti1) / 2;
-                //Tx.Add(x, b[i]);
-            }
-            //return Tx;
         }
 
         protected override ProblemResult execute()
