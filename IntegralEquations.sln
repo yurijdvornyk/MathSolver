@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProblemConsoleTest", "Probl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Problems", "Problems\Problems.csproj", "{382E1C6E-B2E8-4002-8EBA-09DF63757CBC}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "MathProblemSolver", "MathProblemSolver\MathProblemSolver.vdproj", "{019927D9-4697-4AE0-9187-041CB9A721D0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,8 @@ Global
 		{382E1C6E-B2E8-4002-8EBA-09DF63757CBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{382E1C6E-B2E8-4002-8EBA-09DF63757CBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{382E1C6E-B2E8-4002-8EBA-09DF63757CBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{019927D9-4697-4AE0-9187-041CB9A721D0}.Debug|Any CPU.ActiveCfg = Debug
+		{019927D9-4697-4AE0-9187-041CB9A721D0}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
