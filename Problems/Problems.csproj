@@ -48,6 +48,7 @@
     <Compile Include="ArbitraryContourExtendedCase.cs" />
     <Compile Include="Helper\IntegrationHelper.cs" />
     <Compile Include="Helper\LinearEquationHelper.cs" />
+    <Compile Include="Helper\PotentialHelper.cs" />
     <Compile Include="LinearSingularEquation.cs" />
     <Compile Include="PotentialAbsForRectilinearSegment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

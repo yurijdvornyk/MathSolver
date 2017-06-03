@@ -159,16 +159,18 @@ namespace Problems
         {
             var resultRaw = GetTx();
             var matrix = new object[resultRaw.Count, 2];
-            var chartPoints = new List<ProblemChartPoint>();
+            var chartPoints = new List<Chart2dPoint>();
             for (int i = 0; i < resultRaw.Count; ++i)
             {
                 matrix[i, 0] = resultRaw.Keys.ToList()[i];
                 matrix[i, 1] = resultRaw.Values.ToList()[i];
-                chartPoints.Add(new ProblemChartPoint((double)matrix[i, 0], (double)matrix[i, 1]));
+                chartPoints.Add(new Chart2dPoint((double)matrix[i, 0], (double)matrix[i, 1]));
             }
-            ProblemResult problemResult = new ProblemResult("Result", "t", "tau(t)");
+            ProblemResult problemResult = new ProblemResult(); // "Result", "t", "tau(t)");
             problemResult.ResultData.Items.Add(ResultDataItem.Builder.Create().ColumnTitles("t", "tau(t)").Matrix(matrix).Build());
-            problemResult.ResultChart.Items.Add(ResultChartItem.Builder.Create().Points(chartPoints).Build());
+            ResultChart<Chart2dPoint> chart = new ResultChart<Chart2dPoint>("Result", new List<string>() { "t", "tau(t)" });
+            chart.Items.Add(ResultChartItem<Chart2dPoint>.Builder.Create().Points(chartPoints).Build());
+            problemResult.ResultPlot.Charts.Add(chart);
             return problemResult;
         }
 

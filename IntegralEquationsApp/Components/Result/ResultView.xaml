@@ -7,12 +7,16 @@
              xmlns:data="clr-namespace:IntegralEquationsApp.Components.Result.Data"
              xmlns:charts="clr-namespace:IntegralEquationsApp.Components.Result.Charts"
              mc:Ignorable="d">
-    <TabControl>
-        <TabItem Header="Data">
-            <data:ResultDataView x:Name="dataView"/>
-        </TabItem>
-        <TabItem Header="Charts">
-            <charts:ResultChartsView x:Name="chartsView"/>
-        </TabItem>
-    </TabControl>
+    <Grid Background="White">
+        <TextBlock Name="tbDefaultText" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   TextAlignment="Center" TextWrapping="WrapWithOverflow" Margin="24" Foreground="Gray"/>
+        <TabControl Name="tcResult" Visibility="Collapsed">
+            <TabItem Header="Data" Background="White">
+                <data:ResultDataView x:Name="dataView"/>
+            </TabItem>
+            <TabItem Header="Charts" Background="White">
+                <charts:ResultChartsView x:Name="chartsView"/>
+            </TabItem>
+        </TabControl>
+    </Grid>
 </UserControl>

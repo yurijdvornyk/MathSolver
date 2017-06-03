@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace IntegralEquationsApp.Components.Solution
 {
@@ -20,12 +8,15 @@ namespace IntegralEquationsApp.Components.Solution
     /// </summary>
     public partial class SolutionView : UserControl, ISolutionView
     {
+        private readonly string ERROR_TITLE = "Error";
+
         private SolutionPresenter presenter;
 
         public SolutionView()
         {
             InitializeComponent();
             presenter = new SolutionPresenter(this);
+            btnSolve.Content = "\u25BA";
         }
 
         public void FinishProgress()
@@ -43,6 +34,11 @@ namespace IntegralEquationsApp.Components.Solution
         public void SetSolveButtonEnabled(bool enabled)
         {
             btnSolve.IsEnabled = enabled;
+        }
+
+        public void ShowError(string message)
+        {
+            MessageBox.Show(message, ERROR_TITLE, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
         }
 
         public void StartProgress()

@@ -85,17 +85,19 @@ namespace Problems
         {
             object[,] result = new object[N, 2];
             var resArray = SolveMatrix();
-            List<ProblemChartPoint> chartPoints = new List<ProblemChartPoint>();
+            List<Chart2dPoint> chartPoints = new List<Chart2dPoint>();
             for (int i = 0; i < N; ++i)
             {
                 double x = A + i * H;
                 result[i, 0] = x;
                 result[i, 1] = resArray[i];
-                chartPoints.Add(new ProblemChartPoint(x, resArray[i]));
+                chartPoints.Add(new Chart2dPoint(x, resArray[i]));
             }
-            ProblemResult problemResult = new ProblemResult("Result", "x", "f(x)");
+            ProblemResult problemResult = new ProblemResult();
             problemResult.ResultData.Items.Add(ResultDataItem.Builder.Create().ColumnTitles("x", "f(x)").Matrix(result).Build());
-            problemResult.ResultChart.Items.Add(ResultChartItem.Builder.Create().Points(chartPoints).Build());
+            ResultChart<Chart2dPoint> chart = new ResultChart<Chart2dPoint>("Result", new List<string>() { "t", "tau(t)" });
+            chart.Items.Add(ResultChartItem<Chart2dPoint>.Builder.Create().Points(chartPoints).Build());
+            problemResult.ResultPlot.Charts.Add(chart);
             return problemResult;
         }
 

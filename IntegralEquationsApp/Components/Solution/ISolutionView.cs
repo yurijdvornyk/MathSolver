@@ -6,5 +6,6 @@
         void SetProgress(double progress);
         void StartProgress();
         void FinishProgress();
+        void ShowError(string message);
     }
 }

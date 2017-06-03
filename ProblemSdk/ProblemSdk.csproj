@@ -58,12 +58,17 @@
     <Compile Include="ISolutionListener.cs" />
     <Compile Include="Problem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Result\ProblemChartPoint.cs" />
+    <Compile Include="Result\Chart3dPoint.cs" />
+    <Compile Include="Result\ChartPoint.cs" />
+    <Compile Include="Result\IChartPoint.cs" />
+    <Compile Include="Result\Chart2dPoint.cs" />
+    <Compile Include="Result\IResultChart.cs" />
     <Compile Include="Result\ResultChart.cs" />
     <Compile Include="Result\ResultChartItem.cs" />
     <Compile Include="Result\ResultData.cs" />
     <Compile Include="Result\ProblemResult.cs" />
     <Compile Include="Result\ResultDataItem.cs" />
+    <Compile Include="Result\ResultPlot.cs" />
     <Compile Include="SolutionNotifier.cs" />
     <Compile Include="Utils\ValidationUtils.cs" />
   </ItemGroup>

@@ -18,10 +18,22 @@ namespace IntegralEquationsApp.Components.Solution
             view.SetSolveButtonEnabled(currentProblem != null);
         }
 
-        public void OnError(object erorr)
+        public void OnError(object error)
         {
             view.SetSolveButtonEnabled(true);
             view.SetProgress(0);
+            if (error == null)
+            {
+                return;
+            }
+            else if (error is Exception)
+            {
+                view.ShowError((error as Exception).Message);
+            }
+            else
+            {
+                view.ShowError(error.ToString());
+            }
         }
 
         public void OnProblemSolved(ProblemResult result)

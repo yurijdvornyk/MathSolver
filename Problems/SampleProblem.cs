@@ -24,7 +24,7 @@ namespace Problems
 
         protected override ProblemResult execute()
         {
-            ProblemResult problemResult = new ProblemResult("Result", "", "");
+            ProblemResult problemResult = new ProblemResult();// "Result", "", "");
             doOperation(() =>
             {
                 double d = b * b - 4 * a * c;

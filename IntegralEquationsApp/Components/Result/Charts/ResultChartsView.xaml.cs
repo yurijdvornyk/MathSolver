@@ -6,6 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System;
+using IntegralEquationsApp.Utils;
+using System.Windows.Input;
+using Microsoft.Research.DynamicDataDisplay;
+using Microsoft.Research.DynamicDataDisplay.DataSources;
+using System.Windows;
 
 namespace IntegralEquationsApp.Components.Result.Charts
 {
@@ -22,29 +28,62 @@ namespace IntegralEquationsApp.Components.Result.Charts
             presenter = new ResultChartsPresenter(this);
         }
 
-        public void setChartData(ResultChart chartData)
+        public void Set2dChart(ResultChart<Chart2dPoint> chartData, ChartPlotter plotter)
         {
-            oxyChart.Series.Clear();
-            chartData.Items.ForEach(item => addChart(item));
-            foreach (var value in chartData.Items)
+            chartData.Items.ForEach(chart =>
             {
-                addChart(value);
-            }
-            oxyChart.IsLegendVisible = chartData.Items.Count > 1;
+                List<double> x = chart.ChartPoints.Select(point => point.X).ToList();
+                List<double> y = chart.ChartPoints.Select(point => point.Y).ToList();
+                plotter.Children.Add(new LineGraph(x.AsXDataSource().Join(y.AsYDataSource())));
+            });
+            plotter.LegendVisible = chartData.Items.Count > 1;
         }
 
-        private void addChart(ResultChartItem item)
+        public void Set3dChart(ResultChart<Chart3dPoint> resultChart, SurfaceWebView surfaceView)
         {
-            LineSeries lineSeries = new LineSeries();
-            lineSeries.StrokeThickness = 2;
-            lineSeries.Color = Colors.DarkGreen;
-            List<DataPoint> linePoints = new List<DataPoint>();
-            item.ChartPoints.ForEach(point =>
+            if (resultChart.Items.Count > 0)
             {
-                linePoints.Add(new DataPoint(point.X, point.Y));
+                surfaceView.SetData(resultChart.Items[0].ChartPoints);
+                //surfaceView.Update(SurfaceUtils.GetValueMatrixFromPoints(resultChart.Items[0].ChartPoints));
+            }
+        }
+
+        public void SetCharts(List<IResultChart> charts)
+        {
+            tcResultsTabs.Items.Clear();
+            charts.ForEach(chart =>
+            {
+                TabItem tabItem = new TabItem();
+                tabItem.Style = new Style(typeof(TabItem));
+                tabItem.Header = getTabHeader(chart.Title);
+                if (chart.GetChartPointType() == typeof(Chart2dPoint))
+                {
+                    ChartPlotter plotter = new ChartPlotter();
+                    Set2dChart(chart as ResultChart<Chart2dPoint>, plotter);
+                    tabItem.Content = plotter;
+                    tcResultsTabs.Items.Add(tabItem);
+                } else if (chart.GetChartPointType() == typeof(Chart3dPoint))
+                {
+                    SurfaceWebView surfaceView = new SurfaceWebView();
+                    Set3dChart(chart as ResultChart<Chart3dPoint>, surfaceView);
+                    tabItem.Content = surfaceView;
+                    tcResultsTabs.Items.Add(tabItem);
+                }
             });
-            lineSeries.ItemsSource = linePoints;
-            oxyChart.Series.Add(lineSeries);
+        }
+
+        private string getTabHeader(string title)
+        {
+
+            return string.IsNullOrEmpty(title) ? (tcResultsTabs.Items.Count + 1).ToString() : title;
+        }
+
+        private void onKeyDown(object sender, KeyEventArgs e)
+        {
+            //if (surfaceView.Visibility == System.Windows.Visibility.Visible)
+            //{
+            //    surfaceView.OnKeyDown(e.Key);
+            //}
         }
     }
 }

@@ -19,7 +19,7 @@ namespace IntegralEquationsApp.Components.Result.Charts
 
         public void OnProblemSolved(ProblemResult result)
         {
-            view.setChartData(result.ResultChart);
+            view.SetCharts(result.ResultPlot.Charts);
         }
 
         public void OnStartProblemSolving(IProblem problem) { }

@@ -2,36 +2,36 @@
 
 namespace ProblemSdk.Result
 {
-    public class ResultChartItem
+    public class ResultChartItem<T> where T: IChartPoint
     {
         public string Title { get; set; }
-        public List<ProblemChartPoint> ChartPoints { get; set; }
+        public List<T> ChartPoints { get; private set; }
 
         public ResultChartItem() : this(string.Empty) { }
 
         public ResultChartItem(string title)
         {
             Title = title;
-            ChartPoints = new List<ProblemChartPoint>();
+            ChartPoints = new List<T>();
         }
 
         public class Builder
         {
-            private ResultChartItem item;
+            private ResultChartItem<T> item;
 
             public static Builder Create()
             {
                 return new Builder();
             }
 
-            public ResultChartItem Build()
+            public ResultChartItem<T> Build()
             {
                 return item;
             }
 
             private Builder()
             {
-                item = new ResultChartItem();
+                item = new ResultChartItem<T>();
             }
 
             public Builder Title(string title)
@@ -40,21 +40,15 @@ namespace ProblemSdk.Result
                 return this;
             }
 
-            public Builder Points(List<ProblemChartPoint> points)
+            public Builder Points(List<T> points)
             {
                 item.ChartPoints = points;
                 return this;
             }
 
-            public Builder AddPoint(ProblemChartPoint point)
+            public Builder AddPoint(T point)
             {
                 item.ChartPoints.Add(point);
-                return this;
-            }
-
-            public Builder AddPoint(double x, double y)
-            {
-                item.ChartPoints.Add(new ProblemChartPoint(x, y));
                 return this;
             }
         }
