@@ -1,17 +1,10 @@
-﻿using IntegralEquationsApp.Data;
-using OxyPlot;
-using OxyPlot.Wpf;
+﻿using Microsoft.Research.DynamicDataDisplay;
+using Microsoft.Research.DynamicDataDisplay.DataSources;
 using ProblemSdk.Result;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Controls;
-using System.Windows.Media;
-using System;
-using IntegralEquationsApp.Utils;
-using System.Windows.Input;
-using Microsoft.Research.DynamicDataDisplay;
-using Microsoft.Research.DynamicDataDisplay.DataSources;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace IntegralEquationsApp.Components.Result.Charts
 {
@@ -44,7 +37,6 @@ namespace IntegralEquationsApp.Components.Result.Charts
             if (resultChart.Items.Count > 0)
             {
                 surfaceView.SetData(resultChart.Items[0].ChartPoints);
-                //surfaceView.Update(SurfaceUtils.GetValueMatrixFromPoints(resultChart.Items[0].ChartPoints));
             }
         }
 
@@ -74,16 +66,7 @@ namespace IntegralEquationsApp.Components.Result.Charts
 
         private string getTabHeader(string title)
         {
-
             return string.IsNullOrEmpty(title) ? (tcResultsTabs.Items.Count + 1).ToString() : title;
-        }
-
-        private void onKeyDown(object sender, KeyEventArgs e)
-        {
-            //if (surfaceView.Visibility == System.Windows.Visibility.Visible)
-            //{
-            //    surfaceView.OnKeyDown(e.Key);
-            //}
         }
     }
 }

@@ -5,12 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:d3="http://research.microsoft.com/DynamicDataDisplay/1.0"
              xmlns:local="clr-namespace:IntegralEquationsApp.Components.Result.Charts"
-             xmlns:oxy="http://oxyplot.org/wpf"
-             mc:Ignorable="d" KeyDown="onKeyDown">
+             xmlns:oxy="http://oxyplot.org/wpf">
     <Grid>
-        <!--<oxy:Plot x:Name="oxyChart"/>
-        <d3:ChartPlotter x:Name="plotter"/>
-        <local:SurfaceView x:Name="surfaceView"/>-->
         <TabControl x:Name="tcResultsTabs" ItemsSource="{Binding Path=ResultTabs, RelativeSource={RelativeSource AncestorType=UserControl}}">
             <TabControl.Template>
                 <ControlTemplate TargetType="TabControl">
