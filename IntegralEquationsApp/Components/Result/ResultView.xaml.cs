@@ -1,18 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using ProblemSdk.Result;
 
 namespace IntegralEquationsApp.Components.Result
 {
@@ -21,12 +8,20 @@ namespace IntegralEquationsApp.Components.Result
     /// </summary>
     public partial class ResultView : UserControl, IResultView
     {
+        private readonly string DEFAULT_TEXT = "In this area the result of the problem solution will be displayed.\n\nSelect Data or Charts on the top of this window to switch between text and graphic representation of the problem solution.";
+
         private ResultPresenter presenter;
 
         public ResultView()
         {
             InitializeComponent();
             presenter = new ResultPresenter(this);
+            tbDefaultText.Text = DEFAULT_TEXT;
+        }
+
+        public void ShowResultTabs()
+        {
+            tcResult.Visibility = Visibility.Visible;
         }
     }
 }

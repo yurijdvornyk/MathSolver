@@ -1,6 +1,5 @@
 ﻿using ProblemSdk;
 using System.Collections.Generic;
-using System;
 
 namespace IntegralEquationsApp.Data
 {

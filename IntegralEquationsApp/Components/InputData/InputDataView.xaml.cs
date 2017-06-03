@@ -26,6 +26,7 @@ namespace IntegralEquationsApp.Components.InputData
         {
             InitializeComponent();
             presenter = new InputDataPresenter(this);
+            tbDefaultText.Text = "Select the problem from the drop down list to see the list of input parameters.";
         }
 
         public void BuildLayoutForProblem(IProblem problem)
@@ -56,6 +57,63 @@ namespace IntegralEquationsApp.Components.InputData
                 addItemValue(item);
                 addItemHint(item);
             });
+        }
+
+        public List<object> GetItemValues()
+        {
+            List<object> result = new List<object>();
+            for (int i = 0; i < contentArea.Children.Count; ++i)
+            {
+                if (contentArea.Children[i] is BaseItemView)
+                {
+                    result.Add((contentArea.Children[i] as BaseItemView).GetItemValue());
+                }
+            }
+            return result;
+        }
+
+        private FrameworkElement getItemTitleView(IDataItem item)
+        {
+            TextBlock textBlock = new TextBlock();
+            textBlock.Text = item.Name;
+            return textBlock;
+        }
+
+        private BaseItemView getItemValueView(IDataItem item)
+        {
+            object defaultValue = null;
+            if (item.GetDefaultValue() != null)
+            {
+                defaultValue = item.GetDefaultValue();
+            }
+            else if (item.GetValue() != null)
+            {
+                defaultValue = item.GetValue();
+            } 
+            Type itemType = item.GetDataItemType();
+            if (itemType == typeof(int))
+            {
+                return new NumericIntegerItemView(defaultValue);
+            }
+            else if (itemType == typeof(double))
+            {
+                return new NumericDoubleItemView(defaultValue);
+            }
+            else if (itemType == typeof(bool))
+            {
+                return new BooleanItemView(defaultValue);
+            }
+            else if (itemType == typeof(string))
+            {
+                return new StringItemView(defaultValue);
+            } else if (itemType == typeof(ISingleChoice))
+            {
+                return new SingleChoiceItemView(defaultValue as ISingleChoice);
+            }
+            else
+            {
+                return new ErrorItemView();
+            }
         }
 
         private void addItemHint(IDataItem item)
@@ -116,66 +174,11 @@ namespace IntegralEquationsApp.Components.InputData
 
         private void clearContentArea()
         {
+            tbDefaultText.Visibility = Visibility.Collapsed;
+            dpInputData.Visibility = Visibility.Visible;
             contentArea.Children.Clear();
             contentArea.ColumnDefinitions.Clear();
             contentArea.RowDefinitions.Clear();
-        }
-
-        public List<object> GetItemValues()
-        {
-            List<object> result = new List<object>();
-            for (int i = 0; i < contentArea.Children.Count; ++i)
-            {
-                if (contentArea.Children[i] is BaseItemView)
-                {
-                    result.Add((contentArea.Children[i] as BaseItemView).GetItemValue());
-                }
-            }
-            return result;
-        }
-
-        private FrameworkElement getItemTitleView(IDataItem item)
-        {
-            TextBlock textBlock = new TextBlock();
-            textBlock.Text = item.Name;
-            return textBlock;
-        }
-
-        private BaseItemView getItemValueView(IDataItem item)
-        {
-            object defaultValue = null;
-            if (item.GetDefaultValue() != null)
-            {
-                defaultValue = item.GetDefaultValue();
-            }
-            else if (item.GetValue() != null)
-            {
-                defaultValue = item.GetValue();
-            } 
-            Type itemType = item.GetDataItemType();
-            if (itemType == typeof(int))
-            {
-                return new NumericIntegerItemView(defaultValue);
-            }
-            else if (itemType == typeof(double))
-            {
-                return new NumericDoubleItemView(defaultValue);
-            }
-            else if (itemType == typeof(bool))
-            {
-                return new BooleanItemView(defaultValue);
-            }
-            else if (itemType == typeof(string))
-            {
-                return new StringItemView(defaultValue);
-            } else if (itemType == typeof(ISingleChoice))
-            {
-                return new SingleChoiceItemView(defaultValue as ISingleChoice);
-            }
-            else
-            {
-                return new ErrorItemView();
-            }
         }
     }
 }

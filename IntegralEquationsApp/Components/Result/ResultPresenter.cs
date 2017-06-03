@@ -1,23 +1,24 @@
-﻿using IntegralEquationsApp.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using ProblemSdk;
+using IntegralEquationsApp.Data;
 using ProblemSdk.Result;
-using IntegralEquationsApp.Components.Result.Data;
-using IntegralEquationsApp.Components.Result.Charts;
 
 namespace IntegralEquationsApp.Components.Result
 {
-    public class ResultPresenter : Presenter<IResultView>
+    public class ResultPresenter : Presenter<IResultView>, IProblemSolutionListener
     {
-        public ResultPresenter(IResultView view) : base(view) { }
-
-        public void OnStartProblemSolving(IProblem problem)
+        public ResultPresenter(IResultView view) : base(view)
         {
-            // TODO: Add code
+            SolutionManager.GetInstance().AddSolutionListener(this);
         }
+
+        public void OnError(object erorr) { }
+
+        public void OnProblemSolved(ProblemResult result)
+        {
+            view.ShowResultTabs();
+        }
+
+        public void OnStartProblemSolving(IProblem problem) { }
     }
 }

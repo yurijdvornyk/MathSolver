@@ -26,13 +26,20 @@ namespace ProblemSdk
 
         public void Solve(params object[] args)
         {
-            setInputData(args);
-            updateData();
-            cancellationTokenSource = new CancellationTokenSource();
-            solutionNotifier.NotifyStartProblemSolving(this);
-            Result = execute();
-            cancellationTokenSource = null;
-            solutionNotifier.NotifyProblemSolved(this);
+            try
+            {
+                setInputData(args);
+                updateData();
+                cancellationTokenSource = new CancellationTokenSource();
+                solutionNotifier.NotifyStartProblemSolving(this);
+                Result = execute();
+                cancellationTokenSource = null;
+                solutionNotifier.NotifyProblemSolved(this);
+            }
+            catch (Exception e)
+            {
+                solutionNotifier.NotifyError(this, e);
+            }
         }
 
         public void SolveAsync(params object[] args)

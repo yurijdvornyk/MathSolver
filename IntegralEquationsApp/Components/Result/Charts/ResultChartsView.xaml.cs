@@ -36,6 +36,7 @@ namespace IntegralEquationsApp.Components.Result.Charts
                 List<double> y = chart.ChartPoints.Select(point => point.Y).ToList();
                 plotter.Children.Add(new LineGraph(x.AsXDataSource().Join(y.AsYDataSource())));
             });
+            plotter.LegendVisible = chartData.Items.Count > 1;
         }
 
         public void Set3dChart(ResultChart<Chart3dPoint> resultChart, SurfaceWebView surfaceView)

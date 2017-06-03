@@ -10,7 +10,7 @@
     xmlns:result="clr-namespace:IntegralEquationsApp.Components.Result"
     x:Class="IntegralEquationsApp.MainWindow"
     mc:Ignorable="d"
-    Title="MainWindow"  
+    Title="Mathematical Problem Solver"  
     Width="840"
     Height="480">
     <DockPanel LastChildFill="True">

@@ -13,7 +13,7 @@ namespace IntegralEquationsApp.Components.Result.Charts.Surface
         public static string GetPageContent(List<Chart3dPoint> points)
         {
             StringBuilder result = new StringBuilder(); // "<!DOCTYPE HTML><html>"
-            result.AppendLine("<!DOCTYPE HTML><html><head><style>body {font: 10pt arial;}</style><script type=\"text/javascript\" src=\"" + getVisJs() + "\"></script></head>");
+            result.AppendLine("<!DOCTYPE HTML><html><head><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"/> <style>body {font: 10pt arial;}</style><script type=\"text/javascript\" src=\"" + getVisJs() + "\"></script></head>");
             appendBody(result, points);
             result.AppendLine("</script></body></html>");
             //result.AppendLine("<head>");
@@ -30,9 +30,10 @@ namespace IntegralEquationsApp.Components.Result.Charts.Surface
             result.AppendLine("<body><div id=\"visualization\"></div>");
             result.AppendLine("<script type=\"text/javascript\">var data = new vis.DataSet();");
             points.ForEach(point => result.AppendLine("data.add({x:" + point.X + ",y:" + point.Y + ",z:" + point.Z + "});"));
-            result.AppendLine("var options = {width: '500px', height: '552px', style: 'surface', showPerspective: true, showGrid: true, showShadow: false, keepAspectRatio: true, verticalRatio: 0.5};");
+            result.AppendLine("var options = {width: window.innerWidth + 'px', height: window.innerHeight + 'px', style: 'surface', showPerspective: true, showGrid: true, showShadow: false, keepAspectRatio: true, verticalRatio: 0.5};");
             result.AppendLine("var container = document.getElementById('visualization');");
             result.AppendLine("var graph3d = new vis.Graph3d(container, data, options);");
+            result.AppendLine("function resize(height){var container=document.getElementById('visualization');container.style.height=height+'px';graph3d.redraw();}");
         }
 
         //private static void appendBody(StringBuilder result)

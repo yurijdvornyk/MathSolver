@@ -1,20 +1,9 @@
 ﻿using IntegralEquationsApp.Components.Result.Charts.Surface;
 using ProblemSdk.Result;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace IntegralEquationsApp.Components.Result.Charts
 {
@@ -46,6 +35,15 @@ namespace IntegralEquationsApp.Components.Result.Charts
         internal void Update(double[,] v)
         {
 
+        }
+
+        private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            try
+            {
+                browser.InvokeScript("resize", e.NewSize.Height);
+            }
+            catch { }
         }
     }
 }
