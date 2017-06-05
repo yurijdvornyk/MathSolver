@@ -24,6 +24,7 @@ namespace IntegralEquationsApp.Components.InputData.ItemView
 
         public override object GetItemValue()
         {
+            singleChoice.SetValue(comboBox.SelectedItem);
             return singleChoice;
         }
 
