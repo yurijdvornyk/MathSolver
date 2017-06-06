@@ -29,11 +29,8 @@ namespace Problems
             Name = "Function Tabulation";
             Equation = null; // You can add path to equation image in PNG, GIF or JPG
 
-            IDataItem function = DataItemBuilder<ISingleChoice>
-                .Create()
-                .Name("function")
-                .DefValue(new SingleChoice<string>(functions.Keys, new List<string>(functions.Keys)[0]))
-                .Build();
+            IDataItem function = DataItemBuilder<ISingleChoice>.Create().Name("function")
+                .DefValue(new SingleChoice<string>(functions.Keys, new List<string>(functions.Keys)[0])).Build();
             IDataItem a = DataItemBuilder<double>.Create().Name("a").Hint("Left bound").Build();
             IDataItem b = DataItemBuilder<double>.Create().Name("b").Hint("Right bound").Build();
 

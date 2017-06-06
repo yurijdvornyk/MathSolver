@@ -10,12 +10,12 @@ namespace IntegralEquationsApp.Data
         {
             new RectilinearSegment(),
             new PotentialAbsForRectilinearSegment(),
-            new ParameterizedRectilinearSegment(),
+            //new ParameterizedRectilinearSegment(),
             new ArbitraryContour(),
             new ArbitraryContourAbsCase(),
             new ArbitraryContourExtendedCase(),
-            new LinearSingularEquation(),
-            new SampleProblem()
+            new LinearSingularEquation()
+            //new SampleProblem()
         };
 
         public static void Initialize()

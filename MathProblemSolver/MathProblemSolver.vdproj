@@ -105,6 +105,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_AA763EFD51AC43AABE779CE933FA17C7"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_B6898F0BD53B494DB89F749D4482B979"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -220,12 +226,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_54574E3493DFD1106050CEF0C41B9241"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_B6898F0BD53B494DB89F749D4482B979"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -325,6 +325,12 @@
         "OwnerKey" = "8:_F4C01871C077520DF136C3AFE02664AC"
         "MsmSig" = "8:_UNDEFINED"
         }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_54574E3493DFD1106050CEF0C41B9241"
+        "MsmSig" = "8:_UNDEFINED"
+        }
     }
     "Configurations"
     {
@@ -343,6 +349,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -359,6 +373,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.5"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.5 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.5"
+                    }
+                }
+            }
         }
     }
     "Deployable"
@@ -634,6 +664,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_AA763EFD51AC43AABE779CE933FA17C7"
+            {
+            "SourcePath" = "8:..\\IntegralEquationsApp\\Components\\Result\\Charts\\Surface\\vis.min.js"
+            "TargetName" = "8:vis.min.js"
+            "Tag" = "8:"
+            "Folder" = "8:_E4AEB34D621F405E8DA1C8BCB3A7BA74"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B6E8ED26BE82BAE240DE5FF16F8475FE"
@@ -972,7 +1022,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:MathProblemSolver"
         "ProductCode" = "8:{63BC88C6-90CB-469A-9878-E0859FC3D0D4}"
-        "PackageCode" = "8:{BD314E99-13E0-40AF-86EF-07D10AFAA644}"
+        "PackageCode" = "8:{BFD4F980-8383-4E4C-B159-01A65D0F9F43}"
         "UpgradeCode" = "8:{AF9FC36E-0BAC-402E-9F22-5D4DD9634FE8}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"

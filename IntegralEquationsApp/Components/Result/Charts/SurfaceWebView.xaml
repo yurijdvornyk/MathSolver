@@ -5,6 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:IntegralEquationsApp.Components.Result.Charts"
              mc:Ignorable="d" SizeChanged="UserControl_SizeChanged">
-    <!--<cefSharp:ChromiumWebBrowser x:Name="browser"/>-->
-    <WebBrowser Name="browser"/>
+    <DockPanel LastChildFill="True">
+        <StackPanel DockPanel.Dock="Bottom">
+            <Button Content="Export HTML" Click="btnExport_Click" HorizontalAlignment="Right"/>
+        </StackPanel>
+        <WebBrowser Name="browser"/>
+    </DockPanel>
 </UserControl>
